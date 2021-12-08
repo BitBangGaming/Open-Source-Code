@@ -1,0 +1,33 @@
+#include "main.h"
+
+int main(void)
+{
+	while(1)
+	{
+
+	}
+}
+
+/* Main Functions */
+void Main_SetBlueLed(LedState_t ledState)
+{
+	/* Process act desired */
+	switch(ledState)
+	{
+		// Turn blue LED on or off
+		case LED_ON:
+		case LED_OFF:
+			HAL_GPIO_WritePin(BLUE_LED_PORT, BLUE_LED_PIN_HAL, ledState);
+			break;
+
+		// Toggle blue LED
+		case LED_TOGGLE:
+			HAL_GPIO_TogglePin(BLUE_LED_PORT, BLUE_LED_PIN_HAL);
+			break;
+
+		// Invalid command
+		default:
+			// Do nothing
+			break;
+	}
+}

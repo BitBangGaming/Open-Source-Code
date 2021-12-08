@@ -1,0 +1,59 @@
+#include "main.h"
+
+int main(void)
+{
+	/* Start up HAL */
+	HAL_Init();
+
+	while(1)
+	{
+
+	}
+}
+
+/* Main Functions */
+void Main_Init()
+{
+	/* Initialize the blue led */
+	__HAL_RCC_GPIOC_CLK_ENABLE();
+
+	GPIO_InitTypeDef GPIO_InitStruct_Main = {0};
+
+	GPIO_InitStruct_Main.Pin = BLUE_LED_PIN_HAL;
+	GPIO_InitStruct_Main.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct_Main.Pull = GPIO_NOPULL;
+	GPIO_InitStruct_Main.Speed = GPIO_SPEED_FREQ_LOW;
+
+	HAL_GPIO_Init(BLUE_LED_PORT, &GPIO_InitStruct_Main);
+
+	/* Blue LED off by default */
+	Main_SetBlueLed(LED_OFF);
+}
+
+void Main_SetBlueLed(LedState_t ledState)
+{
+	/* Process act desired */
+	switch(ledState)
+	{
+		// Turn blue LED on or off
+		case LED_ON:
+		case LED_OFF:
+			HAL_GPIO_WritePin(BLUE_LED_PORT, BLUE_LED_PIN_HAL, ledState);
+			break;
+
+		// Toggle blue LED
+		case LED_TOGGLE:
+			HAL_GPIO_TogglePin(BLUE_LED_PORT, BLUE_LED_PIN_HAL);
+			break;
+
+		// Invalid command
+		default:
+			// Do nothing
+			break;
+	}
+}
+
+void SysTick_Handler(void)
+{
+	HAL_IncTick();
+}
