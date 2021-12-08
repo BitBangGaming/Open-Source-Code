@@ -1,0 +1,11 @@
+#ifndef BUTTON_INPUT_H_
+#define BUTTON_INPUT_H_
+
+#include "shared_enums.h"
+
+/* Public Functions */
+void ButtonInput_Init(void);
+void ButtonInput_GetSwitchSnapshot(void);
+ButtonState_t ButtonInput_GetState(GCButtonInput_t);
+
+#endif /* BUTTON_INPUT_H_ */

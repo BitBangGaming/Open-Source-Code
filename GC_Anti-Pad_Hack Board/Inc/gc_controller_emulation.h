@@ -109,4 +109,10 @@ void GCControllerEmulation_Init(void);
 /* Call to run the controller emulation forever */
 void GCControllerEmulation_Run(void);
 
+/* Get all button states*/
+void GCControllerEmulation_GetSwitchSnapshot(void);
+
+/* Get a particular button state */
+ButtonState_t GCControllerEmulation_GetButtonState(GCButtonInput_t);
+
 #endif /* GC_CONTROLLER_EMULATION_H_ */

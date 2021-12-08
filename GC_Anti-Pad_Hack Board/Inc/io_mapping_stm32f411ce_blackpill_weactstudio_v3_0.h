@@ -7,22 +7,33 @@
 #define BLUE_LED_PORT 		(GPIOC)
 #define BLUE_LED_BIT 		(1 << BLUE_LED_PIN)
 
-/* Pins for GC communication */
-#define GC_STOP_PIN			(4U)
-#define GC_STOP_PIN_HAL		(GPIO_PIN_4)
-#define GC_STOP_PORT 		(GPIOC)
-#define GC_STOP_BIT 		(1 << GC_STOP_PIN)
-#define GC_STOP_SET 		(GPIO_BSRR_BS4)
-#define GC_STOP_CLEAR 		(GPIO_BSRR_BR4)
+/* Pins for expansion port communication */
+#define COMMS_TX_PIN		(6U)
+#define COMMS_TX_PIN_HAL	(GPIO_PIN_6)
+#define COMMS_TX_PORT 		(GPIOC)
+#define COMMS_TX_BIT 		(1 << COMMS_TX_PIN)
 
-#define GC_TX_PIN			(10U)
-#define GC_TX_PIN_HAL		(GPIO_PIN_10)
-#define GC_TX_PORT 			(GPIOC)
+#define COMMS_RX_PIN		(7U)
+#define COMMS_RX_PIN_HAL	(GPIO_PIN_7)
+#define COMMS_RX_PORT 		(GPIOC)
+#define COMMS_RX_BIT 		(1 << COMMS_RX_PIN)
+
+/* Pins for GC communication */
+#define GC_STOP_PIN			(5U)
+#define GC_STOP_PIN_HAL		(GPIO_PIN_5)
+#define GC_STOP_PORT 		(GPIOB)
+#define GC_STOP_BIT 		(1 << GC_STOP_PIN)
+#define GC_STOP_SET 		(GPIO_BSRR_BS5)
+#define GC_STOP_CLEAR 		(GPIO_BSRR_BR5)
+
+#define GC_TX_PIN			(6U)
+#define GC_TX_PIN_HAL		(GPIO_PIN_6)
+#define GC_TX_PORT 			(GPIOB)
 #define GC_TX_BIT 			(1 << GC_TX_PIN)
 
-#define GC_RX_PIN			(11U)
-#define GC_RX_PIN_HAL		(GPIO_PIN_11)
-#define GC_RX_PORT 			(GPIOC)
+#define GC_RX_PIN			(7U)
+#define GC_RX_PIN_HAL		(GPIO_PIN_7)
+#define GC_RX_PORT 			(GPIOB)
 #define GC_RX_BIT 			(1 << GC_RX_PIN)
 
 /* Pins for button inputs */
@@ -186,6 +197,5 @@
 #define BUTTON_TILT_Y_BIT 		(0 << BUTTON_TILT_Y_PIN)
 #define BUTTON_TILT_Y_SET 		(GPIO_BSRR_BS13)
 #define BUTTON_TILT_Y_CLEAR 	(GPIO_BSRR_BR13)
-
 
 #endif

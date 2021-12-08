@@ -1,0 +1,801 @@
+#include "GC_controller_emulation.h"
+
+// Macros //
+#define NUM_OF_BUTTON_INPUTS	23
+
+// Enumerations //
+/* GC Bits to UART Bytes */
+typedef enum
+{
+	GC_BITS_00_CASE1 = 0x08,
+	GC_BITS_00_CASE2 = 0x88,
+	GC_BITS_01_CASE1 = 0xE8,
+	GC_BITS_01_CASE2 = 0xC8,
+	GC_BITS_10_CASE1 = 0x0F,
+	GC_BITS_10_CASE2 = 0x8F,
+	GC_BITS_11_CASE1 = 0xEF,
+	GC_BITS_11_CASE2 = 0xCF,
+	GC_BITS_STOP_BIT = 0xFF
+} GCBitsUartByte_t;
+
+/* GC Commands */
+typedef enum
+{
+	GC_COMMAND_PROBE = 0,
+	GC_COMMAND_PROBE_ORIGIN = 1,
+	GC_COMMAND_POLL_AND_TURN_RUMBLE_OFF = 2,
+	GC_COMMAND_POLL_AND_TURN_RUMBLE_ON = 3,
+	GC_COMMAND_UNKNOWN = 4
+} GCCommand_t;
+
+// Variables //
+/* UART for faking 1-wire protocol */
+static UART_HandleTypeDef huart1;
+
+/* Snapshot of button states */
+static ButtonState_t gcButtonInputSnapShot[NUM_OF_BUTTON_INPUTS] = {};
+
+/* Processed snapshot button states */
+static ButtonState_t gcProcessedButtonStates[NUM_OF_BUTTON_INPUTS] = {};
+
+/* Data from console before being converted into a command */
+static uint8_t gcConsoleResponse[MAX_GC_CONSOLE_BYTES];
+
+/* Command from console after converted */
+static GCCommand_t command;
+
+// Function Prototypes //
+/* Waits for a command from the console. Not that this uses the UART
+ * module so if catching a falling edge in the middle of the
+ * transmission, its garbage. But any functions that uses
+ * the data from the console will know how to ignore it. So
+ * calling it again next loop around self-corrects the issue.
+ * That means getting in sync with the console is not necessary.
+ */
+inline static uint8_t GCControllerEmulation_GetConsoleCommand(void);
+
+/* Sends a stop bit to indicate end of GC data transmission */
+inline static void GCControllerEmulation_SendStopBit(void);
+
+/* Sends correct response to poll command */
+inline static void GCControllerEmulation_SendProbeResponse(void);
+
+/* Sends current states of buttons and joystick to console */
+inline static void GCControllerEmulation_SendControllerState(GCCommand_t);
+
+// Function Implementations //
+/* Initializes this module to properly emulate a GC controller */
+void GCControllerEmulation_Init()
+{
+	/* Setup GC communication pins */
+
+	// Clocks
+	__HAL_RCC_GPIOB_CLK_ENABLE();
+	__HAL_RCC_USART1_CLK_ENABLE();
+
+	// Init structure
+	GPIO_InitTypeDef GPIO_InitStruct_GCControllerEmulation = {0};
+
+	// Stop bit control
+	GPIO_InitStruct_GCControllerEmulation.Pin = GC_STOP_PIN_HAL;
+	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_OUTPUT_OD;
+	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_NOPULL;
+	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(GC_STOP_PORT, &GPIO_InitStruct_GCControllerEmulation);
+	GC_STOP_PORT->BSRR = GC_STOP_SET;
+
+	// USART1 TX/RX
+	GPIO_InitStruct_GCControllerEmulation.Pin = GC_TX_PIN_HAL | GC_RX_PIN_HAL;
+	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_AF_OD;
+	GPIO_InitStruct_GCControllerEmulation.Alternate = GPIO_AF7_USART1;
+	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_NOPULL;
+	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(GC_TX_PORT, &GPIO_InitStruct_GCControllerEmulation);
+
+	// Configure USART1
+	huart1.Instance = USART1;
+	huart1.Init.BaudRate = 1300000;
+	huart1.Init.WordLength = UART_WORDLENGTH_8B;
+	huart1.Init.StopBits = UART_STOPBITS_1;
+	huart1.Init.Parity = UART_PARITY_NONE;
+	huart1.Init.Mode = UART_MODE_TX_RX;
+	huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+	huart1.Init.OverSampling = UART_OVERSAMPLING_8;
+	HAL_UART_Init(&huart1);
+
+	// Default command state from console
+	command = GC_COMMAND_UNKNOWN;
+}
+
+/* Emulate a GC controller forever. Note that this loop
+ * is polling based. When the data is sent to the console,
+ * we have about 11-12ms to do something else. That is
+ * quite a bit of time for a fast uC. We use this time
+ * to grab button states.
+ */
+void GCControllerEmulation_Run()
+{
+	while(1)
+	{
+		/* Grab the GC console command */
+		command = GCControllerEmulation_GetConsoleCommand();
+
+		/* Performs command's request */
+		switch(command)
+		{
+			case GC_COMMAND_PROBE:
+				GCControllerEmulation_SendProbeResponse();
+				break;
+
+			case GC_COMMAND_PROBE_ORIGIN:
+				GCControllerEmulation_SendControllerState(GC_COMMAND_PROBE_ORIGIN);
+				break;
+
+			case GC_COMMAND_POLL_AND_TURN_RUMBLE_OFF:
+				GCControllerEmulation_SendControllerState(GC_COMMAND_POLL_AND_TURN_RUMBLE_OFF);
+				break;
+
+			case GC_COMMAND_POLL_AND_TURN_RUMBLE_ON:
+				GCControllerEmulation_SendControllerState(GC_COMMAND_POLL_AND_TURN_RUMBLE_ON);
+				break;
+
+			case GC_COMMAND_UNKNOWN:
+			default:
+				// Do nothing
+				break;
+		}
+	}
+}
+
+// Private Function Implementations //
+ButtonState_t GCControllerEmulation_GetSwitchSnapshot()
+{
+	/* Update all button input states */
+	gcButtonInputSnapShot[GC_A] = GCControllerEmulation_GetButtonState(GC_A);
+	gcButtonInputSnapShot[GC_B] = GCControllerEmulation_GetButtonState(GC_B);
+	gcButtonInputSnapShot[GC_X] = GCControllerEmulation_GetButtonState(GC_X);
+	gcButtonInputSnapShot[GC_Y] = GCControllerEmulation_GetButtonState(GC_Y);
+	gcButtonInputSnapShot[GC_L] = GCControllerEmulation_GetButtonState(GC_L);
+	gcButtonInputSnapShot[GC_R] = GCControllerEmulation_GetButtonState(GC_R);
+	gcButtonInputSnapShot[GC_Z] = GCControllerEmulation_GetButtonState(GC_Z);
+	gcButtonInputSnapShot[GC_START] = GCControllerEmulation_GetButtonState(GC_START);
+	gcButtonInputSnapShot[GC_DPAD_UP] = GCControllerEmulation_GetButtonState(GC_DPAD_UP);
+	gcButtonInputSnapShot[GC_DPAD_DOWN] = GCControllerEmulation_GetButtonState(GC_DPAD_DOWN);
+	gcButtonInputSnapShot[GC_DPAD_LEFT] = GCControllerEmulation_GetButtonState(GC_DPAD_LEFT);
+	gcButtonInputSnapShot[GC_DPAD_RIGHT] = GCControllerEmulation_GetButtonState(GC_DPAD_RIGHT);
+	gcButtonInputSnapShot[GC_MAIN_STICK_UP] = GCControllerEmulation_GetButtonState(GC_MAIN_STICK_UP);
+	gcButtonInputSnapShot[GC_MAIN_STICK_DOWN] = GCControllerEmulation_GetButtonState(GC_MAIN_STICK_DOWN);
+	gcButtonInputSnapShot[GC_MAIN_STICK_LEFT] = GCControllerEmulation_GetButtonState(GC_MAIN_STICK_LEFT);
+	gcButtonInputSnapShot[GC_MAIN_STICK_RIGHT] = GCControllerEmulation_GetButtonState(GC_MAIN_STICK_RIGHT);
+	gcButtonInputSnapShot[GC_C_STICK_UP] = GCControllerEmulation_GetButtonState(GC_C_STICK_UP);
+	gcButtonInputSnapShot[GC_C_STICK_DOWN] = GCControllerEmulation_GetButtonState(GC_C_STICK_DOWN);
+	gcButtonInputSnapShot[GC_C_STICK_LEFT] = GCControllerEmulation_GetButtonState(GC_C_STICK_LEFT);
+	gcButtonInputSnapShot[GC_C_STICK_RIGHT] = GCControllerEmulation_GetButtonState(GC_C_STICK_RIGHT);
+	gcButtonInputSnapShot[GC_MACRO] = GCControllerEmulation_GetButtonState(GC_MACRO);
+	gcButtonInputSnapShot[GC_TILT_X] = GCControllerEmulation_GetButtonState(GC_TILT_X);
+	gcButtonInputSnapShot[GC_TILT_Y] = GCControllerEmulation_GetButtonState(GC_TILT_Y);
+}
+
+GCCommand_t GCControllerEmulation_GetConsoleCommand()
+{
+	/* To receive or send bytes with the GC protocol, it must be understood
+	 * that 1 GC byte = 4 UART bytes.
+	 *
+	 * For receiving, note that the GC stop bit is interpreted as a UART byte.
+	 * Currently, we do nothing with it as this code only handles the polling
+	 * command from the GC console.
+	 *
+	 * For sending, you need to send a stop bit. However, instead of sending
+	 * 0xFF from the UART we can tie another open drain output to the GC data
+	 * line. The reason is because the GC console can respond very quickly.
+	 * And while it is technically not required for when emulating as a
+	 * controller, you need to do this when asking data from a controller.
+	 * To be consistent, this controller emulation sticks to the separate
+	 * data line idea for performing a stop bit.
+	 *
+	 * It is important to note that since the RX and TX of the UART are tied
+	 * together to fake a 1-wire setup, the receiver must be disabled when
+	 * sending data on the TX line. Or else you receive your own data
+	 * possibly making hard to understand who sent what.
+	 */
+	/* Variable to hold return value */
+	GCCommand_t command;
+
+	/* Below is grabbing a response from the console */
+	// Enable the UART receiver
+	USART1->CR1 |= USART_CR1_RE;
+
+	/* First byte (possibly only byte) from console */
+	// Make sure the receive data register is not empty before receiving next byte
+	while(!(USART1->SR & USART_SR_RXNE)){};
+	// Grab states for BIT 7 & BIT 6
+	gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] = USART1->DR;
+
+	// Make sure the receive data register is not empty before receiving next byte
+	while(!(USART1->SR & USART_SR_RXNE)){};
+	// Grab states for BIT 5 & BIT 4
+	gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT5_BIT4] = USART1->DR;
+
+	// Make sure the receive data register is not empty before receiving next byte
+	while(!(USART1->SR & USART_SR_RXNE)){};
+	// Grab states for BIT 3 & BIT 2
+	gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT3_BIT2] = USART1->DR;
+
+	// Make sure the receive data register is not empty before receiving next byte
+	while(!(USART1->SR & USART_SR_RXNE)){};
+	// Grab states for BIT 1 & BIT 0
+	gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT1_BIT0] = USART1->DR;
+
+	// Make sure the receive data register is not empty before receiving next byte
+	while(!(USART1->SR & USART_SR_RXNE)){};
+	// Acquire the stop for later processing
+	gcConsoleResponse[GC_CONSOLE_TEMP_BITS] = USART1->DR;
+
+	// See if the last UART byte is a GC stop bit
+	if(gcConsoleResponse[GC_CONSOLE_TEMP_BITS] == GC_BITS_STOP_BIT)
+	{
+		// If it is, stop listening for commands and perform proper command conversion
+		if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_00_CASE2) ) &&
+			( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT5_BIT4] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT5_BIT4] == GC_BITS_00_CASE2) ) &&
+			( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT3_BIT2] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT3_BIT2] == GC_BITS_00_CASE2) ) &&
+			( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT1_BIT0] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT1_BIT0] == GC_BITS_00_CASE2) )    )
+		{
+			// Interpreted command
+			command = GC_COMMAND_PROBE;
+		}
+		else if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_01_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_01_CASE2) ) &&
+				 ( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT5_BIT4] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT5_BIT4] == GC_BITS_00_CASE2) ) &&
+				 ( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT3_BIT2] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT3_BIT2] == GC_BITS_00_CASE2) ) &&
+				 ( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT1_BIT0] == GC_BITS_01_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT1_BIT0] == GC_BITS_01_CASE2) )    )
+		{
+			// Interpreted command
+			command = GC_COMMAND_PROBE_ORIGIN;
+		}
+		else
+		{
+			// Unknown command
+			command = GC_COMMAND_UNKNOWN;
+		}
+
+		// Disable the receiver
+		USART1->CR1 &= ~USART_CR1_RE;
+
+		// Return command
+		return command;
+	}
+	else
+	{
+		// It was not a GC stop bit so keep reading the rest of the command bytes
+	}
+
+	/* Second byte from console */
+	// Remember that last UART byte isn't a stop bit so quickly re-map
+	gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT7_BIT6] = gcConsoleResponse[GC_CONSOLE_TEMP_BITS];
+
+    // Make sure the receive data register is not empty before receiving next byte
+	while(!(USART1->SR & USART_SR_RXNE)){};
+	// Grab states for BIT 5 & BIT 4
+	gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT5_BIT4] = USART1->DR;
+
+	// Make sure the receive data register is not empty before receiving next byte
+	while(!(USART1->SR & USART_SR_RXNE)){};
+	// Grab states for BIT 3 & BIT 2
+	gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT3_BIT2] = USART1->DR;
+
+	// Make sure the receive data register is not empty before receiving next byte
+	while(!(USART1->SR & USART_SR_RXNE)){};
+	// Grab states for BIT 1 & BIT 0
+	gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT1_BIT0] = USART1->DR;
+
+	// There is no two byte GC command (afaik) so DO NOT interpret a stop bit next
+
+	/* Third byte from console */
+	// Make sure the receive data register is not empty before receiving next byte
+	while(!(USART1->SR & USART_SR_RXNE)){};
+	// Grab states for BIT 7 & BIT 6
+	gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT7_BIT6] = USART1->DR;
+
+	// Make sure the receive data register is not empty before receiving next byte
+	while(!(USART1->SR & USART_SR_RXNE)){};
+	// Grab states for BIT 5 & BIT 4
+	gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT5_BIT4] = USART1->DR;
+
+	// Make sure the receive data register is not empty before receiving next byte
+	while(!(USART1->SR & USART_SR_RXNE)){};
+	// Grab states for BIT 3 & BIT 2
+	gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT3_BIT2] = USART1->DR;
+
+	// Make sure the receive data register is not empty before receiving next byte
+	while(!(USART1->SR & USART_SR_RXNE)){};
+	// Grab states for BIT 1 & BIT 0
+	gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT1_BIT0] = USART1->DR;
+
+	// Make sure the receive data register is not empty before receiving next byte
+	while(!(USART1->SR & USART_SR_RXNE)){};
+	// Acquire the stop bit and do nothing with it
+	gcConsoleResponse[GC_CONSOLE_TEMP_BITS] = USART1->DR;
+
+	/* This marks the end as three byte commands from GC console is as big as needed for this project.
+	 * Even though this code does not need to interpret all three bytes to perform the necessary action,
+	 * still do the comparison logic so that if future commands are necessary, it can be integrated
+	 * easily. But the lazy way out would be to only interpret the last byte to see if rumble needs to
+	 * occur. The really lazy way would be to just respond the button states and never investigate
+	 * any byte and rely on deduction.
+	 */
+	// Figure out first byte
+	if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_01_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_01_CASE2) ) &&
+		( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT5_BIT4] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT5_BIT4] == GC_BITS_00_CASE2) ) &&
+		( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT3_BIT2] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT3_BIT2] == GC_BITS_00_CASE2) ) &&
+		( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT1_BIT0] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT1_BIT0] == GC_BITS_00_CASE2) )    )
+	{
+		// So far we see 0x40, check possible next byte possibilities
+		if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT7_BIT6] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT7_BIT6] == GC_BITS_00_CASE2) ) &&
+		    ( (gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT5_BIT4] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT5_BIT4] == GC_BITS_00_CASE2) ) &&
+		    ( (gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT3_BIT2] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT3_BIT2] == GC_BITS_00_CASE2) ) &&
+		    ( (gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT1_BIT0] == GC_BITS_11_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT1_BIT0] == GC_BITS_11_CASE2) )    )
+		{
+			// So far we see 0x40, 0x03, check possible next byte possibilities
+			if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT7_BIT6] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT7_BIT6] == GC_BITS_00_CASE2) ) &&
+				( (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT5_BIT4] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT5_BIT4] == GC_BITS_00_CASE2) ) &&
+				( (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT3_BIT2] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT3_BIT2] == GC_BITS_00_CASE2) ) &&
+				( (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT1_BIT0] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT1_BIT0] == GC_BITS_00_CASE2) )    )
+			{
+				// Interpreted command
+				command = GC_COMMAND_POLL_AND_TURN_RUMBLE_OFF;
+			}
+			else if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT7_BIT6] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT7_BIT6] == GC_BITS_00_CASE2) ) &&
+					( (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT5_BIT4] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT5_BIT4] == GC_BITS_00_CASE2) ) &&
+					( (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT3_BIT2] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT3_BIT2] == GC_BITS_00_CASE2) ) &&
+					( (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT1_BIT0] == GC_BITS_01_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT1_BIT0] == GC_BITS_01_CASE2) )    )
+			{
+				// Interpreted command
+				command = GC_COMMAND_POLL_AND_TURN_RUMBLE_ON;
+			}
+			else
+			{
+				// Unknown command - 0x40, 0x03, 0x??
+				command = GC_COMMAND_UNKNOWN;
+			}
+		}
+		else
+		{
+			// Unknown command - 0x40, 0x??, 0x??
+			command = GC_COMMAND_UNKNOWN;
+		}
+	}
+	else
+	{
+		// Unknown command
+		command = GC_COMMAND_UNKNOWN;
+	}
+
+	// Disable the receiver
+	USART1->CR1 &= ~USART_CR1_RE;
+
+	// Return command
+	return command;
+}
+
+void GCControllerEmulation_SendStopBit()
+{
+	/* The timing of the stop bit does not need to be so precise. But
+	 * it has been optimized for this uC to be 1us. */
+	GC_STOP_PORT->BSRR = GC_STOP_CLEAR;
+	volatile uint32_t counter = 17;
+	while(counter--);
+	GC_STOP_PORT->BSRR = GC_STOP_SET;
+}
+
+void GCControllerEmulation_SendProbeResponse()
+{
+	/* First byte to console - 0x09 */
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for A and B
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	//while(!(USART1->SR & USART_SR_TC)){};
+	// Send states for Z and START
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for DU and DD
+	USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for DL and DR
+	USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
+
+	/* Second byte to console 0x00 */
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for RESET and RESERVED
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for L and R
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for CU and CD
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for CL and CR
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	/* Third byte to console - 0x03 */
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for X-AXIS BIT7 & BIT6
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for X-AXIS BIT5 & BIT4
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for X-AXIS BIT3 & BIT2
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for X-AXIS BIT1 & BIT0
+	USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+
+	/* Stop bit to console */
+	// Make sure the last UART byte transmission is complete before sending stop bit
+	while(!(USART1->SR & USART_SR_TC)){};
+	GCControllerEmulation_SendStopBit();
+}
+
+void GCControllerEmulation_SendControllerState(GCCommand_t command)
+{
+	/* For some reason, placing the bit states for inputs in a variable
+	 * causes the UART to delay a little. Most reliable way is to place
+	 * code directly into if...then statements for direct data transmission
+	 * via DR in UART.
+	 */
+	/* Get snapshot of all button and switch inputs */
+	GCControllerEmulation_GetSwitchSnapshot();
+
+	// State holders (left means left most bit, right means right most bit)
+	ButtonState_t leftButtonState;
+	ButtonState_t rightButtonState;
+
+	/* First byte to console */
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for RESERVED and RESERVED
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Update RESERVED and START
+	rightButtonState = gcButtonInputSnapShot[GC_START];
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for RESERVED and START
+	if(rightButtonState == RELEASED)
+	{
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+	}
+	else
+	{
+		USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
+	}
+
+	// Update Y and X
+	leftButtonState = gcButtonInputSnapShot[(uint8_t)P1];
+	rightButtonState = gcButtonInputSnapShot[(uint8_t)P2];
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for Y and X
+	if( (leftButtonState == RELEASED) && (rightButtonState == RELEASED) )
+	{
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+	}
+	else if( (leftButtonState == RELEASED) && (rightButtonState == PUSHED) )
+	{
+		USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
+	}
+	else if( (leftButtonState == PUSHED) && (rightButtonState == RELEASED) )
+	{
+		USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
+	}
+	else
+	{
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+	}
+
+	// Update B and A
+	leftButtonState = gcButtonInputSnapShot[(uint8_t)K2];
+	rightButtonState = gcButtonInputSnapShot[(uint8_t)K1];
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for B and A
+	if( (leftButtonState == RELEASED) && (rightButtonState == RELEASED) )
+	{
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+	}
+	else if( (leftButtonState == RELEASED) && (rightButtonState == PUSHED) )
+	{
+		USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
+	}
+	else if( (leftButtonState == PUSHED) && (rightButtonState == RELEASED) )
+	{
+		USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
+	}
+	else
+	{
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+	}
+
+	/* Second byte to console */
+	// Update RESERVED and L
+	rightButtonState = gcButtonInputSnapShot[(uint8_t)P3];
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for RESERVED and L
+	if(rightButtonState == RELEASED)
+	{
+		USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
+	}
+	else
+	{
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+	}
+
+	// Update R and Z
+	leftButtonState = gcButtonInputSnapShot[(uint8_t)K3];
+	rightButtonState = gcButtonInputSnapShot[(uint8_t)P4];
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for R and Z
+	if( (leftButtonState == RELEASED) && (rightButtonState == RELEASED) )
+	{
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+	}
+	else if( (leftButtonState == RELEASED) && (rightButtonState == PUSHED) )
+	{
+		USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
+	}
+	else if( (leftButtonState == PUSHED) && (rightButtonState == RELEASED) )
+	{
+		USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
+	}
+	else
+	{
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+	}
+
+	// Update DU and DD
+	leftButtonState = Socd_GetState(UP);
+	rightButtonState = Socd_GetState(DOWN);
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for DU and DD
+	if( (leftButtonState == RELEASED) && (rightButtonState == RELEASED) )
+	{
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+	}
+	else if( (leftButtonState == RELEASED) && (rightButtonState == PUSHED) )
+	{
+		USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
+	}
+	else if( (leftButtonState == PUSHED) && (rightButtonState == RELEASED) )
+	{
+		USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
+	}
+	else
+	{
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+	}
+
+	// Update DR and DL
+	leftButtonState = Socd_GetState(RIGHT);
+	rightButtonState = Socd_GetState(LEFT);
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for DR and DL
+	if( (leftButtonState == RELEASED) && (rightButtonState == RELEASED) )
+	{
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+	}
+	else if( (leftButtonState == RELEASED) && (rightButtonState == PUSHED) )
+	{
+		USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
+	}
+	else if( (leftButtonState == PUSHED) && (rightButtonState == RELEASED) )
+	{
+		USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
+	}
+	else
+	{
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+	}
+
+	/* Third byte to console */
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for MAIN STICK X AXIS BIT7 AND BIT6
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for MAIN STICK X AXIS BIT5 AND BIT4
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for MAIN STICK X AXIS BIT2 AND BIT2
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for MAIN STICK X AXIS BIT1 AND BIT0
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	/* Fourth byte to console */
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for MAIN STICK Y AXIS BIT7 AND BIT6
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for MAIN STICK Y AXIS BIT5 AND BIT4
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for MAIN STICK Y AXIS BIT3 AND BIT2
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for MAIN STICK Y AXIS BIT1 AND BIT0
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	/* Fifth byte to console */
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for C STICK X AXIS BIT7 AND BIT6
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for C STICK X AXIS BIT5 AND BIT4
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for C STICK X AXIS BIT3 AND BIT2
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for C STICK X AXIS BIT1 AND BIT0
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	/* Sixth byte to console */
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for C STICK Y AXIS BIT7 AND BIT6
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for C STICK Y AXIS BIT5 AND BIT4
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for C STICK Y AXIS BIT3 AND BIT2
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for C STICK Y AXIS BIT1 AND BIT0
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	/* Seventh byte to console */
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for L TRIGGER BIT7 AND BIT6
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for L TRIGGER BIT5 AND BIT4
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for L TRIGGER BIT3 AND BIT2
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for L TRIGGER BIT1 AND BIT0
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	/* Eighth byte to console */
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for R TRIGGER BIT7 AND BIT6
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for R TRIGGER BIT5 AND BIT4
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for R TRIGGER BIT3 AND BIT2
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Make sure the transmit data register is empty before sending next byte
+	while(!(USART1->SR & USART_SR_TXE)){};
+	// Send states for R TRIGGER BIT1 AND BIT0
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+	// Optional bytes to send
+	if(command == GC_COMMAND_PROBE_ORIGIN)
+	{
+		/* Ninth byte to console */
+		// Make sure the transmit data register is empty before sending next byte
+		while(!(USART1->SR & USART_SR_TXE)){};
+		// Send states for
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+		// Make sure the transmit data register is empty before sending next byte
+		while(!(USART1->SR & USART_SR_TXE)){};
+		// Send states for
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+		// Make sure the transmit data register is empty before sending next byte
+		while(!(USART1->SR & USART_SR_TXE)){};
+		// Send states for
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+		// Make sure the transmit data register is empty before sending next byte
+		while(!(USART1->SR & USART_SR_TXE)){};
+		// Send states for
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+		/* Tenth byte to console */
+		// Make sure the transmit data register is empty before sending next byte
+		while(!(USART1->SR & USART_SR_TXE)){};
+		// Send states for
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+		// Make sure the transmit data register is empty before sending next byte
+		while(!(USART1->SR & USART_SR_TXE)){};
+		// Send states for
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+		// Make sure the transmit data register is empty before sending next byte
+		while(!(USART1->SR & USART_SR_TXE)){};
+		// Send states for
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+		// Make sure the transmit data register is empty before sending next byte
+		while(!(USART1->SR & USART_SR_TXE)){};
+		// Send states for
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+	}
+
+	/* Stop bit to console */
+	// Make sure the last UART byte transmission is complete before sending stop bit
+	while(!(USART1->SR & USART_SR_TC)){};
+	GCControllerEmulation_SendStopBit();
+}

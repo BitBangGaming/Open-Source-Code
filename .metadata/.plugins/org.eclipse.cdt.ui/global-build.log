@@ -1,26 +1,6 @@
-13:31:33 **** Incremental Build of configuration Debug for project GC_Anti-Pad_Hack Board ****
+14:31:34 **** Incremental Build of configuration Debug for project GC_Anti-Pad_Hack Board ****
 make -j12 all 
 arm-none-eabi-gcc "../Src/gc_controller_emulation.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Inc -I"C:/Users/jcorleto/Documents/Altium Docs/Open-Source-Code/GC_Anti-Pad_Hack Board/Drivers/CMSIS/Include" -I"C:/Users/jcorleto/Documents/Altium Docs/Open-Source-Code/GC_Anti-Pad_Hack Board/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"C:/Users/jcorleto/Documents/Altium Docs/Open-Source-Code/GC_Anti-Pad_Hack Board/Drivers/STM32F4xx_HAL_Driver/Inc" -O1 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/gc_controller_emulation.d" -MT"Src/gc_controller_emulation.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/gc_controller_emulation.o"
-../Src/gc_controller_emulation.c: In function 'GCControllerEmulation_GetConsoleCommand':
-../Src/gc_controller_emulation.c:211:14: warning: unused variable 'command' [-Wunused-variable]
-  GCCommand_t command;
-              ^~~~~~~
-../Src/gc_controller_emulation.c:386:1: warning: no return statement in function returning non-void [-Wreturn-type]
- }
- ^
-At top level:
-../Src/gc_controller_emulation.c:41:16: warning: 'GCConsoleResponse' defined but not used [-Wunused-variable]
- static uint8_t GCConsoleResponse[MAX_GC_CONSOLE_BYTES];
-                ^~~~~~~~~~~~~~~~~
-../Src/gc_controller_emulation.c:38:22: warning: 'gcSnapshotSSI' defined but not used [-Wunused-variable]
- static ButtonState_t gcSnapshotSSI[8] = {};
-                      ^~~~~~~~~~~~~
-../Src/gc_controller_emulation.c:37:22: warning: 'gcSnapshotMSI' defined but not used [-Wunused-variable]
- static ButtonState_t gcSnapshotMSI[16] = {};
-                      ^~~~~~~~~~~~~
-../Src/gc_controller_emulation.c:34:27: warning: 'huart3' defined but not used [-Wunused-variable]
- static UART_HandleTypeDef huart3;
-                           ^~~~~~
 arm-none-eabi-gcc -o "GC_Anti-Pad_Hack Board.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\jcorleto\Documents\Altium Docs\Open-Source-Code\GC_Anti-Pad_Hack Board\STM32F411CEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="GC_Anti-Pad_Hack Board.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: GC_Anti-Pad_Hack Board.elf
  
