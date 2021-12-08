@@ -3,8 +3,17 @@
 
 #include <stdint.h>
 #include "stm32f4xx_hal.h"
-#include "io_mapping_stm32f411ce_blackpill_weactstudio_v3_0.h"
 #include "shared_enums.h"
+#include "io_mapping_zero_ko_rev_a.h"
+#include "button_input.h"
+#include "board_register.h"
+#include "socd.h"
+#include "player_led.h"
+#include "acrylic_led.h"
+
+/* Private functions and variables are located in
+ * the source file.
+ */
 
 // Notes //
 /* NOTE 1:

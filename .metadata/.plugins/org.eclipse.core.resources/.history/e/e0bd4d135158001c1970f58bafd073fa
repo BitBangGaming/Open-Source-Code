@@ -6,6 +6,11 @@
 #include "io_mapping_stm32f411ce_blackpill_weactstudio_v3_0.h"
 #include "shared_enums.h"
 
+
+/* Private functions and variables are located in
+ * the source file.
+ */
+
 // Notes //
 /* NOTE 1:
  * This module will emulate a GC controller. It currently will

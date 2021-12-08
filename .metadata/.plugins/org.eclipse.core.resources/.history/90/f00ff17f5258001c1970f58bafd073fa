@@ -1,0 +1,86 @@
+#ifndef IO_MAPPING_STM32F411CE_BLACKPILL_WEACTSTUDIO_V3_0_H_
+#define IO_MAPPING_STM32F411CE_BLACKPILL_WEACTSTUDIO_V3_0_H_
+
+/* Pins for leds */
+#define BLUE_LED_PIN		(13U)
+#define BLUE_LED_PIN_HAL	(GPIO_PIN_13)
+#define BLUE_LED_PORT 		(GPIOC)
+#define BLUE_LED_BIT 		(1 << BLUE_LED_PIN)
+
+/* Pins for GC communication */
+#define GC_STOP_PIN			(4U)
+#define GC_STOP_PIN_HAL		(GPIO_PIN_4)
+#define GC_STOP_PORT 		(GPIOC)
+#define GC_STOP_BIT 		(1 << GC_STOP_PIN)
+#define GC_STOP_SET 		(GPIO_BSRR_BS4)
+#define GC_STOP_CLEAR 		(GPIO_BSRR_BR4)
+
+#define GC_TX_PIN			(10U)
+#define GC_TX_PIN_HAL		(GPIO_PIN_10)
+#define GC_TX_PORT 			(GPIOC)
+#define GC_TX_BIT 			(1 << GC_TX_PIN)
+
+#define GC_RX_PIN			(11U)
+#define GC_RX_PIN_HAL		(GPIO_PIN_11)
+#define GC_RX_PORT 			(GPIOC)
+#define GC_RX_BIT 			(1 << GC_RX_PIN)
+
+/* Pins for button inputs */
+#define BUTTON_A_PIN			(12U)
+#define BUTTON_A_PIN_HAL		(GPIO_PIN_12)
+#define BUTTON_A_PORT 			(GPIOB)
+#define BUTTON_A_BIT 			(1 << BUTTON_A_PIN)
+#define BUTTON_A_SET 			(GPIO_BSRR_BS12)
+#define BUTTON_A_CLEAR 			(GPIO_BSRR_BR12)
+
+#define BUTTON_B_PIN			(13U)
+#define BUTTON_B_PIN_HAL		(GPIO_PIN_13)
+#define BUTTON_B_PORT 			(GPIOB)
+#define BUTTON_B_BIT 			(1 << BUTTON_B_PIN)
+#define BUTTON_B_SET 			(GPIO_BSRR_BS13)
+#define BUTTON_B_CLEAR 			(GPIO_BSRR_BR13)
+
+#define BUTTON_X_PIN			(14U)
+#define BUTTON_X_PIN_HAL		(GPIO_PIN_14)
+#define BUTTON_X_PORT 			(GPIOB)
+#define BUTTON_X_BIT 			(1 << BUTTON_X_PIN)
+#define BUTTON_X_SET 			(GPIO_BSRR_BS14)
+#define BUTTON_X_CLEAR 			(GPIO_BSRR_BR14)
+
+#define BUTTON_Y_PIN			(15U)
+#define BUTTON_Y_PIN_HAL		(GPIO_PIN_15)
+#define BUTTON_Y_PORT 			(GPIOB)
+#define BUTTON_Y_BIT 			(1 << BUTTON_Y_PIN)
+#define BUTTON_Y_SET 			(GPIO_BSRR_BS15)
+#define BUTTON_Y_CLEAR 			(GPIO_BSRR_BR15)
+
+#define BUTTON_L_PIN			(8U)
+#define BUTTON_L_PIN_HAL		(GPIO_PIN_8)
+#define BUTTON_L_PORT 			(GPIOA)
+#define BUTTON_L_BIT 			(1 << BUTTON_L_PIN)
+#define BUTTON_L_SET 			(GPIO_BSRR_BS8)
+#define BUTTON_L_CLEAR 			(GPIO_BSRR_BR8)
+
+#define BUTTON_R_PIN			(9U)
+#define BUTTON_R_PIN_HAL		(GPIO_PIN_9)
+#define BUTTON_R_PORT 			(GPIOA)
+#define BUTTON_R_BIT 			(1 << BUTTON_R_PIN)
+#define BUTTON_R_SET 			(GPIO_BSRR_BS9)
+#define BUTTON_R_CLEAR 			(GPIO_BSRR_BR9)
+
+#define BUTTON_Z_PIN			(10U)
+#define BUTTON_Z_PIN_HAL		(GPIO_PIN_10)
+#define BUTTON_Z_PORT 			(GPIOA)
+#define BUTTON_Z_BIT 			(1 << BUTTON_Z_PIN)
+#define BUTTON_Z_SET 			(GPIO_BSRR_BS10)
+#define BUTTON_Z_CLEAR 			(GPIO_BSRR_BR10)
+
+#define BUTTON_START_PIN		(11U)
+#define BUTTON_START_PIN_HAL	(GPIO_PIN_11)
+#define BUTTON_START_PORT 		(GPIOA)
+#define BUTTON_START_BIT 		(1 << BUTTON_START_PIN)
+#define BUTTON_START_SET 		(GPIO_BSRR_BS11)
+#define BUTTON_START_CLEAR 		(GPIO_BSRR_BR11)
+
+
+#endif

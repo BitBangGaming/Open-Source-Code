@@ -1,0 +1,3 @@
+gc_controller_emulation.c:67:6:GCControllerEmulation_Init	0	static
+gc_controller_emulation.c:122:6:GCControllerEmulation_Run	0	static
+gc_controller_emulation.c:157:6:GCControllerEmulation_GetSwitchSnapshot	0	static

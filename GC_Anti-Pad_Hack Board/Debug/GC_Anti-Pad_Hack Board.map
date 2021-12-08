@@ -1947,6 +1947,107 @@ Discarded input sections
  .debug_frame   0x0000000000000000      0x3e4 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_usart.o
  .ARM.attributes
                 0x0000000000000000       0x39 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_usart.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .group         0x0000000000000000        0xc Src/gc_controller_emulation.o
+ .text          0x0000000000000000        0x0 Src/gc_controller_emulation.o
+ .data          0x0000000000000000        0x0 Src/gc_controller_emulation.o
+ .bss           0x0000000000000000        0x0 Src/gc_controller_emulation.o
+ .text.GCControllerEmulation_Init
+                0x0000000000000000        0x2 Src/gc_controller_emulation.o
+ .text.GCControllerEmulation_Run
+                0x0000000000000000        0x2 Src/gc_controller_emulation.o
+ .text.GCControllerEmulation_GetSwitchSnapshot
+                0x0000000000000000        0x2 Src/gc_controller_emulation.o
+ .debug_info    0x0000000000000000      0x733 Src/gc_controller_emulation.o
+ .debug_abbrev  0x0000000000000000      0x1b2 Src/gc_controller_emulation.o
+ .debug_aranges
+                0x0000000000000000       0x30 Src/gc_controller_emulation.o
+ .debug_ranges  0x0000000000000000       0x20 Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000      0x1f2 Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000      0xa54 Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000       0x22 Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000       0x8e Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000       0x51 Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000       0xef Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000       0x6a Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000      0x1df Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000      0x2cb Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000       0x2e Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000       0x28 Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000       0x1c Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000       0x22 Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000       0xdf Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000     0x102d Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000      0x11f Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000     0xb937 Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000       0x43 Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000     0x3659 Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000      0x174 Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000       0x5c Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000      0x447 Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000      0x9fe Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000      0x117 Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000      0x11b Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000       0x82 Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000      0x15f Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000      0x287 Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000       0x5f Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000      0x236 Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000      0x132 Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000      0x264 Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000       0x2e Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000      0x11a Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000       0x85 Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000       0x89 Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000      0x295 Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000      0x217 Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000      0x126 Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000      0x3e7 Src/gc_controller_emulation.o
+ .debug_macro   0x0000000000000000       0x58 Src/gc_controller_emulation.o
+ .debug_line    0x0000000000000000      0x858 Src/gc_controller_emulation.o
+ .debug_str     0x0000000000000000    0x8238f Src/gc_controller_emulation.o
+ .comment       0x0000000000000000       0x7c Src/gc_controller_emulation.o
+ .debug_frame   0x0000000000000000       0x40 Src/gc_controller_emulation.o
+ .ARM.attributes
+                0x0000000000000000       0x39 Src/gc_controller_emulation.o
  .group         0x0000000000000000        0xc Src/main.o
  .group         0x0000000000000000        0xc Src/main.o
  .group         0x0000000000000000        0xc Src/main.o
@@ -2027,6 +2128,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x295 Src/main.o
  .debug_macro   0x0000000000000000      0x217 Src/main.o
  .debug_macro   0x0000000000000000      0x126 Src/main.o
+ .debug_macro   0x0000000000000000      0x3e7 Src/main.o
  .group         0x0000000000000000        0xc Src/syscalls.o
  .group         0x0000000000000000        0xc Src/syscalls.o
  .group         0x0000000000000000        0xc Src/syscalls.o
@@ -2325,6 +2427,7 @@ LOAD Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
 LOAD Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
 LOAD Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
 LOAD Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_usart.o
+LOAD Src/gc_controller_emulation.o
 LOAD Src/main.o
 LOAD Src/syscalls.o
 LOAD Src/sysmem.o
@@ -2685,13 +2788,12 @@ OUTPUT(GC_Anti-Pad_Hack Board.elf elf32-littlearm)
  .debug_ranges  0x0000000000000208       0x28 Src/main.o
  .debug_ranges  0x0000000000000230       0x20 Startup/startup_stm32f411ceux.o
 
-.debug_macro    0x0000000000000000      0x86c
+.debug_macro    0x0000000000000000      0x7f6
  .debug_macro   0x0000000000000000      0x224 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
  .debug_macro   0x0000000000000224      0x1c4 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
  .debug_macro   0x00000000000003e8      0x1ca Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
  .debug_macro   0x00000000000005b2      0x1e1 Src/main.o
- .debug_macro   0x0000000000000793       0x76 Src/main.o
- .debug_macro   0x0000000000000809       0x63 Src/system_stm32f4xx.o
+ .debug_macro   0x0000000000000793       0x63 Src/system_stm32f4xx.o
 
 .debug_line     0x0000000000000000     0x29c4
  .debug_line    0x0000000000000000      0x9d6 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
@@ -2701,18 +2803,18 @@ OUTPUT(GC_Anti-Pad_Hack Board.elf elf32-littlearm)
  .debug_line    0x00000000000025c7      0x379 Src/system_stm32f4xx.o
  .debug_line    0x0000000000002940       0x84 Startup/startup_stm32f411ceux.o
 
-.debug_str      0x0000000000000000    0x81a80
+.debug_str      0x0000000000000000    0x82a40
  .debug_str     0x0000000000000000    0x81204 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
                                       0x81567 (size before relaxing)
  .debug_str     0x0000000000081204      0x3c3 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
                                       0x812ff (size before relaxing)
  .debug_str     0x00000000000815c7      0x1e5 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
                                       0x80d3f (size before relaxing)
- .debug_str     0x00000000000817ac      0x289 Src/main.o
-                                      0x80e3c (size before relaxing)
- .debug_str     0x0000000000081a35       0x1a Src/system_stm32f4xx.o
+ .debug_str     0x00000000000817ac     0x1249 Src/main.o
+                                      0x81dfc (size before relaxing)
+ .debug_str     0x00000000000829f5       0x1a Src/system_stm32f4xx.o
                                        0x3c5b (size before relaxing)
- .debug_str     0x0000000000081a4f       0x31 Startup/startup_stm32f411ceux.o
+ .debug_str     0x0000000000082a0f       0x31 Startup/startup_stm32f411ceux.o
                                          0x87 (size before relaxing)
 
 .comment        0x0000000000000000       0x7b
