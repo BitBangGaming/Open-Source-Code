@@ -46,7 +46,7 @@
 
 #define BUTTON_B_PIN			(13U)
 #define BUTTON_B_PIN_HAL		(GPIO_PIN_13)
-#define BUTTON_B_PORT 			(GPIOB)
+#define BUTTON_B_PORT			(GPIOB)
 #define BUTTON_B_BIT 			(1 << BUTTON_B_PIN)
 #define BUTTON_B_SET 			(GPIO_BSRR_BS13)
 #define BUTTON_B_CLEAR 			(GPIO_BSRR_BR13)

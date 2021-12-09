@@ -27,7 +27,7 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
  C:/Users/jcorleto/Documents/Altium\ Docs/Open-Source-Code/GC_Anti-Pad_Hack\ Board/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  C:/Users/jcorleto/Documents/Altium\ Docs/Open-Source-Code/GC_Anti-Pad_Hack\ Board/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_usart.h \
  ../Inc/io_mapping_stm32f411ce_blackpill_weactstudio_v3_0.h \
- ../Inc/shared_enums.h
+ ../Inc/shared_enums.h ../Inc/gc_controller_emulation.h
 
 ../Inc/main.h:
 
@@ -88,3 +88,5 @@ C:/Users/jcorleto/Documents/Altium\ Docs/Open-Source-Code/GC_Anti-Pad_Hack\ Boar
 ../Inc/io_mapping_stm32f411ce_blackpill_weactstudio_v3_0.h:
 
 ../Inc/shared_enums.h:
+
+../Inc/gc_controller_emulation.h:

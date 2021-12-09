@@ -1,3 +1,4 @@
-gc_controller_emulation.c:68:6:GCControllerEmulation_Init	56	static
-gc_controller_emulation.c:151:6:GCControllerEmulation_GetSwitchSnapshot	8	static
-gc_controller_emulation.c:116:6:GCControllerEmulation_Run	40	static
+gc_controller_emulation.c:71:6:GCControllerEmulation_Init	80	static
+gc_controller_emulation.c:319:15:GCControllerEmulation_GetButtonState	8	static
+gc_controller_emulation.c:424:6:GCControllerEmulation_GetSwitchSnapshot	8	static
+gc_controller_emulation.c:284:6:GCControllerEmulation_Run	40	static

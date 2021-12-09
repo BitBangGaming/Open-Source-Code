@@ -5,6 +5,7 @@
 #include "stm32f4xx_hal.h"
 #include "io_mapping_stm32f411ce_blackpill_weactstudio_v3_0.h"
 #include "shared_enums.h"
+#include "gc_controller_emulation.h"
 
 /* Public Functions */
 void Main_Init(void);

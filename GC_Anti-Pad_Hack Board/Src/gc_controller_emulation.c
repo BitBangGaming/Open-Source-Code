@@ -45,6 +45,9 @@ static uint8_t gcConsoleResponse[MAX_GC_CONSOLE_BYTES];
 static GCCommand_t command;
 
 // Function Prototypes //
+/* Gets a button state */
+ButtonState_t GCControllerEmulation_GetButtonState(GCButtonInput_t);
+
 /* Waits for a command from the console. Not that this uses the UART
  * module so if catching a falling edge in the middle of the
  * transmission, its garbage. But any functions that uses
@@ -67,8 +70,7 @@ inline static void GCControllerEmulation_SendControllerState(GCCommand_t);
 /* Initializes this module to properly emulate a GC controller */
 void GCControllerEmulation_Init()
 {
-	/* Setup GC communication pins */
-
+	/* Setup GC communication */
 	// Clocks
 	__HAL_RCC_GPIOB_CLK_ENABLE();
 	__HAL_RCC_USART1_CLK_ENABLE();
@@ -94,7 +96,7 @@ void GCControllerEmulation_Init()
 
 	// Configure USART1
 	huart1.Instance = USART1;
-	huart1.Init.BaudRate = 1300000;
+	huart1.Init.BaudRate = 1100000; // 1100000 works
 	huart1.Init.WordLength = UART_WORDLENGTH_8B;
 	huart1.Init.StopBits = UART_STOPBITS_1;
 	huart1.Init.Parity = UART_PARITY_NONE;
@@ -105,6 +107,172 @@ void GCControllerEmulation_Init()
 
 	// Default command state from console
 	command = GC_COMMAND_UNKNOWN;
+
+	/* Setup buttons */
+	__HAL_RCC_GPIOA_CLK_ENABLE();
+	__HAL_RCC_GPIOB_CLK_ENABLE();
+	__HAL_RCC_GPIOC_CLK_ENABLE();
+
+	// A Button
+	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_A_PIN_HAL;
+	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
+	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(BUTTON_A_PORT, &GPIO_InitStruct_GCControllerEmulation);
+
+	// B Button
+	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_B_PIN_HAL;
+	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
+	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(BUTTON_B_PORT, &GPIO_InitStruct_GCControllerEmulation);
+
+	// X Button
+	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_X_PIN_HAL;
+	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
+	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(BUTTON_X_PORT, &GPIO_InitStruct_GCControllerEmulation);
+
+	// Y Button
+	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_Y_PIN_HAL;
+	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
+	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(BUTTON_Y_PORT, &GPIO_InitStruct_GCControllerEmulation);
+
+//	// L Button
+//	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_L_PIN_HAL;
+//	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
+//	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
+//	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+//	HAL_GPIO_Init(BUTTON_L_PORT, &GPIO_InitStruct_GCControllerEmulation);
+
+	// R Button
+	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_R_PIN_HAL;
+	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
+	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(BUTTON_R_PORT, &GPIO_InitStruct_GCControllerEmulation);
+
+	// Z Button
+	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_Z_PIN_HAL;
+	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
+	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(BUTTON_Z_PORT, &GPIO_InitStruct_GCControllerEmulation);
+
+	// START Button
+	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_START_PIN_HAL;
+	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
+	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(BUTTON_START_PORT, &GPIO_InitStruct_GCControllerEmulation);
+
+	// DU Button
+	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_DU_PIN_HAL;
+	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
+	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(BUTTON_DU_PORT, &GPIO_InitStruct_GCControllerEmulation);
+
+	// DD Button
+	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_DD_PIN_HAL;
+	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
+	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(BUTTON_DD_PORT, &GPIO_InitStruct_GCControllerEmulation);
+
+	// DL Button
+	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_DL_PIN_HAL;
+	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
+	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(BUTTON_DL_PORT, &GPIO_InitStruct_GCControllerEmulation);
+
+	// DR Button
+	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_DR_PIN_HAL;
+	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
+	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(BUTTON_DR_PORT, &GPIO_InitStruct_GCControllerEmulation);
+
+	// LSU Button
+	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_LSU_PIN_HAL;
+	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
+	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(BUTTON_LSU_PORT, &GPIO_InitStruct_GCControllerEmulation);
+
+	// LSD Button
+	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_LSD_PIN_HAL;
+	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
+	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(BUTTON_LSD_PORT, &GPIO_InitStruct_GCControllerEmulation);
+
+	// LSL Button
+	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_LSL_PIN_HAL;
+	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
+	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(BUTTON_LSL_PORT, &GPIO_InitStruct_GCControllerEmulation);
+
+	// LSR Button
+	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_LSR_PIN_HAL;
+	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
+	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(BUTTON_LSR_PORT, &GPIO_InitStruct_GCControllerEmulation);
+
+	// CU Button
+	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_CU_PIN_HAL;
+	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
+	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(BUTTON_CU_PORT, &GPIO_InitStruct_GCControllerEmulation);
+
+	// CD Button
+	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_CD_PIN_HAL;
+	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
+	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(BUTTON_CD_PORT, &GPIO_InitStruct_GCControllerEmulation);
+
+	// CL Button
+	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_CL_PIN_HAL;
+	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
+	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(BUTTON_CL_PORT, &GPIO_InitStruct_GCControllerEmulation);
+
+	// CR Button
+	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_CR_PIN_HAL;
+	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
+	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(BUTTON_CR_PORT, &GPIO_InitStruct_GCControllerEmulation);
+
+	// MACRO Button
+	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_MACRO_PIN_HAL;
+	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
+	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(BUTTON_MACRO_PORT, &GPIO_InitStruct_GCControllerEmulation);
+
+	// TILT_X Button
+	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_TILT_X_PIN_HAL;
+	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
+	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(BUTTON_TILT_X_PORT, &GPIO_InitStruct_GCControllerEmulation);
+
+//	// TILT_Y Button
+//	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_TILT_Y_PIN_HAL;
+//	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
+//	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
+//	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+//	HAL_GPIO_Init(BUTTON_TILT_Y_PORT, &GPIO_InitStruct_GCControllerEmulation);
 }
 
 /* Emulate a GC controller forever. Note that this loop
@@ -148,6 +316,111 @@ void GCControllerEmulation_Run()
 }
 
 // Private Function Implementations //
+ButtonState_t GCControllerEmulation_GetButtonState(GCButtonInput_t gcButton)
+{
+	ButtonState_t gcButtonState = RELEASED;
+
+	switch(gcButton)
+	{
+		case GC_A:
+			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_A_PORT, BUTTON_A_PIN_HAL);
+			break;
+
+		case GC_B:
+			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_B_PORT, BUTTON_B_PIN_HAL);
+			break;
+
+		case GC_X:
+			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_X_PORT, BUTTON_X_PIN_HAL);
+			break;
+
+		case GC_Y:
+			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_Y_PORT, BUTTON_Y_PIN_HAL);
+			break;
+
+		case GC_L:
+			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_L_PORT, BUTTON_L_PIN_HAL);
+			break;
+
+		case GC_R:
+			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_R_PORT, BUTTON_R_PIN_HAL);
+			break;
+
+		case GC_Z:
+			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_Z_PORT, BUTTON_Z_PIN_HAL);
+			break;
+
+		case GC_START:
+			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_START_PORT, BUTTON_START_PIN_HAL);
+			break;
+
+		case GC_DPAD_UP:
+			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_DU_PORT, BUTTON_DU_PIN_HAL);
+			break;
+
+		case GC_DPAD_DOWN:
+			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_DD_PORT, BUTTON_DD_PIN_HAL);
+			break;
+
+		case GC_DPAD_LEFT:
+			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_DL_PORT, BUTTON_DL_PIN_HAL);
+			break;
+
+		case GC_DPAD_RIGHT:
+			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_DR_PORT, BUTTON_DR_PIN_HAL);
+			break;
+
+		case GC_MAIN_STICK_UP:
+			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_LSU_PORT, BUTTON_LSU_PIN_HAL);
+			break;
+
+		case GC_MAIN_STICK_DOWN:
+			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_LSD_PORT, BUTTON_LSD_PIN_HAL);
+			break;
+
+		case GC_MAIN_STICK_LEFT:
+			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_LSL_PORT, BUTTON_LSL_PIN_HAL);
+			break;
+
+		case GC_MAIN_STICK_RIGHT:
+			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_LSR_PORT, BUTTON_LSR_PIN_HAL);
+			break;
+
+		case GC_C_STICK_UP:
+			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_CU_PORT, BUTTON_CU_PIN_HAL);
+			break;
+
+		case GC_C_STICK_DOWN:
+			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_CD_PORT, BUTTON_CD_PIN_HAL);
+			break;
+
+		case GC_C_STICK_LEFT:
+			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_CL_PORT, BUTTON_CL_PIN_HAL);
+			break;
+
+		case GC_C_STICK_RIGHT:
+			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_CR_PORT, BUTTON_CR_PIN_HAL);
+			break;
+
+		case GC_MACRO:
+			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_MACRO_PORT, BUTTON_MACRO_PIN_HAL);
+			break;
+
+		case GC_TILT_X:
+			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_TILT_X_PORT, BUTTON_TILT_X_PIN_HAL);
+			break;
+
+		case GC_TILT_Y:
+			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_TILT_Y_PORT, BUTTON_TILT_Y_PIN_HAL);
+			break;
+
+		default:
+			break;
+	}
+
+	return gcButtonState;
+}
+
 void GCControllerEmulation_GetSwitchSnapshot()
 {
 	/* Update all button input states */
