@@ -141,12 +141,12 @@ void GCControllerEmulation_Init()
 	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 	HAL_GPIO_Init(BUTTON_Y_PORT, &GPIO_InitStruct_GCControllerEmulation);
 
-	// L Button
-	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_L_PIN_HAL;
-	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
-	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
-	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-	HAL_GPIO_Init(BUTTON_L_PORT, &GPIO_InitStruct_GCControllerEmulation);
+//	// L Button
+//	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_L_PIN_HAL;
+//	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
+//	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
+//	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+//	HAL_GPIO_Init(BUTTON_L_PORT, &GPIO_InitStruct_GCControllerEmulation);
 
 	// R Button
 	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_R_PIN_HAL;
