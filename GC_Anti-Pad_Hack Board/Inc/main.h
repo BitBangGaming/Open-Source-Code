@@ -9,6 +9,6 @@
 
 /* Public Functions */
 void Main_Init(void);
-void Main_SetBlueLed(LedState_t);
+//void Main_SetBlueLed(LedState_t);
 
 #endif

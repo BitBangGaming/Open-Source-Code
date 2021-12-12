@@ -36,7 +36,7 @@ static UART_HandleTypeDef huart1;
 static ButtonState_t gcButtonInputSnapShot[NUM_OF_BUTTON_INPUTS] = {};
 
 /* Processed snapshot button states */
-// FUTURE USE: static ButtonState_t gcProcessedButtonStates[NUM_OF_BUTTON_INPUTS] = {};
+static ButtonState_t gcProcessedButtonStates[NUM_OF_BUTTON_INPUTS] = {};
 
 /* Data from console before being converted into a command */
 static uint8_t gcConsoleResponse[MAX_GC_CONSOLE_BYTES];
@@ -65,6 +65,9 @@ inline static void GCControllerEmulation_SendProbeResponse(void);
 
 /* Sends current states of buttons and joystick to console */
 inline static void GCControllerEmulation_SendControllerState(GCCommand_t);
+
+/* Processes raw inputs to proper signals (example: socd cleaning) */
+inline static void GCControllerEmulation_ProcessSwitchSnapshot();
 
 // Function Implementations //
 /* Initializes this module to properly emulate a GC controller */
@@ -267,12 +270,12 @@ void GCControllerEmulation_Init()
 	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 	HAL_GPIO_Init(BUTTON_TILT_X_PORT, &GPIO_InitStruct_GCControllerEmulation);
 
-//	// TILT_Y Button
-//	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_TILT_Y_PIN_HAL;
-//	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
-//	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
-//	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-//	HAL_GPIO_Init(BUTTON_TILT_Y_PORT, &GPIO_InitStruct_GCControllerEmulation);
+	// TILT_Y Button
+	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_TILT_Y_PIN_HAL;
+	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
+	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(BUTTON_TILT_Y_PORT, &GPIO_InitStruct_GCControllerEmulation);
 }
 
 /* Emulate a GC controller forever. Note that this loop
@@ -287,6 +290,7 @@ void GCControllerEmulation_Run()
 	{
 		/* Grab the GC console command */
 		command = GCControllerEmulation_GetConsoleCommand();
+
 
 		/* Performs command's request */
 		switch(command)
@@ -313,6 +317,35 @@ void GCControllerEmulation_Run()
 				break;
 		}
 	}
+}
+
+/* Gets all inputs from GC Anti-Pad Hack Board */
+void GCControllerEmulation_GetSwitchSnapshot()
+{
+	/* Update all button input states */
+	gcButtonInputSnapShot[GC_A] = GCControllerEmulation_GetButtonState(GC_A);
+	gcButtonInputSnapShot[GC_B] = GCControllerEmulation_GetButtonState(GC_B);
+	gcButtonInputSnapShot[GC_X] = GCControllerEmulation_GetButtonState(GC_X);
+	gcButtonInputSnapShot[GC_Y] = GCControllerEmulation_GetButtonState(GC_Y);
+	gcButtonInputSnapShot[GC_L] = GCControllerEmulation_GetButtonState(GC_L);
+	gcButtonInputSnapShot[GC_R] = GCControllerEmulation_GetButtonState(GC_R);
+	gcButtonInputSnapShot[GC_Z] = GCControllerEmulation_GetButtonState(GC_Z);
+	gcButtonInputSnapShot[GC_START] = GCControllerEmulation_GetButtonState(GC_START);
+	gcButtonInputSnapShot[GC_DPAD_UP] = GCControllerEmulation_GetButtonState(GC_DPAD_UP);
+	gcButtonInputSnapShot[GC_DPAD_DOWN] = GCControllerEmulation_GetButtonState(GC_DPAD_DOWN);
+	gcButtonInputSnapShot[GC_DPAD_LEFT] = GCControllerEmulation_GetButtonState(GC_DPAD_LEFT);
+	gcButtonInputSnapShot[GC_DPAD_RIGHT] = GCControllerEmulation_GetButtonState(GC_DPAD_RIGHT);
+	gcButtonInputSnapShot[GC_MAIN_STICK_UP] = GCControllerEmulation_GetButtonState(GC_MAIN_STICK_UP);
+	gcButtonInputSnapShot[GC_MAIN_STICK_DOWN] = GCControllerEmulation_GetButtonState(GC_MAIN_STICK_DOWN);
+	gcButtonInputSnapShot[GC_MAIN_STICK_LEFT] = GCControllerEmulation_GetButtonState(GC_MAIN_STICK_LEFT);
+	gcButtonInputSnapShot[GC_MAIN_STICK_RIGHT] = GCControllerEmulation_GetButtonState(GC_MAIN_STICK_RIGHT);
+	gcButtonInputSnapShot[GC_C_STICK_UP] = GCControllerEmulation_GetButtonState(GC_C_STICK_UP);
+	gcButtonInputSnapShot[GC_C_STICK_DOWN] = GCControllerEmulation_GetButtonState(GC_C_STICK_DOWN);
+	gcButtonInputSnapShot[GC_C_STICK_LEFT] = GCControllerEmulation_GetButtonState(GC_C_STICK_LEFT);
+	gcButtonInputSnapShot[GC_C_STICK_RIGHT] = GCControllerEmulation_GetButtonState(GC_C_STICK_RIGHT);
+	gcButtonInputSnapShot[GC_MACRO] = GCControllerEmulation_GetButtonState(GC_MACRO);
+	gcButtonInputSnapShot[GC_TILT_X] = GCControllerEmulation_GetButtonState(GC_TILT_X);
+	gcButtonInputSnapShot[GC_TILT_Y] = GCControllerEmulation_GetButtonState(GC_TILT_Y);
 }
 
 // Private Function Implementations //
@@ -419,34 +452,6 @@ ButtonState_t GCControllerEmulation_GetButtonState(GCButtonInput_t gcButton)
 	}
 
 	return gcButtonState;
-}
-
-void GCControllerEmulation_GetSwitchSnapshot()
-{
-	/* Update all button input states */
-	gcButtonInputSnapShot[GC_A] = GCControllerEmulation_GetButtonState(GC_A);
-	gcButtonInputSnapShot[GC_B] = GCControllerEmulation_GetButtonState(GC_B);
-	gcButtonInputSnapShot[GC_X] = GCControllerEmulation_GetButtonState(GC_X);
-	gcButtonInputSnapShot[GC_Y] = GCControllerEmulation_GetButtonState(GC_Y);
-	gcButtonInputSnapShot[GC_L] = GCControllerEmulation_GetButtonState(GC_L);
-	gcButtonInputSnapShot[GC_R] = GCControllerEmulation_GetButtonState(GC_R);
-	gcButtonInputSnapShot[GC_Z] = GCControllerEmulation_GetButtonState(GC_Z);
-	gcButtonInputSnapShot[GC_START] = GCControllerEmulation_GetButtonState(GC_START);
-	gcButtonInputSnapShot[GC_DPAD_UP] = GCControllerEmulation_GetButtonState(GC_DPAD_UP);
-	gcButtonInputSnapShot[GC_DPAD_DOWN] = GCControllerEmulation_GetButtonState(GC_DPAD_DOWN);
-	gcButtonInputSnapShot[GC_DPAD_LEFT] = GCControllerEmulation_GetButtonState(GC_DPAD_LEFT);
-	gcButtonInputSnapShot[GC_DPAD_RIGHT] = GCControllerEmulation_GetButtonState(GC_DPAD_RIGHT);
-	gcButtonInputSnapShot[GC_MAIN_STICK_UP] = GCControllerEmulation_GetButtonState(GC_MAIN_STICK_UP);
-	gcButtonInputSnapShot[GC_MAIN_STICK_DOWN] = GCControllerEmulation_GetButtonState(GC_MAIN_STICK_DOWN);
-	gcButtonInputSnapShot[GC_MAIN_STICK_LEFT] = GCControllerEmulation_GetButtonState(GC_MAIN_STICK_LEFT);
-	gcButtonInputSnapShot[GC_MAIN_STICK_RIGHT] = GCControllerEmulation_GetButtonState(GC_MAIN_STICK_RIGHT);
-	gcButtonInputSnapShot[GC_C_STICK_UP] = GCControllerEmulation_GetButtonState(GC_C_STICK_UP);
-	gcButtonInputSnapShot[GC_C_STICK_DOWN] = GCControllerEmulation_GetButtonState(GC_C_STICK_DOWN);
-	gcButtonInputSnapShot[GC_C_STICK_LEFT] = GCControllerEmulation_GetButtonState(GC_C_STICK_LEFT);
-	gcButtonInputSnapShot[GC_C_STICK_RIGHT] = GCControllerEmulation_GetButtonState(GC_C_STICK_RIGHT);
-	gcButtonInputSnapShot[GC_MACRO] = GCControllerEmulation_GetButtonState(GC_MACRO);
-	gcButtonInputSnapShot[GC_TILT_X] = GCControllerEmulation_GetButtonState(GC_TILT_X);
-	gcButtonInputSnapShot[GC_TILT_Y] = GCControllerEmulation_GetButtonState(GC_TILT_Y);
 }
 
 GCCommand_t GCControllerEmulation_GetConsoleCommand()
@@ -741,6 +746,9 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 	/* Get snapshot of all button and switch inputs */
 	GCControllerEmulation_GetSwitchSnapshot();
 
+	/* Process button snapshot and update data we will send to the console */
+	GCControllerEmulation_ProcessSwitchSnapshot();
+
 	// State holders (left means left most bit, right means right most bit)
 	ButtonState_t leftButtonState;
 	ButtonState_t rightButtonState;
@@ -752,7 +760,7 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
 
 	// Update RESERVED and START
-	rightButtonState = gcButtonInputSnapShot[GC_START];
+	rightButtonState = gcProcessedButtonStates[GC_START];
 	// Make sure the transmit data register is empty before sending next byte
 	while(!(USART1->SR & USART_SR_TXE)){};
 	// Send states for RESERVED and START
@@ -766,8 +774,8 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 	}
 
 	// Update Y and X
-	leftButtonState = gcButtonInputSnapShot[GC_Y];
-	rightButtonState = gcButtonInputSnapShot[GC_X];
+	leftButtonState = gcProcessedButtonStates[GC_Y];
+	rightButtonState = gcProcessedButtonStates[GC_X];
 	// Make sure the transmit data register is empty before sending next byte
 	while(!(USART1->SR & USART_SR_TXE)){};
 	// Send states for Y and X
@@ -789,8 +797,8 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 	}
 
 	// Update B and A
-	leftButtonState = gcButtonInputSnapShot[GC_B];
-	rightButtonState = gcButtonInputSnapShot[GC_A];
+	leftButtonState = gcProcessedButtonStates[GC_B];
+	rightButtonState = gcProcessedButtonStates[GC_A];
 	// Make sure the transmit data register is empty before sending next byte
 	while(!(USART1->SR & USART_SR_TXE)){};
 	// Send states for B and A
@@ -813,7 +821,7 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 
 	/* Second byte to console */
 	// Update RESERVED and L
-	rightButtonState = gcButtonInputSnapShot[GC_L];
+	rightButtonState = gcProcessedButtonStates[GC_L];
 	// Make sure the transmit data register is empty before sending next byte
 	while(!(USART1->SR & USART_SR_TXE)){};
 	// Send states for RESERVED and L
@@ -827,8 +835,8 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 	}
 
 	// Update R and Z
-	leftButtonState = gcButtonInputSnapShot[GC_R];
-	rightButtonState = gcButtonInputSnapShot[GC_Z];
+	leftButtonState = gcProcessedButtonStates[GC_R];
+	rightButtonState = gcProcessedButtonStates[GC_Z];
 	// Make sure the transmit data register is empty before sending next byte
 	while(!(USART1->SR & USART_SR_TXE)){};
 	// Send states for R and Z
@@ -850,8 +858,8 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 	}
 
 	// Update DU and DD
-	leftButtonState = gcButtonInputSnapShot[GC_DPAD_UP];
-	rightButtonState = gcButtonInputSnapShot[GC_DPAD_DOWN];;
+	leftButtonState = gcProcessedButtonStates[GC_DPAD_UP];
+	rightButtonState = gcProcessedButtonStates[GC_DPAD_DOWN];;
 	// Make sure the transmit data register is empty before sending next byte
 	while(!(USART1->SR & USART_SR_TXE)){};
 	// Send states for DU and DD
@@ -873,8 +881,8 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 	}
 
 	// Update DR and DL
-	leftButtonState = gcButtonInputSnapShot[GC_DPAD_RIGHT];
-	rightButtonState = gcButtonInputSnapShot[GC_DPAD_LEFT];
+	leftButtonState = gcProcessedButtonStates[GC_DPAD_RIGHT];
+	rightButtonState = gcProcessedButtonStates[GC_DPAD_LEFT];
 	// Make sure the transmit data register is empty before sending next byte
 	while(!(USART1->SR & USART_SR_TXE)){};
 	// Send states for DR and DL
@@ -1071,4 +1079,175 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 	// Make sure the last UART byte transmission is complete before sending stop bit
 	while(!(USART1->SR & USART_SR_TC)){};
 	GCControllerEmulation_SendStopBit();
+}
+
+void GCControllerEmulation_ProcessSwitchSnapshot()
+{
+	/* @Bad64: This is where we have the chance to process the raw button inputs
+	 * immediately after sending the last update to the console. This part of the code
+	 * should be handled as fast as possible. For the GC, we must process this within
+	 * 650us because this is the minimum time before the console polls again. For example
+	 * I wrote very basic SOCD code to clean to neutral. I also copied over the
+	 * gcButtonInputSnapShot array (raw inputs) into the gcProcessedButtonStates array,
+	 * (processed raw inputs).
+	 *
+	 * You need to decide what you want to do for the "digital action buttons" and the
+	 * "digital feature buttons". I know you want to program behavior of the "digital
+	 * feature buttons" like the tilt buttons, but I have no idea if you want to do
+	 * something with the "digital action buttons" like the A, B, X, etc buttons.
+	 */
+	/* Apply basic SOCD cleaning (clean to neutral) */
+	// Clean d-pad x-axis
+	if ( (gcButtonInputSnapShot[GC_DPAD_LEFT] == RELEASED) && (gcButtonInputSnapShot[GC_DPAD_RIGHT] == RELEASED) )
+	{
+		gcProcessedButtonStates[GC_DPAD_LEFT] = RELEASED;
+		gcProcessedButtonStates[GC_DPAD_RIGHT] = RELEASED;
+	}
+	else if ( (gcButtonInputSnapShot[GC_DPAD_LEFT] == RELEASED) && (gcButtonInputSnapShot[GC_DPAD_RIGHT] == PUSHED) )
+	{
+		gcProcessedButtonStates[GC_DPAD_LEFT] = RELEASED;
+		gcProcessedButtonStates[GC_DPAD_RIGHT] = PUSHED;
+	}
+	else if ( (gcButtonInputSnapShot[GC_DPAD_LEFT] == PUSHED) && (gcButtonInputSnapShot[GC_DPAD_RIGHT] == RELEASED) )
+	{
+		gcProcessedButtonStates[GC_DPAD_LEFT] = PUSHED;
+		gcProcessedButtonStates[GC_DPAD_RIGHT] = RELEASED;
+	}
+	else
+	{
+		gcProcessedButtonStates[GC_DPAD_LEFT] = RELEASED;
+		gcProcessedButtonStates[GC_DPAD_RIGHT] = RELEASED;
+	}
+
+	// Clean d-pad y-axis
+	if ( (gcButtonInputSnapShot[GC_DPAD_DOWN] == RELEASED) && (gcButtonInputSnapShot[GC_DPAD_UP] == RELEASED) )
+	{
+		gcProcessedButtonStates[GC_DPAD_DOWN] = RELEASED;
+		gcProcessedButtonStates[GC_DPAD_UP] = RELEASED;
+	}
+	else if ( (gcButtonInputSnapShot[GC_DPAD_DOWN] == RELEASED) && (gcButtonInputSnapShot[GC_DPAD_UP] == PUSHED) )
+	{
+		gcProcessedButtonStates[GC_DPAD_DOWN] = RELEASED;
+		gcProcessedButtonStates[GC_DPAD_UP] = PUSHED;
+	}
+	else if ( (gcButtonInputSnapShot[GC_DPAD_DOWN] == PUSHED) && (gcButtonInputSnapShot[GC_DPAD_UP] == RELEASED) )
+	{
+		gcProcessedButtonStates[GC_DPAD_DOWN] = PUSHED;
+		gcProcessedButtonStates[GC_DPAD_UP] = RELEASED;
+	}
+	else
+	{
+		gcProcessedButtonStates[GC_DPAD_DOWN] = RELEASED;
+		gcProcessedButtonStates[GC_DPAD_UP] = RELEASED;
+	}
+
+	// Clean main stick x-axis
+	if ( (gcButtonInputSnapShot[GC_MAIN_STICK_LEFT] == RELEASED) && (gcButtonInputSnapShot[GC_MAIN_STICK_RIGHT] == RELEASED) )
+	{
+		gcProcessedButtonStates[GC_MAIN_STICK_LEFT] = RELEASED;
+		gcProcessedButtonStates[GC_MAIN_STICK_RIGHT] = RELEASED;
+	}
+	else if ( (gcButtonInputSnapShot[GC_MAIN_STICK_LEFT] == RELEASED) && (gcButtonInputSnapShot[GC_MAIN_STICK_RIGHT] == PUSHED) )
+	{
+		gcProcessedButtonStates[GC_MAIN_STICK_LEFT] = RELEASED;
+		gcProcessedButtonStates[GC_MAIN_STICK_RIGHT] = PUSHED;
+	}
+	else if ( (gcButtonInputSnapShot[GC_MAIN_STICK_LEFT] == PUSHED) && (gcButtonInputSnapShot[GC_MAIN_STICK_RIGHT] == RELEASED) )
+	{
+		gcProcessedButtonStates[GC_MAIN_STICK_LEFT] = PUSHED;
+		gcProcessedButtonStates[GC_MAIN_STICK_RIGHT] = RELEASED;
+	}
+	else
+	{
+		gcProcessedButtonStates[GC_MAIN_STICK_LEFT] = RELEASED;
+		gcProcessedButtonStates[GC_MAIN_STICK_RIGHT] = RELEASED;
+	}
+
+	// Clean main stick y-axis
+	if ( (gcButtonInputSnapShot[GC_MAIN_STICK_DOWN] == RELEASED) && (gcButtonInputSnapShot[GC_MAIN_STICK_UP] == RELEASED) )
+	{
+		gcProcessedButtonStates[GC_MAIN_STICK_DOWN] = RELEASED;
+		gcProcessedButtonStates[GC_MAIN_STICK_UP] = RELEASED;
+	}
+	else if ( (gcButtonInputSnapShot[GC_MAIN_STICK_DOWN] == RELEASED) && (gcButtonInputSnapShot[GC_MAIN_STICK_UP] == PUSHED) )
+	{
+		gcProcessedButtonStates[GC_MAIN_STICK_DOWN] = RELEASED;
+		gcProcessedButtonStates[GC_MAIN_STICK_UP] = PUSHED;
+	}
+	else if ( (gcButtonInputSnapShot[GC_MAIN_STICK_DOWN] == PUSHED) && (gcButtonInputSnapShot[GC_MAIN_STICK_UP] == RELEASED) )
+	{
+		gcProcessedButtonStates[GC_MAIN_STICK_DOWN] = PUSHED;
+		gcProcessedButtonStates[GC_MAIN_STICK_UP] = RELEASED;
+	}
+	else
+	{
+		gcProcessedButtonStates[GC_MAIN_STICK_DOWN] = RELEASED;
+		gcProcessedButtonStates[GC_MAIN_STICK_UP] = RELEASED;
+	}
+
+	// Clean c stick x-axis
+	if ( (gcButtonInputSnapShot[GC_C_STICK_LEFT] == RELEASED) && (gcButtonInputSnapShot[GC_C_STICK_RIGHT] == RELEASED) )
+	{
+		gcProcessedButtonStates[GC_C_STICK_LEFT] = RELEASED;
+		gcProcessedButtonStates[GC_C_STICK_RIGHT] = RELEASED;
+	}
+	else if ( (gcButtonInputSnapShot[GC_C_STICK_LEFT] == RELEASED) && (gcButtonInputSnapShot[GC_C_STICK_RIGHT] == PUSHED) )
+	{
+		gcProcessedButtonStates[GC_C_STICK_LEFT] = RELEASED;
+		gcProcessedButtonStates[GC_C_STICK_RIGHT] = PUSHED;
+	}
+	else if ( (gcButtonInputSnapShot[GC_C_STICK_LEFT] == PUSHED) && (gcButtonInputSnapShot[GC_C_STICK_RIGHT] == RELEASED) )
+	{
+		gcProcessedButtonStates[GC_C_STICK_LEFT] = PUSHED;
+		gcProcessedButtonStates[GC_C_STICK_RIGHT] = RELEASED;
+	}
+	else
+	{
+		gcProcessedButtonStates[GC_C_STICK_LEFT] = RELEASED;
+		gcProcessedButtonStates[GC_C_STICK_RIGHT] = RELEASED;
+	}
+
+	// Clean c stick y-axis
+	if ( (gcButtonInputSnapShot[GC_C_STICK_DOWN] == RELEASED) && (gcButtonInputSnapShot[GC_C_STICK_UP] == RELEASED) )
+	{
+		gcProcessedButtonStates[GC_C_STICK_DOWN] = RELEASED;
+		gcProcessedButtonStates[GC_C_STICK_UP] = RELEASED;
+	}
+	else if ( (gcButtonInputSnapShot[GC_C_STICK_DOWN] == RELEASED) && (gcButtonInputSnapShot[GC_C_STICK_UP] == PUSHED) )
+	{
+		gcProcessedButtonStates[GC_C_STICK_DOWN] = RELEASED;
+		gcProcessedButtonStates[GC_C_STICK_UP] = PUSHED;
+	}
+	else if ( (gcButtonInputSnapShot[GC_C_STICK_DOWN] == PUSHED) && (gcButtonInputSnapShot[GC_C_STICK_UP] == RELEASED) )
+	{
+		gcProcessedButtonStates[GC_C_STICK_DOWN] = PUSHED;
+		gcProcessedButtonStates[GC_C_STICK_UP] = RELEASED;
+	}
+	else
+	{
+		gcProcessedButtonStates[GC_C_STICK_DOWN] = RELEASED;
+		gcProcessedButtonStates[GC_C_STICK_UP] = RELEASED;
+	}
+	/* End of SOCD cleaning */
+
+	/* Process digital action buttons. For the meantime, they do not need
+	 * any sort of special processing so just copy them over.
+	 */
+	gcProcessedButtonStates[GC_A] = gcButtonInputSnapShot[GC_A];
+	gcProcessedButtonStates[GC_B] = gcButtonInputSnapShot[GC_B];
+	gcProcessedButtonStates[GC_X] = gcButtonInputSnapShot[GC_X];
+	gcProcessedButtonStates[GC_Y] = gcButtonInputSnapShot[GC_Y];
+	gcProcessedButtonStates[GC_L] = gcButtonInputSnapShot[GC_L];
+	gcProcessedButtonStates[GC_R] = gcButtonInputSnapShot[GC_R];
+	gcProcessedButtonStates[GC_Z] = gcButtonInputSnapShot[GC_Z];
+	gcProcessedButtonStates[GC_START] = gcButtonInputSnapShot[GC_START];
+	/* End processing of digital action buttons */
+
+	/* Process digital feature buttons. For the meantime, they do not need
+	 * any sort of special processing so just copy them over.
+	 */
+	gcProcessedButtonStates[GC_MACRO] = gcButtonInputSnapShot[GC_MACRO];
+	gcProcessedButtonStates[GC_TILT_X] = gcButtonInputSnapShot[GC_TILT_X];
+	gcProcessedButtonStates[GC_TILT_Y] = gcButtonInputSnapShot[GC_TILT_Y];
+	/* End processing of digital action buttons */
 }
