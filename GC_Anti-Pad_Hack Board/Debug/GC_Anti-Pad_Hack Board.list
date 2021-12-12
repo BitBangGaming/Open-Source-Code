@@ -5,25 +5,25 @@ Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
   0 .isr_vector   00000198  08000000  08000000  00010000  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  1 .text         00001e40  08000198  08000198  00010198  2**2
+  1 .text         00002098  08000198  08000198  00010198  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       00000018  08001fd8  08001fd8  00011fd8  2**2
+  2 .rodata       00000018  08002230  08002230  00012230  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  08001ff0  08001ff0  0002000c  2**0
+  3 .ARM.extab    00000000  08002248  08002248  0002000c  2**0
                   CONTENTS
-  4 .ARM          00000008  08001ff0  08001ff0  00011ff0  2**2
+  4 .ARM          00000008  08002248  08002248  00012248  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  5 .preinit_array 00000000  08001ff8  08001ff8  0002000c  2**0
+  5 .preinit_array 00000000  08002250  08002250  0002000c  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  08001ff8  08001ff8  00011ff8  2**2
+  6 .init_array   00000004  08002250  08002250  00012250  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  7 .fini_array   00000004  08001ffc  08001ffc  00011ffc  2**2
+  7 .fini_array   00000004  08002254  08002254  00012254  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  8 .data         0000000c  20000000  08002000  00020000  2**2
+  8 .data         0000000c  20000000  08002258  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          00000094  2000000c  0800200c  0002000c  2**2
+  9 .bss          00000094  2000000c  08002264  0002000c  2**2
                   ALLOC
- 10 ._user_heap_stack 00000600  200000a0  0800200c  000200a0  2**0
+ 10 ._user_heap_stack 00000600  200000a0  08002264  000200a0  2**0
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  0002000c  2**0
                   CONTENTS, READONLY
@@ -39,13 +39,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  17 .debug_macro  0000126e  00000000  00000000  0002aee0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 18 .debug_line   0000535a  00000000  00000000  0002c14e  2**0
+ 18 .debug_line   000054a2  00000000  00000000  0002c14e  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .debug_str    00083ef5  00000000  00000000  000314a8  2**0
+ 19 .debug_str    00083ef5  00000000  00000000  000315f0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 20 .comment      0000007b  00000000  00000000  000b539d  2**0
+ 20 .comment      0000007b  00000000  00000000  000b54e5  2**0
                   CONTENTS, READONLY
- 21 .debug_frame  00000d0c  00000000  00000000  000b5418  2**2
+ 21 .debug_frame  00000d0c  00000000  00000000  000b5560  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -64,7 +64,7 @@ Disassembly of section .text:
  80001ae:	bd10      	pop	{r4, pc}
  80001b0:	2000000c 	.word	0x2000000c
  80001b4:	00000000 	.word	0x00000000
- 80001b8:	08001fc0 	.word	0x08001fc0
+ 80001b8:	08002218 	.word	0x08002218
 
 080001bc <frame_dummy>:
  80001bc:	b508      	push	{r3, lr}
@@ -76,7 +76,7 @@ Disassembly of section .text:
  80001ca:	bd08      	pop	{r3, pc}
  80001cc:	00000000 	.word	0x00000000
  80001d0:	20000010 	.word	0x20000010
- 80001d4:	08001fc0 	.word	0x08001fc0
+ 80001d4:	08002218 	.word	0x08002218
 
 080001d8 <__aeabi_uldivmod>:
  80001d8:	b953      	cbnz	r3, 80001f0 <__aeabi_uldivmod+0x18>
@@ -1979,7 +1979,7 @@ void HAL_RCC_MCOConfig(uint32_t RCC_MCOx, uint32_t RCC_MCOSource, uint32_t RCC_M
  8000eae:	e76c      	b.n	8000d8a <HAL_RCC_ClockConfig+0x2a>
  8000eb0:	40023c00 	.word	0x40023c00
  8000eb4:	40023800 	.word	0x40023800
- 8000eb8:	08001fd8 	.word	0x08001fd8
+ 8000eb8:	08002230 	.word	0x08002230
  8000ebc:	20000008 	.word	0x20000008
  8000ec0:	20000004 	.word	0x20000004
 
@@ -2001,7 +2001,7 @@ uint32_t HAL_RCC_GetPCLK1Freq(void)
  8000ed4:	40d8      	lsrs	r0, r3
  8000ed6:	4770      	bx	lr
  8000ed8:	40023800 	.word	0x40023800
- 8000edc:	08001fe8 	.word	0x08001fe8
+ 8000edc:	08002240 	.word	0x08002240
  8000ee0:	20000008 	.word	0x20000008
 
 08000ee4 <HAL_RCC_GetPCLK2Freq>:
@@ -2022,7 +2022,7 @@ uint32_t HAL_RCC_GetPCLK2Freq(void)
  8000ef4:	40d8      	lsrs	r0, r3
  8000ef6:	4770      	bx	lr
  8000ef8:	40023800 	.word	0x40023800
- 8000efc:	08001fe8 	.word	0x08001fe8
+ 8000efc:	08002240 	.word	0x08002240
  8000f00:	20000008 	.word	0x20000008
 
 08000f04 <UART_SetConfig>:
@@ -3022,10 +3022,10 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 	/* Apply basic SOCD cleaning (clean to neutral) */
 	// Clean d-pad x-axis
 	if ( (gcButtonInputSnapShot[GC_DPAD_LEFT] == RELEASED) && (gcButtonInputSnapShot[GC_DPAD_RIGHT] == RELEASED) )
- 800153a:	4ba1      	ldr	r3, [pc, #644]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
+ 800153a:	4ba0      	ldr	r3, [pc, #640]	; (80017bc <GCControllerEmulation_SendControllerState+0x28c>)
  800153c:	7a9b      	ldrb	r3, [r3, #10]
  800153e:	2b01      	cmp	r3, #1
- 8001540:	f000 81c6 	beq.w	80018d0 <GCControllerEmulation_SendControllerState+0x3a0>
+ 8001540:	f000 81d9 	beq.w	80018f6 <GCControllerEmulation_SendControllerState+0x3c6>
 	else if ( (gcButtonInputSnapShot[GC_DPAD_LEFT] == RELEASED) && (gcButtonInputSnapShot[GC_DPAD_RIGHT] == PUSHED) )
 	{
 		gcProcessedButtonStates[GC_DPAD_LEFT] = RELEASED;
@@ -3033,17 +3033,17 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 	}
 	else if ( (gcButtonInputSnapShot[GC_DPAD_LEFT] == PUSHED) && (gcButtonInputSnapShot[GC_DPAD_RIGHT] == RELEASED) )
  8001544:	b923      	cbnz	r3, 8001550 <GCControllerEmulation_SendControllerState+0x20>
- 8001546:	4b9e      	ldr	r3, [pc, #632]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
+ 8001546:	4b9d      	ldr	r3, [pc, #628]	; (80017bc <GCControllerEmulation_SendControllerState+0x28c>)
  8001548:	7adb      	ldrb	r3, [r3, #11]
  800154a:	2b01      	cmp	r3, #1
- 800154c:	f000 81d2 	beq.w	80018f4 <GCControllerEmulation_SendControllerState+0x3c4>
+ 800154c:	f000 81e5 	beq.w	800191a <GCControllerEmulation_SendControllerState+0x3ea>
 		gcProcessedButtonStates[GC_DPAD_LEFT] = PUSHED;
 		gcProcessedButtonStates[GC_DPAD_RIGHT] = RELEASED;
 	}
 	else
 	{
 		gcProcessedButtonStates[GC_DPAD_LEFT] = RELEASED;
- 8001550:	4b9c      	ldr	r3, [pc, #624]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
+ 8001550:	4b9b      	ldr	r3, [pc, #620]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
  8001552:	2201      	movs	r2, #1
  8001554:	729a      	strb	r2, [r3, #10]
 		gcProcessedButtonStates[GC_DPAD_RIGHT] = RELEASED;
@@ -3052,10 +3052,10 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 
 	// Clean d-pad y-axis
 	if ( (gcButtonInputSnapShot[GC_DPAD_DOWN] == RELEASED) && (gcButtonInputSnapShot[GC_DPAD_UP] == RELEASED) )
- 8001558:	4b99      	ldr	r3, [pc, #612]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
+ 8001558:	4b98      	ldr	r3, [pc, #608]	; (80017bc <GCControllerEmulation_SendControllerState+0x28c>)
  800155a:	7a5b      	ldrb	r3, [r3, #9]
  800155c:	2b01      	cmp	r3, #1
- 800155e:	f000 81cf 	beq.w	8001900 <GCControllerEmulation_SendControllerState+0x3d0>
+ 800155e:	f000 81e2 	beq.w	8001926 <GCControllerEmulation_SendControllerState+0x3f6>
 	else if ( (gcButtonInputSnapShot[GC_DPAD_DOWN] == RELEASED) && (gcButtonInputSnapShot[GC_DPAD_UP] == PUSHED) )
 	{
 		gcProcessedButtonStates[GC_DPAD_DOWN] = RELEASED;
@@ -3063,17 +3063,17 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 	}
 	else if ( (gcButtonInputSnapShot[GC_DPAD_DOWN] == PUSHED) && (gcButtonInputSnapShot[GC_DPAD_UP] == RELEASED) )
  8001562:	b923      	cbnz	r3, 800156e <GCControllerEmulation_SendControllerState+0x3e>
- 8001564:	4b96      	ldr	r3, [pc, #600]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
+ 8001564:	4b95      	ldr	r3, [pc, #596]	; (80017bc <GCControllerEmulation_SendControllerState+0x28c>)
  8001566:	7a1b      	ldrb	r3, [r3, #8]
  8001568:	2b01      	cmp	r3, #1
- 800156a:	f000 81db 	beq.w	8001924 <GCControllerEmulation_SendControllerState+0x3f4>
+ 800156a:	f000 81ee 	beq.w	800194a <GCControllerEmulation_SendControllerState+0x41a>
 		gcProcessedButtonStates[GC_DPAD_DOWN] = PUSHED;
 		gcProcessedButtonStates[GC_DPAD_UP] = RELEASED;
 	}
 	else
 	{
 		gcProcessedButtonStates[GC_DPAD_DOWN] = RELEASED;
- 800156e:	4b95      	ldr	r3, [pc, #596]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
+ 800156e:	4b94      	ldr	r3, [pc, #592]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
  8001570:	2201      	movs	r2, #1
  8001572:	725a      	strb	r2, [r3, #9]
 		gcProcessedButtonStates[GC_DPAD_UP] = RELEASED;
@@ -3082,10 +3082,10 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 
 	// Clean main stick x-axis
 	if ( (gcButtonInputSnapShot[GC_MAIN_STICK_LEFT] == RELEASED) && (gcButtonInputSnapShot[GC_MAIN_STICK_RIGHT] == RELEASED) )
- 8001576:	4b92      	ldr	r3, [pc, #584]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
+ 8001576:	4b91      	ldr	r3, [pc, #580]	; (80017bc <GCControllerEmulation_SendControllerState+0x28c>)
  8001578:	7b9b      	ldrb	r3, [r3, #14]
  800157a:	2b01      	cmp	r3, #1
- 800157c:	f000 81d8 	beq.w	8001930 <GCControllerEmulation_SendControllerState+0x400>
+ 800157c:	f000 81eb 	beq.w	8001956 <GCControllerEmulation_SendControllerState+0x426>
 	else if ( (gcButtonInputSnapShot[GC_MAIN_STICK_LEFT] == RELEASED) && (gcButtonInputSnapShot[GC_MAIN_STICK_RIGHT] == PUSHED) )
 	{
 		gcProcessedButtonStates[GC_MAIN_STICK_LEFT] = RELEASED;
@@ -3093,17 +3093,17 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 	}
 	else if ( (gcButtonInputSnapShot[GC_MAIN_STICK_LEFT] == PUSHED) && (gcButtonInputSnapShot[GC_MAIN_STICK_RIGHT] == RELEASED) )
  8001580:	b923      	cbnz	r3, 800158c <GCControllerEmulation_SendControllerState+0x5c>
- 8001582:	4b8f      	ldr	r3, [pc, #572]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
+ 8001582:	4b8e      	ldr	r3, [pc, #568]	; (80017bc <GCControllerEmulation_SendControllerState+0x28c>)
  8001584:	7bdb      	ldrb	r3, [r3, #15]
  8001586:	2b01      	cmp	r3, #1
- 8001588:	f000 81e4 	beq.w	8001954 <GCControllerEmulation_SendControllerState+0x424>
+ 8001588:	f000 81f7 	beq.w	800197a <GCControllerEmulation_SendControllerState+0x44a>
 		gcProcessedButtonStates[GC_MAIN_STICK_LEFT] = PUSHED;
 		gcProcessedButtonStates[GC_MAIN_STICK_RIGHT] = RELEASED;
 	}
 	else
 	{
 		gcProcessedButtonStates[GC_MAIN_STICK_LEFT] = RELEASED;
- 800158c:	4b8d      	ldr	r3, [pc, #564]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
+ 800158c:	4b8c      	ldr	r3, [pc, #560]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
  800158e:	2201      	movs	r2, #1
  8001590:	739a      	strb	r2, [r3, #14]
 		gcProcessedButtonStates[GC_MAIN_STICK_RIGHT] = RELEASED;
@@ -3112,10 +3112,10 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 
 	// Clean main stick y-axis
 	if ( (gcButtonInputSnapShot[GC_MAIN_STICK_DOWN] == RELEASED) && (gcButtonInputSnapShot[GC_MAIN_STICK_UP] == RELEASED) )
- 8001594:	4b8a      	ldr	r3, [pc, #552]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
+ 8001594:	4b89      	ldr	r3, [pc, #548]	; (80017bc <GCControllerEmulation_SendControllerState+0x28c>)
  8001596:	7b5b      	ldrb	r3, [r3, #13]
  8001598:	2b01      	cmp	r3, #1
- 800159a:	f000 81e1 	beq.w	8001960 <GCControllerEmulation_SendControllerState+0x430>
+ 800159a:	f000 81f4 	beq.w	8001986 <GCControllerEmulation_SendControllerState+0x456>
 	else if ( (gcButtonInputSnapShot[GC_MAIN_STICK_DOWN] == RELEASED) && (gcButtonInputSnapShot[GC_MAIN_STICK_UP] == PUSHED) )
 	{
 		gcProcessedButtonStates[GC_MAIN_STICK_DOWN] = RELEASED;
@@ -3123,17 +3123,17 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 	}
 	else if ( (gcButtonInputSnapShot[GC_MAIN_STICK_DOWN] == PUSHED) && (gcButtonInputSnapShot[GC_MAIN_STICK_UP] == RELEASED) )
  800159e:	b923      	cbnz	r3, 80015aa <GCControllerEmulation_SendControllerState+0x7a>
- 80015a0:	4b87      	ldr	r3, [pc, #540]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
+ 80015a0:	4b86      	ldr	r3, [pc, #536]	; (80017bc <GCControllerEmulation_SendControllerState+0x28c>)
  80015a2:	7b1b      	ldrb	r3, [r3, #12]
  80015a4:	2b01      	cmp	r3, #1
- 80015a6:	f000 81ed 	beq.w	8001984 <GCControllerEmulation_SendControllerState+0x454>
+ 80015a6:	f000 8200 	beq.w	80019aa <GCControllerEmulation_SendControllerState+0x47a>
 		gcProcessedButtonStates[GC_MAIN_STICK_DOWN] = PUSHED;
 		gcProcessedButtonStates[GC_MAIN_STICK_UP] = RELEASED;
 	}
 	else
 	{
 		gcProcessedButtonStates[GC_MAIN_STICK_DOWN] = RELEASED;
- 80015aa:	4b86      	ldr	r3, [pc, #536]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
+ 80015aa:	4b85      	ldr	r3, [pc, #532]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
  80015ac:	2201      	movs	r2, #1
  80015ae:	735a      	strb	r2, [r3, #13]
 		gcProcessedButtonStates[GC_MAIN_STICK_UP] = RELEASED;
@@ -3142,10 +3142,10 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 
 	// Clean c stick x-axis
 	if ( (gcButtonInputSnapShot[GC_C_STICK_LEFT] == RELEASED) && (gcButtonInputSnapShot[GC_C_STICK_RIGHT] == RELEASED) )
- 80015b2:	4b83      	ldr	r3, [pc, #524]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
+ 80015b2:	4b82      	ldr	r3, [pc, #520]	; (80017bc <GCControllerEmulation_SendControllerState+0x28c>)
  80015b4:	7c9b      	ldrb	r3, [r3, #18]
  80015b6:	2b01      	cmp	r3, #1
- 80015b8:	f000 81ea 	beq.w	8001990 <GCControllerEmulation_SendControllerState+0x460>
+ 80015b8:	f000 81fd 	beq.w	80019b6 <GCControllerEmulation_SendControllerState+0x486>
 	else if ( (gcButtonInputSnapShot[GC_C_STICK_LEFT] == RELEASED) && (gcButtonInputSnapShot[GC_C_STICK_RIGHT] == PUSHED) )
 	{
 		gcProcessedButtonStates[GC_C_STICK_LEFT] = RELEASED;
@@ -3153,17 +3153,17 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 	}
 	else if ( (gcButtonInputSnapShot[GC_C_STICK_LEFT] == PUSHED) && (gcButtonInputSnapShot[GC_C_STICK_RIGHT] == RELEASED) )
  80015bc:	b923      	cbnz	r3, 80015c8 <GCControllerEmulation_SendControllerState+0x98>
- 80015be:	4b80      	ldr	r3, [pc, #512]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
+ 80015be:	4b7f      	ldr	r3, [pc, #508]	; (80017bc <GCControllerEmulation_SendControllerState+0x28c>)
  80015c0:	7cdb      	ldrb	r3, [r3, #19]
  80015c2:	2b01      	cmp	r3, #1
- 80015c4:	f000 81f6 	beq.w	80019b4 <GCControllerEmulation_SendControllerState+0x484>
+ 80015c4:	f000 8209 	beq.w	80019da <GCControllerEmulation_SendControllerState+0x4aa>
 		gcProcessedButtonStates[GC_C_STICK_LEFT] = PUSHED;
 		gcProcessedButtonStates[GC_C_STICK_RIGHT] = RELEASED;
 	}
 	else
 	{
 		gcProcessedButtonStates[GC_C_STICK_LEFT] = RELEASED;
- 80015c8:	4b7e      	ldr	r3, [pc, #504]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
+ 80015c8:	4b7d      	ldr	r3, [pc, #500]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
  80015ca:	2201      	movs	r2, #1
  80015cc:	749a      	strb	r2, [r3, #18]
 		gcProcessedButtonStates[GC_C_STICK_RIGHT] = RELEASED;
@@ -3172,10 +3172,10 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 
 	// Clean c stick y-axis
 	if ( (gcButtonInputSnapShot[GC_C_STICK_DOWN] == RELEASED) && (gcButtonInputSnapShot[GC_C_STICK_UP] == RELEASED) )
- 80015d0:	4b7b      	ldr	r3, [pc, #492]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
+ 80015d0:	4b7a      	ldr	r3, [pc, #488]	; (80017bc <GCControllerEmulation_SendControllerState+0x28c>)
  80015d2:	7c5b      	ldrb	r3, [r3, #17]
  80015d4:	2b01      	cmp	r3, #1
- 80015d6:	f000 81f3 	beq.w	80019c0 <GCControllerEmulation_SendControllerState+0x490>
+ 80015d6:	f000 8206 	beq.w	80019e6 <GCControllerEmulation_SendControllerState+0x4b6>
 	else if ( (gcButtonInputSnapShot[GC_C_STICK_DOWN] == RELEASED) && (gcButtonInputSnapShot[GC_C_STICK_UP] == PUSHED) )
 	{
 		gcProcessedButtonStates[GC_C_STICK_DOWN] = RELEASED;
@@ -3183,17 +3183,17 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 	}
 	else if ( (gcButtonInputSnapShot[GC_C_STICK_DOWN] == PUSHED) && (gcButtonInputSnapShot[GC_C_STICK_UP] == RELEASED) )
  80015da:	b923      	cbnz	r3, 80015e6 <GCControllerEmulation_SendControllerState+0xb6>
- 80015dc:	4b78      	ldr	r3, [pc, #480]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
+ 80015dc:	4b77      	ldr	r3, [pc, #476]	; (80017bc <GCControllerEmulation_SendControllerState+0x28c>)
  80015de:	7c1b      	ldrb	r3, [r3, #16]
  80015e0:	2b01      	cmp	r3, #1
- 80015e2:	f000 81ff 	beq.w	80019e4 <GCControllerEmulation_SendControllerState+0x4b4>
+ 80015e2:	f000 8212 	beq.w	8001a0a <GCControllerEmulation_SendControllerState+0x4da>
 		gcProcessedButtonStates[GC_C_STICK_DOWN] = PUSHED;
 		gcProcessedButtonStates[GC_C_STICK_UP] = RELEASED;
 	}
 	else
 	{
 		gcProcessedButtonStates[GC_C_STICK_DOWN] = RELEASED;
- 80015e6:	4b77      	ldr	r3, [pc, #476]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
+ 80015e6:	4b76      	ldr	r3, [pc, #472]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
  80015e8:	2201      	movs	r2, #1
  80015ea:	745a      	strb	r2, [r3, #17]
 		gcProcessedButtonStates[GC_C_STICK_UP] = RELEASED;
@@ -3204,9 +3204,9 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 	 * any sort of special processing so just copy them over.
 	 */
 	gcProcessedButtonStates[GC_A] = gcButtonInputSnapShot[GC_A];
- 80015ee:	4a74      	ldr	r2, [pc, #464]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
+ 80015ee:	4a73      	ldr	r2, [pc, #460]	; (80017bc <GCControllerEmulation_SendControllerState+0x28c>)
  80015f0:	7815      	ldrb	r5, [r2, #0]
- 80015f2:	4b74      	ldr	r3, [pc, #464]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
+ 80015f2:	4b73      	ldr	r3, [pc, #460]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
  80015f4:	701d      	strb	r5, [r3, #0]
 	gcProcessedButtonStates[GC_B] = gcButtonInputSnapShot[GC_B];
  80015f6:	7851      	ldrb	r1, [r2, #1]
@@ -3244,1517 +3244,1851 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
  800161a:	7d92      	ldrb	r2, [r2, #22]
  800161c:	759a      	strb	r2, [r3, #22]
 	while(!(USART1->SR & USART_SR_TXE)){};
- 800161e:	4a6a      	ldr	r2, [pc, #424]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
+ 800161e:	4a69      	ldr	r2, [pc, #420]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
  8001620:	6813      	ldr	r3, [r2, #0]
  8001622:	f013 0f80 	tst.w	r3, #128	; 0x80
  8001626:	d0fb      	beq.n	8001620 <GCControllerEmulation_SendControllerState+0xf0>
 	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001628:	4b67      	ldr	r3, [pc, #412]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
+ 8001628:	4b66      	ldr	r3, [pc, #408]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
  800162a:	2208      	movs	r2, #8
  800162c:	605a      	str	r2, [r3, #4]
 	rightButtonState = gcProcessedButtonStates[GC_START];
- 800162e:	4b65      	ldr	r3, [pc, #404]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
+ 800162e:	4b64      	ldr	r3, [pc, #400]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
  8001630:	79df      	ldrb	r7, [r3, #7]
 	while(!(USART1->SR & USART_SR_TXE)){};
- 8001632:	4a65      	ldr	r2, [pc, #404]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
+ 8001632:	4a64      	ldr	r2, [pc, #400]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
  8001634:	6813      	ldr	r3, [r2, #0]
  8001636:	f013 0f80 	tst.w	r3, #128	; 0x80
  800163a:	d0fb      	beq.n	8001634 <GCControllerEmulation_SendControllerState+0x104>
 	if(rightButtonState == RELEASED)
  800163c:	2f01      	cmp	r7, #1
 		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 800163e:	4b62      	ldr	r3, [pc, #392]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
+ 800163e:	4b61      	ldr	r3, [pc, #388]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
  8001640:	bf0c      	ite	eq
  8001642:	2208      	moveq	r2, #8
 		USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
  8001644:	22e8      	movne	r2, #232	; 0xe8
  8001646:	605a      	str	r2, [r3, #4]
 	while(!(USART1->SR & USART_SR_TXE)){};
- 8001648:	4a5f      	ldr	r2, [pc, #380]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
+ 8001648:	4a5e      	ldr	r2, [pc, #376]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
  800164a:	6813      	ldr	r3, [r2, #0]
  800164c:	f013 0f80 	tst.w	r3, #128	; 0x80
  8001650:	d0fb      	beq.n	800164a <GCControllerEmulation_SendControllerState+0x11a>
 	if( (leftButtonState == RELEASED) && (rightButtonState == RELEASED) )
  8001652:	2801      	cmp	r0, #1
- 8001654:	f000 81cc 	beq.w	80019f0 <GCControllerEmulation_SendControllerState+0x4c0>
+ 8001654:	f000 81df 	beq.w	8001a16 <GCControllerEmulation_SendControllerState+0x4e6>
 	else if( (leftButtonState == PUSHED) && (rightButtonState == RELEASED) )
  8001658:	b910      	cbnz	r0, 8001660 <GCControllerEmulation_SendControllerState+0x130>
  800165a:	2e01      	cmp	r6, #1
- 800165c:	f000 81d5 	beq.w	8001a0a <GCControllerEmulation_SendControllerState+0x4da>
+ 800165c:	f000 81e8 	beq.w	8001a30 <GCControllerEmulation_SendControllerState+0x500>
 		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
- 8001660:	4b59      	ldr	r3, [pc, #356]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
+ 8001660:	4b58      	ldr	r3, [pc, #352]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
  8001662:	22ef      	movs	r2, #239	; 0xef
  8001664:	605a      	str	r2, [r3, #4]
 	while(!(USART1->SR & USART_SR_TXE)){};
- 8001666:	4a58      	ldr	r2, [pc, #352]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
+ 8001666:	4a57      	ldr	r2, [pc, #348]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
  8001668:	6813      	ldr	r3, [r2, #0]
  800166a:	f013 0f80 	tst.w	r3, #128	; 0x80
  800166e:	d0fb      	beq.n	8001668 <GCControllerEmulation_SendControllerState+0x138>
 	if( (leftButtonState == RELEASED) && (rightButtonState == RELEASED) )
  8001670:	2901      	cmp	r1, #1
- 8001672:	f000 81ce 	beq.w	8001a12 <GCControllerEmulation_SendControllerState+0x4e2>
+ 8001672:	f000 81e1 	beq.w	8001a38 <GCControllerEmulation_SendControllerState+0x508>
 	else if( (leftButtonState == PUSHED) && (rightButtonState == RELEASED) )
  8001676:	b911      	cbnz	r1, 800167e <GCControllerEmulation_SendControllerState+0x14e>
  8001678:	2d01      	cmp	r5, #1
- 800167a:	f000 81d7 	beq.w	8001a2c <GCControllerEmulation_SendControllerState+0x4fc>
+ 800167a:	f000 81ea 	beq.w	8001a52 <GCControllerEmulation_SendControllerState+0x522>
 		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
- 800167e:	4b52      	ldr	r3, [pc, #328]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
+ 800167e:	4b51      	ldr	r3, [pc, #324]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
  8001680:	22ef      	movs	r2, #239	; 0xef
  8001682:	605a      	str	r2, [r3, #4]
 	rightButtonState = gcProcessedButtonStates[GC_L];
- 8001684:	4b4f      	ldr	r3, [pc, #316]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
+ 8001684:	4b4e      	ldr	r3, [pc, #312]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
  8001686:	7919      	ldrb	r1, [r3, #4]
 	while(!(USART1->SR & USART_SR_TXE)){};
- 8001688:	4a4f      	ldr	r2, [pc, #316]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
+ 8001688:	4a4e      	ldr	r2, [pc, #312]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
  800168a:	6813      	ldr	r3, [r2, #0]
  800168c:	f013 0f80 	tst.w	r3, #128	; 0x80
  8001690:	d0fb      	beq.n	800168a <GCControllerEmulation_SendControllerState+0x15a>
 	if(rightButtonState == RELEASED)
  8001692:	2901      	cmp	r1, #1
 		USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
- 8001694:	4b4c      	ldr	r3, [pc, #304]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
+ 8001694:	4b4b      	ldr	r3, [pc, #300]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
  8001696:	bf0c      	ite	eq
  8001698:	220f      	moveq	r2, #15
 		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
  800169a:	22ef      	movne	r2, #239	; 0xef
  800169c:	605a      	str	r2, [r3, #4]
 	leftButtonState = gcProcessedButtonStates[GC_R];
- 800169e:	4b49      	ldr	r3, [pc, #292]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
+ 800169e:	4b48      	ldr	r3, [pc, #288]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
  80016a0:	7959      	ldrb	r1, [r3, #5]
 	rightButtonState = gcProcessedButtonStates[GC_Z];
  80016a2:	7998      	ldrb	r0, [r3, #6]
 	while(!(USART1->SR & USART_SR_TXE)){};
- 80016a4:	4a48      	ldr	r2, [pc, #288]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
+ 80016a4:	4a47      	ldr	r2, [pc, #284]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
  80016a6:	6813      	ldr	r3, [r2, #0]
  80016a8:	f013 0f80 	tst.w	r3, #128	; 0x80
  80016ac:	d0fb      	beq.n	80016a6 <GCControllerEmulation_SendControllerState+0x176>
 	if( (leftButtonState == RELEASED) && (rightButtonState == RELEASED) )
  80016ae:	2901      	cmp	r1, #1
- 80016b0:	f000 81c0 	beq.w	8001a34 <GCControllerEmulation_SendControllerState+0x504>
+ 80016b0:	f000 81d3 	beq.w	8001a5a <GCControllerEmulation_SendControllerState+0x52a>
 	else if( (leftButtonState == PUSHED) && (rightButtonState == RELEASED) )
  80016b4:	b911      	cbnz	r1, 80016bc <GCControllerEmulation_SendControllerState+0x18c>
  80016b6:	2801      	cmp	r0, #1
- 80016b8:	f000 81c9 	beq.w	8001a4e <GCControllerEmulation_SendControllerState+0x51e>
+ 80016b8:	f000 81e4 	beq.w	8001a84 <GCControllerEmulation_SendControllerState+0x554>
 		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
- 80016bc:	4b42      	ldr	r3, [pc, #264]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
+ 80016bc:	4b41      	ldr	r3, [pc, #260]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
  80016be:	22ef      	movs	r2, #239	; 0xef
  80016c0:	605a      	str	r2, [r3, #4]
 	leftButtonState = gcProcessedButtonStates[GC_DPAD_UP];
- 80016c2:	4b40      	ldr	r3, [pc, #256]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
+ 80016c2:	4b3f      	ldr	r3, [pc, #252]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
  80016c4:	7a19      	ldrb	r1, [r3, #8]
 	rightButtonState = gcProcessedButtonStates[GC_DPAD_DOWN];;
  80016c6:	7a58      	ldrb	r0, [r3, #9]
 	while(!(USART1->SR & USART_SR_TXE)){};
- 80016c8:	4a3f      	ldr	r2, [pc, #252]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
+ 80016c8:	4a3e      	ldr	r2, [pc, #248]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
  80016ca:	6813      	ldr	r3, [r2, #0]
  80016cc:	f013 0f80 	tst.w	r3, #128	; 0x80
  80016d0:	d0fb      	beq.n	80016ca <GCControllerEmulation_SendControllerState+0x19a>
 	if( (leftButtonState == RELEASED) && (rightButtonState == RELEASED) )
  80016d2:	2901      	cmp	r1, #1
- 80016d4:	f000 81bf 	beq.w	8001a56 <GCControllerEmulation_SendControllerState+0x526>
+ 80016d4:	f000 81da 	beq.w	8001a8c <GCControllerEmulation_SendControllerState+0x55c>
 	else if( (leftButtonState == PUSHED) && (rightButtonState == RELEASED) )
  80016d8:	b911      	cbnz	r1, 80016e0 <GCControllerEmulation_SendControllerState+0x1b0>
  80016da:	2801      	cmp	r0, #1
- 80016dc:	f000 81c8 	beq.w	8001a70 <GCControllerEmulation_SendControllerState+0x540>
+ 80016dc:	f000 81e3 	beq.w	8001aa6 <GCControllerEmulation_SendControllerState+0x576>
 		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
- 80016e0:	4b39      	ldr	r3, [pc, #228]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
+ 80016e0:	4b38      	ldr	r3, [pc, #224]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
  80016e2:	22ef      	movs	r2, #239	; 0xef
  80016e4:	605a      	str	r2, [r3, #4]
 	leftButtonState = gcProcessedButtonStates[GC_DPAD_RIGHT];
- 80016e6:	4b37      	ldr	r3, [pc, #220]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
+ 80016e6:	4b36      	ldr	r3, [pc, #216]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
  80016e8:	7ad9      	ldrb	r1, [r3, #11]
 	rightButtonState = gcProcessedButtonStates[GC_DPAD_LEFT];
  80016ea:	7a98      	ldrb	r0, [r3, #10]
 	while(!(USART1->SR & USART_SR_TXE)){};
- 80016ec:	4a36      	ldr	r2, [pc, #216]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
+ 80016ec:	4a35      	ldr	r2, [pc, #212]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
  80016ee:	6813      	ldr	r3, [r2, #0]
  80016f0:	f013 0f80 	tst.w	r3, #128	; 0x80
  80016f4:	d0fb      	beq.n	80016ee <GCControllerEmulation_SendControllerState+0x1be>
 	if( (leftButtonState == RELEASED) && (rightButtonState == RELEASED) )
  80016f6:	2901      	cmp	r1, #1
- 80016f8:	f000 81c6 	beq.w	8001a88 <GCControllerEmulation_SendControllerState+0x558>
+ 80016f8:	f000 81d9 	beq.w	8001aae <GCControllerEmulation_SendControllerState+0x57e>
 	else if( (leftButtonState == PUSHED) && (rightButtonState == RELEASED) )
  80016fc:	b911      	cbnz	r1, 8001704 <GCControllerEmulation_SendControllerState+0x1d4>
  80016fe:	2801      	cmp	r0, #1
- 8001700:	f000 81cf 	beq.w	8001aa2 <GCControllerEmulation_SendControllerState+0x572>
+ 8001700:	f000 81e2 	beq.w	8001ac8 <GCControllerEmulation_SendControllerState+0x598>
 		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
- 8001704:	4b30      	ldr	r3, [pc, #192]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
+ 8001704:	4b2f      	ldr	r3, [pc, #188]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
  8001706:	22ef      	movs	r2, #239	; 0xef
  8001708:	605a      	str	r2, [r3, #4]
+	if(gcProcessedButtonStates[GC_MAIN_STICK_LEFT] == PUSHED)
+ 800170a:	4b2d      	ldr	r3, [pc, #180]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
+ 800170c:	7b9b      	ldrb	r3, [r3, #14]
+ 800170e:	2b00      	cmp	r3, #0
+ 8001710:	f040 81de 	bne.w	8001ad0 <GCControllerEmulation_SendControllerState+0x5a0>
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001714:	4a2b      	ldr	r2, [pc, #172]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
+ 8001716:	6813      	ldr	r3, [r2, #0]
+ 8001718:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 800171c:	d0fb      	beq.n	8001716 <GCControllerEmulation_SendControllerState+0x1e6>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 800171e:	4b29      	ldr	r3, [pc, #164]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
+ 8001720:	2208      	movs	r2, #8
+ 8001722:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001724:	461a      	mov	r2, r3
+ 8001726:	6813      	ldr	r3, [r2, #0]
+ 8001728:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 800172c:	d0fb      	beq.n	8001726 <GCControllerEmulation_SendControllerState+0x1f6>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 800172e:	4b25      	ldr	r3, [pc, #148]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
+ 8001730:	2208      	movs	r2, #8
+ 8001732:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001734:	461a      	mov	r2, r3
+ 8001736:	6813      	ldr	r3, [r2, #0]
+ 8001738:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 800173c:	d0fb      	beq.n	8001736 <GCControllerEmulation_SendControllerState+0x206>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 800173e:	4b21      	ldr	r3, [pc, #132]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
+ 8001740:	2208      	movs	r2, #8
+ 8001742:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001744:	461a      	mov	r2, r3
+ 8001746:	6813      	ldr	r3, [r2, #0]
+ 8001748:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 800174c:	d0fb      	beq.n	8001746 <GCControllerEmulation_SendControllerState+0x216>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 800174e:	4b1d      	ldr	r3, [pc, #116]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
+ 8001750:	2208      	movs	r2, #8
+ 8001752:	605a      	str	r2, [r3, #4]
+	if(gcProcessedButtonStates[GC_MAIN_STICK_DOWN] == PUSHED)
+ 8001754:	4b1a      	ldr	r3, [pc, #104]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
+ 8001756:	7b5b      	ldrb	r3, [r3, #13]
+ 8001758:	2b00      	cmp	r3, #0
+ 800175a:	f040 81fe 	bne.w	8001b5a <GCControllerEmulation_SendControllerState+0x62a>
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 800175e:	4a19      	ldr	r2, [pc, #100]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
+ 8001760:	6813      	ldr	r3, [r2, #0]
+ 8001762:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001766:	d0fb      	beq.n	8001760 <GCControllerEmulation_SendControllerState+0x230>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001768:	4b16      	ldr	r3, [pc, #88]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
+ 800176a:	2208      	movs	r2, #8
+ 800176c:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 800176e:	461a      	mov	r2, r3
+ 8001770:	6813      	ldr	r3, [r2, #0]
+ 8001772:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001776:	d0fb      	beq.n	8001770 <GCControllerEmulation_SendControllerState+0x240>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001778:	4b12      	ldr	r3, [pc, #72]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
+ 800177a:	2208      	movs	r2, #8
+ 800177c:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 800177e:	461a      	mov	r2, r3
+ 8001780:	6813      	ldr	r3, [r2, #0]
+ 8001782:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001786:	d0fb      	beq.n	8001780 <GCControllerEmulation_SendControllerState+0x250>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001788:	4b0e      	ldr	r3, [pc, #56]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
+ 800178a:	2208      	movs	r2, #8
+ 800178c:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 800178e:	461a      	mov	r2, r3
+ 8001790:	6813      	ldr	r3, [r2, #0]
+ 8001792:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001796:	d0fb      	beq.n	8001790 <GCControllerEmulation_SendControllerState+0x260>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001798:	4b0a      	ldr	r3, [pc, #40]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
+ 800179a:	2208      	movs	r2, #8
+ 800179c:	605a      	str	r2, [r3, #4]
+	if(gcProcessedButtonStates[GC_C_STICK_LEFT] == PUSHED)
+ 800179e:	4b08      	ldr	r3, [pc, #32]	; (80017c0 <GCControllerEmulation_SendControllerState+0x290>)
+ 80017a0:	7c9b      	ldrb	r3, [r3, #18]
+ 80017a2:	2b00      	cmp	r3, #0
+ 80017a4:	f040 821e 	bne.w	8001be4 <GCControllerEmulation_SendControllerState+0x6b4>
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 80017a8:	4a06      	ldr	r2, [pc, #24]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
+ 80017aa:	6813      	ldr	r3, [r2, #0]
+ 80017ac:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 80017b0:	d0fb      	beq.n	80017aa <GCControllerEmulation_SendControllerState+0x27a>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 80017b2:	4b04      	ldr	r3, [pc, #16]	; (80017c4 <GCControllerEmulation_SendControllerState+0x294>)
+ 80017b4:	2208      	movs	r2, #8
+ 80017b6:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 80017b8:	461a      	mov	r2, r3
+ 80017ba:	e005      	b.n	80017c8 <GCControllerEmulation_SendControllerState+0x298>
+ 80017bc:	20000028 	.word	0x20000028
+ 80017c0:	20000040 	.word	0x20000040
+ 80017c4:	40011000 	.word	0x40011000
+ 80017c8:	6813      	ldr	r3, [r2, #0]
+ 80017ca:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 80017ce:	d0fb      	beq.n	80017c8 <GCControllerEmulation_SendControllerState+0x298>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 80017d0:	4ba8      	ldr	r3, [pc, #672]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 80017d2:	2208      	movs	r2, #8
+ 80017d4:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 80017d6:	461a      	mov	r2, r3
+ 80017d8:	6813      	ldr	r3, [r2, #0]
+ 80017da:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 80017de:	d0fb      	beq.n	80017d8 <GCControllerEmulation_SendControllerState+0x2a8>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 80017e0:	4ba4      	ldr	r3, [pc, #656]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 80017e2:	2208      	movs	r2, #8
+ 80017e4:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 80017e6:	461a      	mov	r2, r3
+ 80017e8:	6813      	ldr	r3, [r2, #0]
+ 80017ea:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 80017ee:	d0fb      	beq.n	80017e8 <GCControllerEmulation_SendControllerState+0x2b8>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 80017f0:	4ba0      	ldr	r3, [pc, #640]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 80017f2:	2208      	movs	r2, #8
+ 80017f4:	605a      	str	r2, [r3, #4]
+	if(gcProcessedButtonStates[GC_C_STICK_DOWN] == PUSHED)
+ 80017f6:	4ba0      	ldr	r3, [pc, #640]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
+ 80017f8:	7c5b      	ldrb	r3, [r3, #17]
+ 80017fa:	2b00      	cmp	r3, #0
+ 80017fc:	f040 8237 	bne.w	8001c6e <GCControllerEmulation_SendControllerState+0x73e>
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001800:	4a9c      	ldr	r2, [pc, #624]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 8001802:	6813      	ldr	r3, [r2, #0]
+ 8001804:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001808:	d0fb      	beq.n	8001802 <GCControllerEmulation_SendControllerState+0x2d2>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 800180a:	4b9a      	ldr	r3, [pc, #616]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 800180c:	2208      	movs	r2, #8
+ 800180e:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001810:	461a      	mov	r2, r3
+ 8001812:	6813      	ldr	r3, [r2, #0]
+ 8001814:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001818:	d0fb      	beq.n	8001812 <GCControllerEmulation_SendControllerState+0x2e2>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 800181a:	4b96      	ldr	r3, [pc, #600]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 800181c:	2208      	movs	r2, #8
+ 800181e:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001820:	461a      	mov	r2, r3
+ 8001822:	6813      	ldr	r3, [r2, #0]
+ 8001824:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001828:	d0fb      	beq.n	8001822 <GCControllerEmulation_SendControllerState+0x2f2>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 800182a:	4b92      	ldr	r3, [pc, #584]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 800182c:	2208      	movs	r2, #8
+ 800182e:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001830:	461a      	mov	r2, r3
+ 8001832:	6813      	ldr	r3, [r2, #0]
+ 8001834:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001838:	d0fb      	beq.n	8001832 <GCControllerEmulation_SendControllerState+0x302>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 800183a:	4b8e      	ldr	r3, [pc, #568]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 800183c:	2208      	movs	r2, #8
+ 800183e:	605a      	str	r2, [r3, #4]
 	while(!(USART1->SR & USART_SR_TXE)){};
- 800170a:	4a2f      	ldr	r2, [pc, #188]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
- 800170c:	6813      	ldr	r3, [r2, #0]
- 800170e:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001712:	d0fb      	beq.n	800170c <GCControllerEmulation_SendControllerState+0x1dc>
+ 8001840:	4a8c      	ldr	r2, [pc, #560]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 8001842:	6813      	ldr	r3, [r2, #0]
+ 8001844:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001848:	d0fb      	beq.n	8001842 <GCControllerEmulation_SendControllerState+0x312>
 	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001714:	4b2c      	ldr	r3, [pc, #176]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
- 8001716:	2208      	movs	r2, #8
- 8001718:	605a      	str	r2, [r3, #4]
+ 800184a:	4b8a      	ldr	r3, [pc, #552]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 800184c:	2208      	movs	r2, #8
+ 800184e:	605a      	str	r2, [r3, #4]
 	while(!(USART1->SR & USART_SR_TXE)){};
- 800171a:	461a      	mov	r2, r3
- 800171c:	6813      	ldr	r3, [r2, #0]
- 800171e:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001722:	d0fb      	beq.n	800171c <GCControllerEmulation_SendControllerState+0x1ec>
+ 8001850:	461a      	mov	r2, r3
+ 8001852:	6813      	ldr	r3, [r2, #0]
+ 8001854:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001858:	d0fb      	beq.n	8001852 <GCControllerEmulation_SendControllerState+0x322>
 	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001724:	4b28      	ldr	r3, [pc, #160]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
- 8001726:	2208      	movs	r2, #8
- 8001728:	605a      	str	r2, [r3, #4]
+ 800185a:	4b86      	ldr	r3, [pc, #536]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 800185c:	2208      	movs	r2, #8
+ 800185e:	605a      	str	r2, [r3, #4]
 	while(!(USART1->SR & USART_SR_TXE)){};
- 800172a:	461a      	mov	r2, r3
- 800172c:	6813      	ldr	r3, [r2, #0]
- 800172e:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001732:	d0fb      	beq.n	800172c <GCControllerEmulation_SendControllerState+0x1fc>
+ 8001860:	461a      	mov	r2, r3
+ 8001862:	6813      	ldr	r3, [r2, #0]
+ 8001864:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001868:	d0fb      	beq.n	8001862 <GCControllerEmulation_SendControllerState+0x332>
 	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001734:	4b24      	ldr	r3, [pc, #144]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
- 8001736:	2208      	movs	r2, #8
- 8001738:	605a      	str	r2, [r3, #4]
+ 800186a:	4b82      	ldr	r3, [pc, #520]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 800186c:	2208      	movs	r2, #8
+ 800186e:	605a      	str	r2, [r3, #4]
 	while(!(USART1->SR & USART_SR_TXE)){};
- 800173a:	461a      	mov	r2, r3
- 800173c:	6813      	ldr	r3, [r2, #0]
- 800173e:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001742:	d0fb      	beq.n	800173c <GCControllerEmulation_SendControllerState+0x20c>
+ 8001870:	461a      	mov	r2, r3
+ 8001872:	6813      	ldr	r3, [r2, #0]
+ 8001874:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001878:	d0fb      	beq.n	8001872 <GCControllerEmulation_SendControllerState+0x342>
 	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001744:	4b20      	ldr	r3, [pc, #128]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
- 8001746:	2208      	movs	r2, #8
- 8001748:	605a      	str	r2, [r3, #4]
+ 800187a:	4b7e      	ldr	r3, [pc, #504]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 800187c:	2208      	movs	r2, #8
+ 800187e:	605a      	str	r2, [r3, #4]
 	while(!(USART1->SR & USART_SR_TXE)){};
- 800174a:	461a      	mov	r2, r3
- 800174c:	6813      	ldr	r3, [r2, #0]
- 800174e:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001752:	d0fb      	beq.n	800174c <GCControllerEmulation_SendControllerState+0x21c>
+ 8001880:	461a      	mov	r2, r3
+ 8001882:	6813      	ldr	r3, [r2, #0]
+ 8001884:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001888:	d0fb      	beq.n	8001882 <GCControllerEmulation_SendControllerState+0x352>
 	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001754:	4b1c      	ldr	r3, [pc, #112]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
- 8001756:	2208      	movs	r2, #8
- 8001758:	605a      	str	r2, [r3, #4]
+ 800188a:	4b7a      	ldr	r3, [pc, #488]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 800188c:	2208      	movs	r2, #8
+ 800188e:	605a      	str	r2, [r3, #4]
 	while(!(USART1->SR & USART_SR_TXE)){};
- 800175a:	461a      	mov	r2, r3
- 800175c:	6813      	ldr	r3, [r2, #0]
- 800175e:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001762:	d0fb      	beq.n	800175c <GCControllerEmulation_SendControllerState+0x22c>
+ 8001890:	461a      	mov	r2, r3
+ 8001892:	6813      	ldr	r3, [r2, #0]
+ 8001894:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001898:	d0fb      	beq.n	8001892 <GCControllerEmulation_SendControllerState+0x362>
 	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001764:	4b18      	ldr	r3, [pc, #96]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
- 8001766:	2208      	movs	r2, #8
- 8001768:	605a      	str	r2, [r3, #4]
+ 800189a:	4b76      	ldr	r3, [pc, #472]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 800189c:	2208      	movs	r2, #8
+ 800189e:	605a      	str	r2, [r3, #4]
 	while(!(USART1->SR & USART_SR_TXE)){};
- 800176a:	461a      	mov	r2, r3
- 800176c:	6813      	ldr	r3, [r2, #0]
- 800176e:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001772:	d0fb      	beq.n	800176c <GCControllerEmulation_SendControllerState+0x23c>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001774:	4b14      	ldr	r3, [pc, #80]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
- 8001776:	2208      	movs	r2, #8
- 8001778:	605a      	str	r2, [r3, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 800177a:	461a      	mov	r2, r3
- 800177c:	6813      	ldr	r3, [r2, #0]
- 800177e:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001782:	d0fb      	beq.n	800177c <GCControllerEmulation_SendControllerState+0x24c>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001784:	4b10      	ldr	r3, [pc, #64]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
- 8001786:	2208      	movs	r2, #8
- 8001788:	605a      	str	r2, [r3, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 800178a:	461a      	mov	r2, r3
- 800178c:	6813      	ldr	r3, [r2, #0]
- 800178e:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001792:	d0fb      	beq.n	800178c <GCControllerEmulation_SendControllerState+0x25c>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001794:	4b0c      	ldr	r3, [pc, #48]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
- 8001796:	2208      	movs	r2, #8
- 8001798:	605a      	str	r2, [r3, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 800179a:	461a      	mov	r2, r3
- 800179c:	6813      	ldr	r3, [r2, #0]
- 800179e:	f013 0f80 	tst.w	r3, #128	; 0x80
- 80017a2:	d0fb      	beq.n	800179c <GCControllerEmulation_SendControllerState+0x26c>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 80017a4:	4b08      	ldr	r3, [pc, #32]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
- 80017a6:	2208      	movs	r2, #8
- 80017a8:	605a      	str	r2, [r3, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 80017aa:	461a      	mov	r2, r3
- 80017ac:	6813      	ldr	r3, [r2, #0]
- 80017ae:	f013 0f80 	tst.w	r3, #128	; 0x80
- 80017b2:	d0fb      	beq.n	80017ac <GCControllerEmulation_SendControllerState+0x27c>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 80017b4:	4b04      	ldr	r3, [pc, #16]	; (80017c8 <GCControllerEmulation_SendControllerState+0x298>)
- 80017b6:	2208      	movs	r2, #8
- 80017b8:	605a      	str	r2, [r3, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 80017ba:	461a      	mov	r2, r3
- 80017bc:	e006      	b.n	80017cc <GCControllerEmulation_SendControllerState+0x29c>
- 80017be:	bf00      	nop
- 80017c0:	20000028 	.word	0x20000028
- 80017c4:	20000040 	.word	0x20000040
- 80017c8:	40011000 	.word	0x40011000
- 80017cc:	6813      	ldr	r3, [r2, #0]
- 80017ce:	f013 0f80 	tst.w	r3, #128	; 0x80
- 80017d2:	d0fb      	beq.n	80017cc <GCControllerEmulation_SendControllerState+0x29c>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 80017d4:	4ba8      	ldr	r3, [pc, #672]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
- 80017d6:	2208      	movs	r2, #8
- 80017d8:	605a      	str	r2, [r3, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 80017da:	461a      	mov	r2, r3
- 80017dc:	6813      	ldr	r3, [r2, #0]
- 80017de:	f013 0f80 	tst.w	r3, #128	; 0x80
- 80017e2:	d0fb      	beq.n	80017dc <GCControllerEmulation_SendControllerState+0x2ac>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 80017e4:	4ba4      	ldr	r3, [pc, #656]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
- 80017e6:	2208      	movs	r2, #8
- 80017e8:	605a      	str	r2, [r3, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 80017ea:	461a      	mov	r2, r3
- 80017ec:	6813      	ldr	r3, [r2, #0]
- 80017ee:	f013 0f80 	tst.w	r3, #128	; 0x80
- 80017f2:	d0fb      	beq.n	80017ec <GCControllerEmulation_SendControllerState+0x2bc>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 80017f4:	4ba0      	ldr	r3, [pc, #640]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
- 80017f6:	2208      	movs	r2, #8
- 80017f8:	605a      	str	r2, [r3, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 80017fa:	461a      	mov	r2, r3
- 80017fc:	6813      	ldr	r3, [r2, #0]
- 80017fe:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001802:	d0fb      	beq.n	80017fc <GCControllerEmulation_SendControllerState+0x2cc>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001804:	4b9c      	ldr	r3, [pc, #624]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
- 8001806:	2208      	movs	r2, #8
- 8001808:	605a      	str	r2, [r3, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 800180a:	461a      	mov	r2, r3
- 800180c:	6813      	ldr	r3, [r2, #0]
- 800180e:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001812:	d0fb      	beq.n	800180c <GCControllerEmulation_SendControllerState+0x2dc>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001814:	4b98      	ldr	r3, [pc, #608]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
- 8001816:	2208      	movs	r2, #8
- 8001818:	605a      	str	r2, [r3, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 800181a:	461a      	mov	r2, r3
- 800181c:	6813      	ldr	r3, [r2, #0]
- 800181e:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001822:	d0fb      	beq.n	800181c <GCControllerEmulation_SendControllerState+0x2ec>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001824:	4b94      	ldr	r3, [pc, #592]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
- 8001826:	2208      	movs	r2, #8
- 8001828:	605a      	str	r2, [r3, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 800182a:	461a      	mov	r2, r3
- 800182c:	6813      	ldr	r3, [r2, #0]
- 800182e:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001832:	d0fb      	beq.n	800182c <GCControllerEmulation_SendControllerState+0x2fc>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001834:	4b90      	ldr	r3, [pc, #576]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
- 8001836:	2208      	movs	r2, #8
- 8001838:	605a      	str	r2, [r3, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 800183a:	461a      	mov	r2, r3
- 800183c:	6813      	ldr	r3, [r2, #0]
- 800183e:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001842:	d0fb      	beq.n	800183c <GCControllerEmulation_SendControllerState+0x30c>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001844:	4b8c      	ldr	r3, [pc, #560]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
- 8001846:	2208      	movs	r2, #8
- 8001848:	605a      	str	r2, [r3, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 800184a:	461a      	mov	r2, r3
- 800184c:	6813      	ldr	r3, [r2, #0]
- 800184e:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001852:	d0fb      	beq.n	800184c <GCControllerEmulation_SendControllerState+0x31c>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001854:	4b88      	ldr	r3, [pc, #544]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
- 8001856:	2208      	movs	r2, #8
- 8001858:	605a      	str	r2, [r3, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 800185a:	461a      	mov	r2, r3
- 800185c:	6813      	ldr	r3, [r2, #0]
- 800185e:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001862:	d0fb      	beq.n	800185c <GCControllerEmulation_SendControllerState+0x32c>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001864:	4b84      	ldr	r3, [pc, #528]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
- 8001866:	2208      	movs	r2, #8
- 8001868:	605a      	str	r2, [r3, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 800186a:	461a      	mov	r2, r3
- 800186c:	6813      	ldr	r3, [r2, #0]
- 800186e:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001872:	d0fb      	beq.n	800186c <GCControllerEmulation_SendControllerState+0x33c>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001874:	4b80      	ldr	r3, [pc, #512]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
- 8001876:	2208      	movs	r2, #8
- 8001878:	605a      	str	r2, [r3, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 800187a:	461a      	mov	r2, r3
- 800187c:	6813      	ldr	r3, [r2, #0]
- 800187e:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001882:	d0fb      	beq.n	800187c <GCControllerEmulation_SendControllerState+0x34c>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001884:	4b7c      	ldr	r3, [pc, #496]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
- 8001886:	2208      	movs	r2, #8
- 8001888:	605a      	str	r2, [r3, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 800188a:	461a      	mov	r2, r3
- 800188c:	6813      	ldr	r3, [r2, #0]
- 800188e:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001892:	d0fb      	beq.n	800188c <GCControllerEmulation_SendControllerState+0x35c>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001894:	4b78      	ldr	r3, [pc, #480]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
- 8001896:	2208      	movs	r2, #8
- 8001898:	605a      	str	r2, [r3, #4]
-	if(command == GC_COMMAND_PROBE_ORIGIN)
- 800189a:	2c01      	cmp	r4, #1
- 800189c:	f000 8105 	beq.w	8001aaa <GCControllerEmulation_SendControllerState+0x57a>
-	while(!(USART1->SR & USART_SR_TC)){};
- 80018a0:	4a75      	ldr	r2, [pc, #468]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
+ 80018a0:	461a      	mov	r2, r3
  80018a2:	6813      	ldr	r3, [r2, #0]
- 80018a4:	f013 0f40 	tst.w	r3, #64	; 0x40
+ 80018a4:	f013 0f80 	tst.w	r3, #128	; 0x80
  80018a8:	d0fb      	beq.n	80018a2 <GCControllerEmulation_SendControllerState+0x372>
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 80018aa:	4b72      	ldr	r3, [pc, #456]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 80018ac:	2208      	movs	r2, #8
+ 80018ae:	605a      	str	r2, [r3, #4]
+	while(!(USART1->SR & USART_SR_TXE)){};
+ 80018b0:	461a      	mov	r2, r3
+ 80018b2:	6813      	ldr	r3, [r2, #0]
+ 80018b4:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 80018b8:	d0fb      	beq.n	80018b2 <GCControllerEmulation_SendControllerState+0x382>
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 80018ba:	4b6e      	ldr	r3, [pc, #440]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 80018bc:	2208      	movs	r2, #8
+ 80018be:	605a      	str	r2, [r3, #4]
+	if(command == GC_COMMAND_PROBE_ORIGIN)
+ 80018c0:	2c01      	cmp	r4, #1
+ 80018c2:	f000 821d 	beq.w	8001d00 <GCControllerEmulation_SendControllerState+0x7d0>
+	while(!(USART1->SR & USART_SR_TC)){};
+ 80018c6:	4a6b      	ldr	r2, [pc, #428]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 80018c8:	6813      	ldr	r3, [r2, #0]
+ 80018ca:	f013 0f40 	tst.w	r3, #64	; 0x40
+ 80018ce:	d0fb      	beq.n	80018c8 <GCControllerEmulation_SendControllerState+0x398>
 	GC_STOP_PORT->BSRR = GC_STOP_CLEAR;
- 80018aa:	4b74      	ldr	r3, [pc, #464]	; (8001a7c <GCControllerEmulation_SendControllerState+0x54c>)
- 80018ac:	f44f 1200 	mov.w	r2, #2097152	; 0x200000
- 80018b0:	619a      	str	r2, [r3, #24]
+ 80018d0:	4b6a      	ldr	r3, [pc, #424]	; (8001a7c <GCControllerEmulation_SendControllerState+0x54c>)
+ 80018d2:	f44f 1200 	mov.w	r2, #2097152	; 0x200000
+ 80018d6:	619a      	str	r2, [r3, #24]
 	volatile uint32_t counter = 17;
- 80018b2:	2311      	movs	r3, #17
- 80018b4:	9301      	str	r3, [sp, #4]
+ 80018d8:	2311      	movs	r3, #17
+ 80018da:	9301      	str	r3, [sp, #4]
 	while(counter--);
- 80018b6:	9b01      	ldr	r3, [sp, #4]
- 80018b8:	1e5a      	subs	r2, r3, #1
- 80018ba:	9201      	str	r2, [sp, #4]
- 80018bc:	2b00      	cmp	r3, #0
- 80018be:	d1fa      	bne.n	80018b6 <GCControllerEmulation_SendControllerState+0x386>
+ 80018dc:	9b01      	ldr	r3, [sp, #4]
+ 80018de:	1e5a      	subs	r2, r3, #1
+ 80018e0:	9201      	str	r2, [sp, #4]
+ 80018e2:	2b00      	cmp	r3, #0
+ 80018e4:	d1fa      	bne.n	80018dc <GCControllerEmulation_SendControllerState+0x3ac>
 	GC_STOP_PORT->BSRR = GC_STOP_SET;
- 80018c0:	f103 4380 	add.w	r3, r3, #1073741824	; 0x40000000
- 80018c4:	f503 3301 	add.w	r3, r3, #132096	; 0x20400
- 80018c8:	2220      	movs	r2, #32
- 80018ca:	619a      	str	r2, [r3, #24]
+ 80018e6:	f103 4380 	add.w	r3, r3, #1073741824	; 0x40000000
+ 80018ea:	f503 3301 	add.w	r3, r3, #132096	; 0x20400
+ 80018ee:	2220      	movs	r2, #32
+ 80018f0:	619a      	str	r2, [r3, #24]
 }
- 80018cc:	b003      	add	sp, #12
- 80018ce:	bdf0      	pop	{r4, r5, r6, r7, pc}
+ 80018f2:	b003      	add	sp, #12
+ 80018f4:	bdf0      	pop	{r4, r5, r6, r7, pc}
 	if ( (gcButtonInputSnapShot[GC_DPAD_LEFT] == RELEASED) && (gcButtonInputSnapShot[GC_DPAD_RIGHT] == RELEASED) )
- 80018d0:	4b6b      	ldr	r3, [pc, #428]	; (8001a80 <GCControllerEmulation_SendControllerState+0x550>)
- 80018d2:	7adb      	ldrb	r3, [r3, #11]
- 80018d4:	2b01      	cmp	r3, #1
- 80018d6:	d008      	beq.n	80018ea <GCControllerEmulation_SendControllerState+0x3ba>
+ 80018f6:	4b62      	ldr	r3, [pc, #392]	; (8001a80 <GCControllerEmulation_SendControllerState+0x550>)
+ 80018f8:	7adb      	ldrb	r3, [r3, #11]
+ 80018fa:	2b01      	cmp	r3, #1
+ 80018fc:	d008      	beq.n	8001910 <GCControllerEmulation_SendControllerState+0x3e0>
 	else if ( (gcButtonInputSnapShot[GC_DPAD_LEFT] == RELEASED) && (gcButtonInputSnapShot[GC_DPAD_RIGHT] == PUSHED) )
- 80018d8:	2b00      	cmp	r3, #0
- 80018da:	f47f ae39 	bne.w	8001550 <GCControllerEmulation_SendControllerState+0x20>
+ 80018fe:	2b00      	cmp	r3, #0
+ 8001900:	f47f ae26 	bne.w	8001550 <GCControllerEmulation_SendControllerState+0x20>
 		gcProcessedButtonStates[GC_DPAD_LEFT] = RELEASED;
- 80018de:	4b69      	ldr	r3, [pc, #420]	; (8001a84 <GCControllerEmulation_SendControllerState+0x554>)
- 80018e0:	2201      	movs	r2, #1
- 80018e2:	729a      	strb	r2, [r3, #10]
+ 8001904:	4b5c      	ldr	r3, [pc, #368]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
+ 8001906:	2201      	movs	r2, #1
+ 8001908:	729a      	strb	r2, [r3, #10]
 		gcProcessedButtonStates[GC_DPAD_RIGHT] = PUSHED;
- 80018e4:	2200      	movs	r2, #0
- 80018e6:	72da      	strb	r2, [r3, #11]
- 80018e8:	e636      	b.n	8001558 <GCControllerEmulation_SendControllerState+0x28>
+ 800190a:	2200      	movs	r2, #0
+ 800190c:	72da      	strb	r2, [r3, #11]
+ 800190e:	e623      	b.n	8001558 <GCControllerEmulation_SendControllerState+0x28>
 		gcProcessedButtonStates[GC_DPAD_LEFT] = RELEASED;
- 80018ea:	4b66      	ldr	r3, [pc, #408]	; (8001a84 <GCControllerEmulation_SendControllerState+0x554>)
- 80018ec:	2201      	movs	r2, #1
- 80018ee:	729a      	strb	r2, [r3, #10]
+ 8001910:	4b59      	ldr	r3, [pc, #356]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
+ 8001912:	2201      	movs	r2, #1
+ 8001914:	729a      	strb	r2, [r3, #10]
 		gcProcessedButtonStates[GC_DPAD_RIGHT] = RELEASED;
- 80018f0:	72da      	strb	r2, [r3, #11]
- 80018f2:	e631      	b.n	8001558 <GCControllerEmulation_SendControllerState+0x28>
+ 8001916:	72da      	strb	r2, [r3, #11]
+ 8001918:	e61e      	b.n	8001558 <GCControllerEmulation_SendControllerState+0x28>
 		gcProcessedButtonStates[GC_DPAD_LEFT] = PUSHED;
- 80018f4:	4b63      	ldr	r3, [pc, #396]	; (8001a84 <GCControllerEmulation_SendControllerState+0x554>)
- 80018f6:	2200      	movs	r2, #0
- 80018f8:	729a      	strb	r2, [r3, #10]
+ 800191a:	4b57      	ldr	r3, [pc, #348]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
+ 800191c:	2200      	movs	r2, #0
+ 800191e:	729a      	strb	r2, [r3, #10]
 		gcProcessedButtonStates[GC_DPAD_RIGHT] = RELEASED;
- 80018fa:	2201      	movs	r2, #1
- 80018fc:	72da      	strb	r2, [r3, #11]
- 80018fe:	e62b      	b.n	8001558 <GCControllerEmulation_SendControllerState+0x28>
+ 8001920:	2201      	movs	r2, #1
+ 8001922:	72da      	strb	r2, [r3, #11]
+ 8001924:	e618      	b.n	8001558 <GCControllerEmulation_SendControllerState+0x28>
 	if ( (gcButtonInputSnapShot[GC_DPAD_DOWN] == RELEASED) && (gcButtonInputSnapShot[GC_DPAD_UP] == RELEASED) )
- 8001900:	4b5f      	ldr	r3, [pc, #380]	; (8001a80 <GCControllerEmulation_SendControllerState+0x550>)
- 8001902:	7a1b      	ldrb	r3, [r3, #8]
- 8001904:	2b01      	cmp	r3, #1
- 8001906:	d008      	beq.n	800191a <GCControllerEmulation_SendControllerState+0x3ea>
+ 8001926:	4b56      	ldr	r3, [pc, #344]	; (8001a80 <GCControllerEmulation_SendControllerState+0x550>)
+ 8001928:	7a1b      	ldrb	r3, [r3, #8]
+ 800192a:	2b01      	cmp	r3, #1
+ 800192c:	d008      	beq.n	8001940 <GCControllerEmulation_SendControllerState+0x410>
 	else if ( (gcButtonInputSnapShot[GC_DPAD_DOWN] == RELEASED) && (gcButtonInputSnapShot[GC_DPAD_UP] == PUSHED) )
- 8001908:	2b00      	cmp	r3, #0
- 800190a:	f47f ae30 	bne.w	800156e <GCControllerEmulation_SendControllerState+0x3e>
+ 800192e:	2b00      	cmp	r3, #0
+ 8001930:	f47f ae1d 	bne.w	800156e <GCControllerEmulation_SendControllerState+0x3e>
 		gcProcessedButtonStates[GC_DPAD_DOWN] = RELEASED;
- 800190e:	4b5d      	ldr	r3, [pc, #372]	; (8001a84 <GCControllerEmulation_SendControllerState+0x554>)
- 8001910:	2201      	movs	r2, #1
- 8001912:	725a      	strb	r2, [r3, #9]
+ 8001934:	4b50      	ldr	r3, [pc, #320]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
+ 8001936:	2201      	movs	r2, #1
+ 8001938:	725a      	strb	r2, [r3, #9]
 		gcProcessedButtonStates[GC_DPAD_UP] = PUSHED;
- 8001914:	2200      	movs	r2, #0
- 8001916:	721a      	strb	r2, [r3, #8]
- 8001918:	e62d      	b.n	8001576 <GCControllerEmulation_SendControllerState+0x46>
+ 800193a:	2200      	movs	r2, #0
+ 800193c:	721a      	strb	r2, [r3, #8]
+ 800193e:	e61a      	b.n	8001576 <GCControllerEmulation_SendControllerState+0x46>
 		gcProcessedButtonStates[GC_DPAD_DOWN] = RELEASED;
- 800191a:	4b5a      	ldr	r3, [pc, #360]	; (8001a84 <GCControllerEmulation_SendControllerState+0x554>)
- 800191c:	2201      	movs	r2, #1
- 800191e:	725a      	strb	r2, [r3, #9]
+ 8001940:	4b4d      	ldr	r3, [pc, #308]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
+ 8001942:	2201      	movs	r2, #1
+ 8001944:	725a      	strb	r2, [r3, #9]
 		gcProcessedButtonStates[GC_DPAD_UP] = RELEASED;
- 8001920:	721a      	strb	r2, [r3, #8]
- 8001922:	e628      	b.n	8001576 <GCControllerEmulation_SendControllerState+0x46>
+ 8001946:	721a      	strb	r2, [r3, #8]
+ 8001948:	e615      	b.n	8001576 <GCControllerEmulation_SendControllerState+0x46>
 		gcProcessedButtonStates[GC_DPAD_DOWN] = PUSHED;
- 8001924:	4b57      	ldr	r3, [pc, #348]	; (8001a84 <GCControllerEmulation_SendControllerState+0x554>)
- 8001926:	2200      	movs	r2, #0
- 8001928:	725a      	strb	r2, [r3, #9]
+ 800194a:	4b4b      	ldr	r3, [pc, #300]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
+ 800194c:	2200      	movs	r2, #0
+ 800194e:	725a      	strb	r2, [r3, #9]
 		gcProcessedButtonStates[GC_DPAD_UP] = RELEASED;
- 800192a:	2201      	movs	r2, #1
- 800192c:	721a      	strb	r2, [r3, #8]
- 800192e:	e622      	b.n	8001576 <GCControllerEmulation_SendControllerState+0x46>
+ 8001950:	2201      	movs	r2, #1
+ 8001952:	721a      	strb	r2, [r3, #8]
+ 8001954:	e60f      	b.n	8001576 <GCControllerEmulation_SendControllerState+0x46>
 	if ( (gcButtonInputSnapShot[GC_MAIN_STICK_LEFT] == RELEASED) && (gcButtonInputSnapShot[GC_MAIN_STICK_RIGHT] == RELEASED) )
- 8001930:	4b53      	ldr	r3, [pc, #332]	; (8001a80 <GCControllerEmulation_SendControllerState+0x550>)
- 8001932:	7bdb      	ldrb	r3, [r3, #15]
- 8001934:	2b01      	cmp	r3, #1
- 8001936:	d008      	beq.n	800194a <GCControllerEmulation_SendControllerState+0x41a>
+ 8001956:	4b4a      	ldr	r3, [pc, #296]	; (8001a80 <GCControllerEmulation_SendControllerState+0x550>)
+ 8001958:	7bdb      	ldrb	r3, [r3, #15]
+ 800195a:	2b01      	cmp	r3, #1
+ 800195c:	d008      	beq.n	8001970 <GCControllerEmulation_SendControllerState+0x440>
 	else if ( (gcButtonInputSnapShot[GC_MAIN_STICK_LEFT] == RELEASED) && (gcButtonInputSnapShot[GC_MAIN_STICK_RIGHT] == PUSHED) )
- 8001938:	2b00      	cmp	r3, #0
- 800193a:	f47f ae27 	bne.w	800158c <GCControllerEmulation_SendControllerState+0x5c>
+ 800195e:	2b00      	cmp	r3, #0
+ 8001960:	f47f ae14 	bne.w	800158c <GCControllerEmulation_SendControllerState+0x5c>
 		gcProcessedButtonStates[GC_MAIN_STICK_LEFT] = RELEASED;
- 800193e:	4b51      	ldr	r3, [pc, #324]	; (8001a84 <GCControllerEmulation_SendControllerState+0x554>)
- 8001940:	2201      	movs	r2, #1
- 8001942:	739a      	strb	r2, [r3, #14]
+ 8001964:	4b44      	ldr	r3, [pc, #272]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
+ 8001966:	2201      	movs	r2, #1
+ 8001968:	739a      	strb	r2, [r3, #14]
 		gcProcessedButtonStates[GC_MAIN_STICK_RIGHT] = PUSHED;
- 8001944:	2200      	movs	r2, #0
- 8001946:	73da      	strb	r2, [r3, #15]
- 8001948:	e624      	b.n	8001594 <GCControllerEmulation_SendControllerState+0x64>
+ 800196a:	2200      	movs	r2, #0
+ 800196c:	73da      	strb	r2, [r3, #15]
+ 800196e:	e611      	b.n	8001594 <GCControllerEmulation_SendControllerState+0x64>
 		gcProcessedButtonStates[GC_MAIN_STICK_LEFT] = RELEASED;
- 800194a:	4b4e      	ldr	r3, [pc, #312]	; (8001a84 <GCControllerEmulation_SendControllerState+0x554>)
- 800194c:	2201      	movs	r2, #1
- 800194e:	739a      	strb	r2, [r3, #14]
+ 8001970:	4b41      	ldr	r3, [pc, #260]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
+ 8001972:	2201      	movs	r2, #1
+ 8001974:	739a      	strb	r2, [r3, #14]
 		gcProcessedButtonStates[GC_MAIN_STICK_RIGHT] = RELEASED;
- 8001950:	73da      	strb	r2, [r3, #15]
- 8001952:	e61f      	b.n	8001594 <GCControllerEmulation_SendControllerState+0x64>
+ 8001976:	73da      	strb	r2, [r3, #15]
+ 8001978:	e60c      	b.n	8001594 <GCControllerEmulation_SendControllerState+0x64>
 		gcProcessedButtonStates[GC_MAIN_STICK_LEFT] = PUSHED;
- 8001954:	4b4b      	ldr	r3, [pc, #300]	; (8001a84 <GCControllerEmulation_SendControllerState+0x554>)
- 8001956:	2200      	movs	r2, #0
- 8001958:	739a      	strb	r2, [r3, #14]
+ 800197a:	4b3f      	ldr	r3, [pc, #252]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
+ 800197c:	2200      	movs	r2, #0
+ 800197e:	739a      	strb	r2, [r3, #14]
 		gcProcessedButtonStates[GC_MAIN_STICK_RIGHT] = RELEASED;
- 800195a:	2201      	movs	r2, #1
- 800195c:	73da      	strb	r2, [r3, #15]
- 800195e:	e619      	b.n	8001594 <GCControllerEmulation_SendControllerState+0x64>
+ 8001980:	2201      	movs	r2, #1
+ 8001982:	73da      	strb	r2, [r3, #15]
+ 8001984:	e606      	b.n	8001594 <GCControllerEmulation_SendControllerState+0x64>
 	if ( (gcButtonInputSnapShot[GC_MAIN_STICK_DOWN] == RELEASED) && (gcButtonInputSnapShot[GC_MAIN_STICK_UP] == RELEASED) )
- 8001960:	4b47      	ldr	r3, [pc, #284]	; (8001a80 <GCControllerEmulation_SendControllerState+0x550>)
- 8001962:	7b1b      	ldrb	r3, [r3, #12]
- 8001964:	2b01      	cmp	r3, #1
- 8001966:	d008      	beq.n	800197a <GCControllerEmulation_SendControllerState+0x44a>
+ 8001986:	4b3e      	ldr	r3, [pc, #248]	; (8001a80 <GCControllerEmulation_SendControllerState+0x550>)
+ 8001988:	7b1b      	ldrb	r3, [r3, #12]
+ 800198a:	2b01      	cmp	r3, #1
+ 800198c:	d008      	beq.n	80019a0 <GCControllerEmulation_SendControllerState+0x470>
 	else if ( (gcButtonInputSnapShot[GC_MAIN_STICK_DOWN] == RELEASED) && (gcButtonInputSnapShot[GC_MAIN_STICK_UP] == PUSHED) )
- 8001968:	2b00      	cmp	r3, #0
- 800196a:	f47f ae1e 	bne.w	80015aa <GCControllerEmulation_SendControllerState+0x7a>
+ 800198e:	2b00      	cmp	r3, #0
+ 8001990:	f47f ae0b 	bne.w	80015aa <GCControllerEmulation_SendControllerState+0x7a>
 		gcProcessedButtonStates[GC_MAIN_STICK_DOWN] = RELEASED;
- 800196e:	4b45      	ldr	r3, [pc, #276]	; (8001a84 <GCControllerEmulation_SendControllerState+0x554>)
- 8001970:	2201      	movs	r2, #1
- 8001972:	735a      	strb	r2, [r3, #13]
+ 8001994:	4b38      	ldr	r3, [pc, #224]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
+ 8001996:	2201      	movs	r2, #1
+ 8001998:	735a      	strb	r2, [r3, #13]
 		gcProcessedButtonStates[GC_MAIN_STICK_UP] = PUSHED;
- 8001974:	2200      	movs	r2, #0
- 8001976:	731a      	strb	r2, [r3, #12]
- 8001978:	e61b      	b.n	80015b2 <GCControllerEmulation_SendControllerState+0x82>
+ 800199a:	2200      	movs	r2, #0
+ 800199c:	731a      	strb	r2, [r3, #12]
+ 800199e:	e608      	b.n	80015b2 <GCControllerEmulation_SendControllerState+0x82>
 		gcProcessedButtonStates[GC_MAIN_STICK_DOWN] = RELEASED;
- 800197a:	4b42      	ldr	r3, [pc, #264]	; (8001a84 <GCControllerEmulation_SendControllerState+0x554>)
- 800197c:	2201      	movs	r2, #1
- 800197e:	735a      	strb	r2, [r3, #13]
+ 80019a0:	4b35      	ldr	r3, [pc, #212]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
+ 80019a2:	2201      	movs	r2, #1
+ 80019a4:	735a      	strb	r2, [r3, #13]
 		gcProcessedButtonStates[GC_MAIN_STICK_UP] = RELEASED;
- 8001980:	731a      	strb	r2, [r3, #12]
- 8001982:	e616      	b.n	80015b2 <GCControllerEmulation_SendControllerState+0x82>
+ 80019a6:	731a      	strb	r2, [r3, #12]
+ 80019a8:	e603      	b.n	80015b2 <GCControllerEmulation_SendControllerState+0x82>
 		gcProcessedButtonStates[GC_MAIN_STICK_DOWN] = PUSHED;
- 8001984:	4b3f      	ldr	r3, [pc, #252]	; (8001a84 <GCControllerEmulation_SendControllerState+0x554>)
- 8001986:	2200      	movs	r2, #0
- 8001988:	735a      	strb	r2, [r3, #13]
+ 80019aa:	4b33      	ldr	r3, [pc, #204]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
+ 80019ac:	2200      	movs	r2, #0
+ 80019ae:	735a      	strb	r2, [r3, #13]
 		gcProcessedButtonStates[GC_MAIN_STICK_UP] = RELEASED;
- 800198a:	2201      	movs	r2, #1
- 800198c:	731a      	strb	r2, [r3, #12]
- 800198e:	e610      	b.n	80015b2 <GCControllerEmulation_SendControllerState+0x82>
+ 80019b0:	2201      	movs	r2, #1
+ 80019b2:	731a      	strb	r2, [r3, #12]
+ 80019b4:	e5fd      	b.n	80015b2 <GCControllerEmulation_SendControllerState+0x82>
 	if ( (gcButtonInputSnapShot[GC_C_STICK_LEFT] == RELEASED) && (gcButtonInputSnapShot[GC_C_STICK_RIGHT] == RELEASED) )
- 8001990:	4b3b      	ldr	r3, [pc, #236]	; (8001a80 <GCControllerEmulation_SendControllerState+0x550>)
- 8001992:	7cdb      	ldrb	r3, [r3, #19]
- 8001994:	2b01      	cmp	r3, #1
- 8001996:	d008      	beq.n	80019aa <GCControllerEmulation_SendControllerState+0x47a>
+ 80019b6:	4b32      	ldr	r3, [pc, #200]	; (8001a80 <GCControllerEmulation_SendControllerState+0x550>)
+ 80019b8:	7cdb      	ldrb	r3, [r3, #19]
+ 80019ba:	2b01      	cmp	r3, #1
+ 80019bc:	d008      	beq.n	80019d0 <GCControllerEmulation_SendControllerState+0x4a0>
 	else if ( (gcButtonInputSnapShot[GC_C_STICK_LEFT] == RELEASED) && (gcButtonInputSnapShot[GC_C_STICK_RIGHT] == PUSHED) )
- 8001998:	2b00      	cmp	r3, #0
- 800199a:	f47f ae15 	bne.w	80015c8 <GCControllerEmulation_SendControllerState+0x98>
+ 80019be:	2b00      	cmp	r3, #0
+ 80019c0:	f47f ae02 	bne.w	80015c8 <GCControllerEmulation_SendControllerState+0x98>
 		gcProcessedButtonStates[GC_C_STICK_LEFT] = RELEASED;
- 800199e:	4b39      	ldr	r3, [pc, #228]	; (8001a84 <GCControllerEmulation_SendControllerState+0x554>)
- 80019a0:	2201      	movs	r2, #1
- 80019a2:	749a      	strb	r2, [r3, #18]
+ 80019c4:	4b2c      	ldr	r3, [pc, #176]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
+ 80019c6:	2201      	movs	r2, #1
+ 80019c8:	749a      	strb	r2, [r3, #18]
 		gcProcessedButtonStates[GC_C_STICK_RIGHT] = PUSHED;
- 80019a4:	2200      	movs	r2, #0
- 80019a6:	74da      	strb	r2, [r3, #19]
- 80019a8:	e612      	b.n	80015d0 <GCControllerEmulation_SendControllerState+0xa0>
+ 80019ca:	2200      	movs	r2, #0
+ 80019cc:	74da      	strb	r2, [r3, #19]
+ 80019ce:	e5ff      	b.n	80015d0 <GCControllerEmulation_SendControllerState+0xa0>
 		gcProcessedButtonStates[GC_C_STICK_LEFT] = RELEASED;
- 80019aa:	4b36      	ldr	r3, [pc, #216]	; (8001a84 <GCControllerEmulation_SendControllerState+0x554>)
- 80019ac:	2201      	movs	r2, #1
- 80019ae:	749a      	strb	r2, [r3, #18]
+ 80019d0:	4b29      	ldr	r3, [pc, #164]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
+ 80019d2:	2201      	movs	r2, #1
+ 80019d4:	749a      	strb	r2, [r3, #18]
 		gcProcessedButtonStates[GC_C_STICK_RIGHT] = RELEASED;
- 80019b0:	74da      	strb	r2, [r3, #19]
- 80019b2:	e60d      	b.n	80015d0 <GCControllerEmulation_SendControllerState+0xa0>
+ 80019d6:	74da      	strb	r2, [r3, #19]
+ 80019d8:	e5fa      	b.n	80015d0 <GCControllerEmulation_SendControllerState+0xa0>
 		gcProcessedButtonStates[GC_C_STICK_LEFT] = PUSHED;
- 80019b4:	4b33      	ldr	r3, [pc, #204]	; (8001a84 <GCControllerEmulation_SendControllerState+0x554>)
- 80019b6:	2200      	movs	r2, #0
- 80019b8:	749a      	strb	r2, [r3, #18]
+ 80019da:	4b27      	ldr	r3, [pc, #156]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
+ 80019dc:	2200      	movs	r2, #0
+ 80019de:	749a      	strb	r2, [r3, #18]
 		gcProcessedButtonStates[GC_C_STICK_RIGHT] = RELEASED;
- 80019ba:	2201      	movs	r2, #1
- 80019bc:	74da      	strb	r2, [r3, #19]
- 80019be:	e607      	b.n	80015d0 <GCControllerEmulation_SendControllerState+0xa0>
+ 80019e0:	2201      	movs	r2, #1
+ 80019e2:	74da      	strb	r2, [r3, #19]
+ 80019e4:	e5f4      	b.n	80015d0 <GCControllerEmulation_SendControllerState+0xa0>
 	if ( (gcButtonInputSnapShot[GC_C_STICK_DOWN] == RELEASED) && (gcButtonInputSnapShot[GC_C_STICK_UP] == RELEASED) )
- 80019c0:	4b2f      	ldr	r3, [pc, #188]	; (8001a80 <GCControllerEmulation_SendControllerState+0x550>)
- 80019c2:	7c1b      	ldrb	r3, [r3, #16]
- 80019c4:	2b01      	cmp	r3, #1
- 80019c6:	d008      	beq.n	80019da <GCControllerEmulation_SendControllerState+0x4aa>
+ 80019e6:	4b26      	ldr	r3, [pc, #152]	; (8001a80 <GCControllerEmulation_SendControllerState+0x550>)
+ 80019e8:	7c1b      	ldrb	r3, [r3, #16]
+ 80019ea:	2b01      	cmp	r3, #1
+ 80019ec:	d008      	beq.n	8001a00 <GCControllerEmulation_SendControllerState+0x4d0>
 	else if ( (gcButtonInputSnapShot[GC_C_STICK_DOWN] == RELEASED) && (gcButtonInputSnapShot[GC_C_STICK_UP] == PUSHED) )
- 80019c8:	2b00      	cmp	r3, #0
- 80019ca:	f47f ae0c 	bne.w	80015e6 <GCControllerEmulation_SendControllerState+0xb6>
+ 80019ee:	2b00      	cmp	r3, #0
+ 80019f0:	f47f adf9 	bne.w	80015e6 <GCControllerEmulation_SendControllerState+0xb6>
 		gcProcessedButtonStates[GC_C_STICK_DOWN] = RELEASED;
- 80019ce:	4b2d      	ldr	r3, [pc, #180]	; (8001a84 <GCControllerEmulation_SendControllerState+0x554>)
- 80019d0:	2201      	movs	r2, #1
- 80019d2:	745a      	strb	r2, [r3, #17]
+ 80019f4:	4b20      	ldr	r3, [pc, #128]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
+ 80019f6:	2201      	movs	r2, #1
+ 80019f8:	745a      	strb	r2, [r3, #17]
 		gcProcessedButtonStates[GC_C_STICK_UP] = PUSHED;
- 80019d4:	2200      	movs	r2, #0
- 80019d6:	741a      	strb	r2, [r3, #16]
- 80019d8:	e609      	b.n	80015ee <GCControllerEmulation_SendControllerState+0xbe>
+ 80019fa:	2200      	movs	r2, #0
+ 80019fc:	741a      	strb	r2, [r3, #16]
+ 80019fe:	e5f6      	b.n	80015ee <GCControllerEmulation_SendControllerState+0xbe>
 		gcProcessedButtonStates[GC_C_STICK_DOWN] = RELEASED;
- 80019da:	4b2a      	ldr	r3, [pc, #168]	; (8001a84 <GCControllerEmulation_SendControllerState+0x554>)
- 80019dc:	2201      	movs	r2, #1
- 80019de:	745a      	strb	r2, [r3, #17]
+ 8001a00:	4b1d      	ldr	r3, [pc, #116]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
+ 8001a02:	2201      	movs	r2, #1
+ 8001a04:	745a      	strb	r2, [r3, #17]
 		gcProcessedButtonStates[GC_C_STICK_UP] = RELEASED;
- 80019e0:	741a      	strb	r2, [r3, #16]
- 80019e2:	e604      	b.n	80015ee <GCControllerEmulation_SendControllerState+0xbe>
+ 8001a06:	741a      	strb	r2, [r3, #16]
+ 8001a08:	e5f1      	b.n	80015ee <GCControllerEmulation_SendControllerState+0xbe>
 		gcProcessedButtonStates[GC_C_STICK_DOWN] = PUSHED;
- 80019e4:	4b27      	ldr	r3, [pc, #156]	; (8001a84 <GCControllerEmulation_SendControllerState+0x554>)
- 80019e6:	2200      	movs	r2, #0
- 80019e8:	745a      	strb	r2, [r3, #17]
-		gcProcessedButtonStates[GC_C_STICK_UP] = RELEASED;
- 80019ea:	2201      	movs	r2, #1
- 80019ec:	741a      	strb	r2, [r3, #16]
- 80019ee:	e5fe      	b.n	80015ee <GCControllerEmulation_SendControllerState+0xbe>
-	if( (leftButtonState == RELEASED) && (rightButtonState == RELEASED) )
- 80019f0:	2e01      	cmp	r6, #1
- 80019f2:	d006      	beq.n	8001a02 <GCControllerEmulation_SendControllerState+0x4d2>
-	else if( (leftButtonState == RELEASED) && (rightButtonState == PUSHED) )
- 80019f4:	2e00      	cmp	r6, #0
- 80019f6:	f47f ae33 	bne.w	8001660 <GCControllerEmulation_SendControllerState+0x130>
-		USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
- 80019fa:	4b1f      	ldr	r3, [pc, #124]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
- 80019fc:	22e8      	movs	r2, #232	; 0xe8
- 80019fe:	605a      	str	r2, [r3, #4]
- 8001a00:	e631      	b.n	8001666 <GCControllerEmulation_SendControllerState+0x136>
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001a02:	4b1d      	ldr	r3, [pc, #116]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
- 8001a04:	2208      	movs	r2, #8
- 8001a06:	605a      	str	r2, [r3, #4]
- 8001a08:	e62d      	b.n	8001666 <GCControllerEmulation_SendControllerState+0x136>
-		USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
  8001a0a:	4b1b      	ldr	r3, [pc, #108]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
- 8001a0c:	220f      	movs	r2, #15
- 8001a0e:	605a      	str	r2, [r3, #4]
- 8001a10:	e629      	b.n	8001666 <GCControllerEmulation_SendControllerState+0x136>
+ 8001a0c:	2200      	movs	r2, #0
+ 8001a0e:	745a      	strb	r2, [r3, #17]
+		gcProcessedButtonStates[GC_C_STICK_UP] = RELEASED;
+ 8001a10:	2201      	movs	r2, #1
+ 8001a12:	741a      	strb	r2, [r3, #16]
+ 8001a14:	e5eb      	b.n	80015ee <GCControllerEmulation_SendControllerState+0xbe>
 	if( (leftButtonState == RELEASED) && (rightButtonState == RELEASED) )
- 8001a12:	2d01      	cmp	r5, #1
- 8001a14:	d006      	beq.n	8001a24 <GCControllerEmulation_SendControllerState+0x4f4>
+ 8001a16:	2e01      	cmp	r6, #1
+ 8001a18:	d006      	beq.n	8001a28 <GCControllerEmulation_SendControllerState+0x4f8>
 	else if( (leftButtonState == RELEASED) && (rightButtonState == PUSHED) )
- 8001a16:	2d00      	cmp	r5, #0
- 8001a18:	f47f ae31 	bne.w	800167e <GCControllerEmulation_SendControllerState+0x14e>
+ 8001a1a:	2e00      	cmp	r6, #0
+ 8001a1c:	f47f ae20 	bne.w	8001660 <GCControllerEmulation_SendControllerState+0x130>
 		USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
- 8001a1c:	4b16      	ldr	r3, [pc, #88]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
- 8001a1e:	22e8      	movs	r2, #232	; 0xe8
- 8001a20:	605a      	str	r2, [r3, #4]
- 8001a22:	e62f      	b.n	8001684 <GCControllerEmulation_SendControllerState+0x154>
+ 8001a20:	4b14      	ldr	r3, [pc, #80]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 8001a22:	22e8      	movs	r2, #232	; 0xe8
+ 8001a24:	605a      	str	r2, [r3, #4]
+ 8001a26:	e61e      	b.n	8001666 <GCControllerEmulation_SendControllerState+0x136>
 		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001a24:	4b14      	ldr	r3, [pc, #80]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
- 8001a26:	2208      	movs	r2, #8
- 8001a28:	605a      	str	r2, [r3, #4]
- 8001a2a:	e62b      	b.n	8001684 <GCControllerEmulation_SendControllerState+0x154>
+ 8001a28:	4b12      	ldr	r3, [pc, #72]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 8001a2a:	2208      	movs	r2, #8
+ 8001a2c:	605a      	str	r2, [r3, #4]
+ 8001a2e:	e61a      	b.n	8001666 <GCControllerEmulation_SendControllerState+0x136>
 		USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
- 8001a2c:	4b12      	ldr	r3, [pc, #72]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
- 8001a2e:	220f      	movs	r2, #15
- 8001a30:	605a      	str	r2, [r3, #4]
- 8001a32:	e627      	b.n	8001684 <GCControllerEmulation_SendControllerState+0x154>
+ 8001a30:	4b10      	ldr	r3, [pc, #64]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 8001a32:	220f      	movs	r2, #15
+ 8001a34:	605a      	str	r2, [r3, #4]
+ 8001a36:	e616      	b.n	8001666 <GCControllerEmulation_SendControllerState+0x136>
 	if( (leftButtonState == RELEASED) && (rightButtonState == RELEASED) )
- 8001a34:	2801      	cmp	r0, #1
- 8001a36:	d006      	beq.n	8001a46 <GCControllerEmulation_SendControllerState+0x516>
+ 8001a38:	2d01      	cmp	r5, #1
+ 8001a3a:	d006      	beq.n	8001a4a <GCControllerEmulation_SendControllerState+0x51a>
 	else if( (leftButtonState == RELEASED) && (rightButtonState == PUSHED) )
- 8001a38:	2800      	cmp	r0, #0
- 8001a3a:	f47f ae3f 	bne.w	80016bc <GCControllerEmulation_SendControllerState+0x18c>
+ 8001a3c:	2d00      	cmp	r5, #0
+ 8001a3e:	f47f ae1e 	bne.w	800167e <GCControllerEmulation_SendControllerState+0x14e>
 		USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
- 8001a3e:	4b0e      	ldr	r3, [pc, #56]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
- 8001a40:	22e8      	movs	r2, #232	; 0xe8
- 8001a42:	605a      	str	r2, [r3, #4]
- 8001a44:	e63d      	b.n	80016c2 <GCControllerEmulation_SendControllerState+0x192>
+ 8001a42:	4b0c      	ldr	r3, [pc, #48]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 8001a44:	22e8      	movs	r2, #232	; 0xe8
+ 8001a46:	605a      	str	r2, [r3, #4]
+ 8001a48:	e61c      	b.n	8001684 <GCControllerEmulation_SendControllerState+0x154>
 		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001a46:	4b0c      	ldr	r3, [pc, #48]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
- 8001a48:	2208      	movs	r2, #8
- 8001a4a:	605a      	str	r2, [r3, #4]
- 8001a4c:	e639      	b.n	80016c2 <GCControllerEmulation_SendControllerState+0x192>
+ 8001a4a:	4b0a      	ldr	r3, [pc, #40]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 8001a4c:	2208      	movs	r2, #8
+ 8001a4e:	605a      	str	r2, [r3, #4]
+ 8001a50:	e618      	b.n	8001684 <GCControllerEmulation_SendControllerState+0x154>
 		USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
- 8001a4e:	4b0a      	ldr	r3, [pc, #40]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
- 8001a50:	220f      	movs	r2, #15
- 8001a52:	605a      	str	r2, [r3, #4]
- 8001a54:	e635      	b.n	80016c2 <GCControllerEmulation_SendControllerState+0x192>
+ 8001a52:	4b08      	ldr	r3, [pc, #32]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 8001a54:	220f      	movs	r2, #15
+ 8001a56:	605a      	str	r2, [r3, #4]
+ 8001a58:	e614      	b.n	8001684 <GCControllerEmulation_SendControllerState+0x154>
 	if( (leftButtonState == RELEASED) && (rightButtonState == RELEASED) )
- 8001a56:	2801      	cmp	r0, #1
- 8001a58:	d006      	beq.n	8001a68 <GCControllerEmulation_SendControllerState+0x538>
+ 8001a5a:	2801      	cmp	r0, #1
+ 8001a5c:	d006      	beq.n	8001a6c <GCControllerEmulation_SendControllerState+0x53c>
 	else if( (leftButtonState == RELEASED) && (rightButtonState == PUSHED) )
- 8001a5a:	2800      	cmp	r0, #0
- 8001a5c:	f47f ae40 	bne.w	80016e0 <GCControllerEmulation_SendControllerState+0x1b0>
+ 8001a5e:	2800      	cmp	r0, #0
+ 8001a60:	f47f ae2c 	bne.w	80016bc <GCControllerEmulation_SendControllerState+0x18c>
 		USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
- 8001a60:	4b05      	ldr	r3, [pc, #20]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
- 8001a62:	22e8      	movs	r2, #232	; 0xe8
- 8001a64:	605a      	str	r2, [r3, #4]
- 8001a66:	e63e      	b.n	80016e6 <GCControllerEmulation_SendControllerState+0x1b6>
+ 8001a64:	4b03      	ldr	r3, [pc, #12]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 8001a66:	22e8      	movs	r2, #232	; 0xe8
+ 8001a68:	605a      	str	r2, [r3, #4]
+ 8001a6a:	e62a      	b.n	80016c2 <GCControllerEmulation_SendControllerState+0x192>
 		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001a68:	4b03      	ldr	r3, [pc, #12]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
- 8001a6a:	2208      	movs	r2, #8
- 8001a6c:	605a      	str	r2, [r3, #4]
- 8001a6e:	e63a      	b.n	80016e6 <GCControllerEmulation_SendControllerState+0x1b6>
-		USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
- 8001a70:	4b01      	ldr	r3, [pc, #4]	; (8001a78 <GCControllerEmulation_SendControllerState+0x548>)
- 8001a72:	220f      	movs	r2, #15
- 8001a74:	605a      	str	r2, [r3, #4]
- 8001a76:	e636      	b.n	80016e6 <GCControllerEmulation_SendControllerState+0x1b6>
- 8001a78:	40011000 	.word	0x40011000
+ 8001a6c:	4b01      	ldr	r3, [pc, #4]	; (8001a74 <GCControllerEmulation_SendControllerState+0x544>)
+ 8001a6e:	2208      	movs	r2, #8
+ 8001a70:	605a      	str	r2, [r3, #4]
+ 8001a72:	e626      	b.n	80016c2 <GCControllerEmulation_SendControllerState+0x192>
+ 8001a74:	40011000 	.word	0x40011000
+ 8001a78:	20000040 	.word	0x20000040
  8001a7c:	40020400 	.word	0x40020400
  8001a80:	20000028 	.word	0x20000028
- 8001a84:	20000040 	.word	0x20000040
-	if( (leftButtonState == RELEASED) && (rightButtonState == RELEASED) )
- 8001a88:	2801      	cmp	r0, #1
- 8001a8a:	d006      	beq.n	8001a9a <GCControllerEmulation_SendControllerState+0x56a>
-	else if( (leftButtonState == RELEASED) && (rightButtonState == PUSHED) )
- 8001a8c:	2800      	cmp	r0, #0
- 8001a8e:	f47f ae39 	bne.w	8001704 <GCControllerEmulation_SendControllerState+0x1d4>
-		USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
- 8001a92:	4b26      	ldr	r3, [pc, #152]	; (8001b2c <GCControllerEmulation_SendControllerState+0x5fc>)
- 8001a94:	22e8      	movs	r2, #232	; 0xe8
- 8001a96:	605a      	str	r2, [r3, #4]
- 8001a98:	e637      	b.n	800170a <GCControllerEmulation_SendControllerState+0x1da>
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001a9a:	4b24      	ldr	r3, [pc, #144]	; (8001b2c <GCControllerEmulation_SendControllerState+0x5fc>)
- 8001a9c:	2208      	movs	r2, #8
- 8001a9e:	605a      	str	r2, [r3, #4]
- 8001aa0:	e633      	b.n	800170a <GCControllerEmulation_SendControllerState+0x1da>
 		USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
- 8001aa2:	4b22      	ldr	r3, [pc, #136]	; (8001b2c <GCControllerEmulation_SendControllerState+0x5fc>)
- 8001aa4:	220f      	movs	r2, #15
- 8001aa6:	605a      	str	r2, [r3, #4]
- 8001aa8:	e62f      	b.n	800170a <GCControllerEmulation_SendControllerState+0x1da>
-		while(!(USART1->SR & USART_SR_TXE)){};
- 8001aaa:	461a      	mov	r2, r3
- 8001aac:	6813      	ldr	r3, [r2, #0]
- 8001aae:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001ab2:	d0fb      	beq.n	8001aac <GCControllerEmulation_SendControllerState+0x57c>
+ 8001a84:	4b9c      	ldr	r3, [pc, #624]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001a86:	220f      	movs	r2, #15
+ 8001a88:	605a      	str	r2, [r3, #4]
+ 8001a8a:	e61a      	b.n	80016c2 <GCControllerEmulation_SendControllerState+0x192>
+	if( (leftButtonState == RELEASED) && (rightButtonState == RELEASED) )
+ 8001a8c:	2801      	cmp	r0, #1
+ 8001a8e:	d006      	beq.n	8001a9e <GCControllerEmulation_SendControllerState+0x56e>
+	else if( (leftButtonState == RELEASED) && (rightButtonState == PUSHED) )
+ 8001a90:	2800      	cmp	r0, #0
+ 8001a92:	f47f ae25 	bne.w	80016e0 <GCControllerEmulation_SendControllerState+0x1b0>
+		USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
+ 8001a96:	4b98      	ldr	r3, [pc, #608]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001a98:	22e8      	movs	r2, #232	; 0xe8
+ 8001a9a:	605a      	str	r2, [r3, #4]
+ 8001a9c:	e623      	b.n	80016e6 <GCControllerEmulation_SendControllerState+0x1b6>
 		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001ab4:	4b1d      	ldr	r3, [pc, #116]	; (8001b2c <GCControllerEmulation_SendControllerState+0x5fc>)
- 8001ab6:	2208      	movs	r2, #8
- 8001ab8:	605a      	str	r2, [r3, #4]
-		while(!(USART1->SR & USART_SR_TXE)){};
- 8001aba:	461a      	mov	r2, r3
- 8001abc:	6813      	ldr	r3, [r2, #0]
- 8001abe:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001ac2:	d0fb      	beq.n	8001abc <GCControllerEmulation_SendControllerState+0x58c>
+ 8001a9e:	4b96      	ldr	r3, [pc, #600]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001aa0:	2208      	movs	r2, #8
+ 8001aa2:	605a      	str	r2, [r3, #4]
+ 8001aa4:	e61f      	b.n	80016e6 <GCControllerEmulation_SendControllerState+0x1b6>
+		USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
+ 8001aa6:	4b94      	ldr	r3, [pc, #592]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001aa8:	220f      	movs	r2, #15
+ 8001aaa:	605a      	str	r2, [r3, #4]
+ 8001aac:	e61b      	b.n	80016e6 <GCControllerEmulation_SendControllerState+0x1b6>
+	if( (leftButtonState == RELEASED) && (rightButtonState == RELEASED) )
+ 8001aae:	2801      	cmp	r0, #1
+ 8001ab0:	d006      	beq.n	8001ac0 <GCControllerEmulation_SendControllerState+0x590>
+	else if( (leftButtonState == RELEASED) && (rightButtonState == PUSHED) )
+ 8001ab2:	2800      	cmp	r0, #0
+ 8001ab4:	f47f ae26 	bne.w	8001704 <GCControllerEmulation_SendControllerState+0x1d4>
+		USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
+ 8001ab8:	4b8f      	ldr	r3, [pc, #572]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001aba:	22e8      	movs	r2, #232	; 0xe8
+ 8001abc:	605a      	str	r2, [r3, #4]
+ 8001abe:	e624      	b.n	800170a <GCControllerEmulation_SendControllerState+0x1da>
 		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001ac4:	4b19      	ldr	r3, [pc, #100]	; (8001b2c <GCControllerEmulation_SendControllerState+0x5fc>)
- 8001ac6:	2208      	movs	r2, #8
- 8001ac8:	605a      	str	r2, [r3, #4]
+ 8001ac0:	4b8d      	ldr	r3, [pc, #564]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001ac2:	2208      	movs	r2, #8
+ 8001ac4:	605a      	str	r2, [r3, #4]
+ 8001ac6:	e620      	b.n	800170a <GCControllerEmulation_SendControllerState+0x1da>
+		USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
+ 8001ac8:	4b8b      	ldr	r3, [pc, #556]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001aca:	220f      	movs	r2, #15
+ 8001acc:	605a      	str	r2, [r3, #4]
+ 8001ace:	e61c      	b.n	800170a <GCControllerEmulation_SendControllerState+0x1da>
+	else if(gcProcessedButtonStates[GC_MAIN_STICK_RIGHT] == PUSHED)
+ 8001ad0:	4b8a      	ldr	r3, [pc, #552]	; (8001cfc <GCControllerEmulation_SendControllerState+0x7cc>)
+ 8001ad2:	7bdb      	ldrb	r3, [r3, #15]
+ 8001ad4:	b303      	cbz	r3, 8001b18 <GCControllerEmulation_SendControllerState+0x5e8>
 		while(!(USART1->SR & USART_SR_TXE)){};
- 8001aca:	461a      	mov	r2, r3
- 8001acc:	6813      	ldr	r3, [r2, #0]
- 8001ace:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001ad2:	d0fb      	beq.n	8001acc <GCControllerEmulation_SendControllerState+0x59c>
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001ad4:	4b15      	ldr	r3, [pc, #84]	; (8001b2c <GCControllerEmulation_SendControllerState+0x5fc>)
- 8001ad6:	2208      	movs	r2, #8
- 8001ad8:	605a      	str	r2, [r3, #4]
+ 8001ad6:	4a88      	ldr	r2, [pc, #544]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001ad8:	6813      	ldr	r3, [r2, #0]
+ 8001ada:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001ade:	d0fb      	beq.n	8001ad8 <GCControllerEmulation_SendControllerState+0x5a8>
+		USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
+ 8001ae0:	4b85      	ldr	r3, [pc, #532]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001ae2:	220f      	movs	r2, #15
+ 8001ae4:	605a      	str	r2, [r3, #4]
 		while(!(USART1->SR & USART_SR_TXE)){};
- 8001ada:	461a      	mov	r2, r3
- 8001adc:	6813      	ldr	r3, [r2, #0]
- 8001ade:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001ae2:	d0fb      	beq.n	8001adc <GCControllerEmulation_SendControllerState+0x5ac>
+ 8001ae6:	461a      	mov	r2, r3
+ 8001ae8:	6813      	ldr	r3, [r2, #0]
+ 8001aea:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001aee:	d0fb      	beq.n	8001ae8 <GCControllerEmulation_SendControllerState+0x5b8>
 		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001ae4:	4b11      	ldr	r3, [pc, #68]	; (8001b2c <GCControllerEmulation_SendControllerState+0x5fc>)
- 8001ae6:	2208      	movs	r2, #8
- 8001ae8:	605a      	str	r2, [r3, #4]
+ 8001af0:	4b81      	ldr	r3, [pc, #516]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001af2:	2208      	movs	r2, #8
+ 8001af4:	605a      	str	r2, [r3, #4]
 		while(!(USART1->SR & USART_SR_TXE)){};
- 8001aea:	461a      	mov	r2, r3
- 8001aec:	6813      	ldr	r3, [r2, #0]
- 8001aee:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001af2:	d0fb      	beq.n	8001aec <GCControllerEmulation_SendControllerState+0x5bc>
+ 8001af6:	461a      	mov	r2, r3
+ 8001af8:	6813      	ldr	r3, [r2, #0]
+ 8001afa:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001afe:	d0fb      	beq.n	8001af8 <GCControllerEmulation_SendControllerState+0x5c8>
 		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001af4:	4b0d      	ldr	r3, [pc, #52]	; (8001b2c <GCControllerEmulation_SendControllerState+0x5fc>)
- 8001af6:	2208      	movs	r2, #8
- 8001af8:	605a      	str	r2, [r3, #4]
+ 8001b00:	4b7d      	ldr	r3, [pc, #500]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001b02:	2208      	movs	r2, #8
+ 8001b04:	605a      	str	r2, [r3, #4]
 		while(!(USART1->SR & USART_SR_TXE)){};
- 8001afa:	461a      	mov	r2, r3
- 8001afc:	6813      	ldr	r3, [r2, #0]
- 8001afe:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001b02:	d0fb      	beq.n	8001afc <GCControllerEmulation_SendControllerState+0x5cc>
+ 8001b06:	461a      	mov	r2, r3
+ 8001b08:	6813      	ldr	r3, [r2, #0]
+ 8001b0a:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001b0e:	d0fb      	beq.n	8001b08 <GCControllerEmulation_SendControllerState+0x5d8>
 		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001b04:	4b09      	ldr	r3, [pc, #36]	; (8001b2c <GCControllerEmulation_SendControllerState+0x5fc>)
- 8001b06:	2208      	movs	r2, #8
- 8001b08:	605a      	str	r2, [r3, #4]
+ 8001b10:	4b79      	ldr	r3, [pc, #484]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001b12:	2208      	movs	r2, #8
+ 8001b14:	605a      	str	r2, [r3, #4]
+ 8001b16:	e61d      	b.n	8001754 <GCControllerEmulation_SendControllerState+0x224>
 		while(!(USART1->SR & USART_SR_TXE)){};
- 8001b0a:	461a      	mov	r2, r3
- 8001b0c:	6813      	ldr	r3, [r2, #0]
- 8001b0e:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001b12:	d0fb      	beq.n	8001b0c <GCControllerEmulation_SendControllerState+0x5dc>
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001b14:	4b05      	ldr	r3, [pc, #20]	; (8001b2c <GCControllerEmulation_SendControllerState+0x5fc>)
- 8001b16:	2208      	movs	r2, #8
- 8001b18:	605a      	str	r2, [r3, #4]
+ 8001b18:	4a77      	ldr	r2, [pc, #476]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001b1a:	6813      	ldr	r3, [r2, #0]
+ 8001b1c:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001b20:	d0fb      	beq.n	8001b1a <GCControllerEmulation_SendControllerState+0x5ea>
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+ 8001b22:	4b75      	ldr	r3, [pc, #468]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001b24:	22ef      	movs	r2, #239	; 0xef
+ 8001b26:	605a      	str	r2, [r3, #4]
 		while(!(USART1->SR & USART_SR_TXE)){};
- 8001b1a:	461a      	mov	r2, r3
- 8001b1c:	6813      	ldr	r3, [r2, #0]
- 8001b1e:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001b22:	d0fb      	beq.n	8001b1c <GCControllerEmulation_SendControllerState+0x5ec>
+ 8001b28:	461a      	mov	r2, r3
+ 8001b2a:	6813      	ldr	r3, [r2, #0]
+ 8001b2c:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001b30:	d0fb      	beq.n	8001b2a <GCControllerEmulation_SendControllerState+0x5fa>
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+ 8001b32:	4b71      	ldr	r3, [pc, #452]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001b34:	22ef      	movs	r2, #239	; 0xef
+ 8001b36:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001b38:	461a      	mov	r2, r3
+ 8001b3a:	6813      	ldr	r3, [r2, #0]
+ 8001b3c:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001b40:	d0fb      	beq.n	8001b3a <GCControllerEmulation_SendControllerState+0x60a>
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+ 8001b42:	4b6d      	ldr	r3, [pc, #436]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001b44:	22ef      	movs	r2, #239	; 0xef
+ 8001b46:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001b48:	461a      	mov	r2, r3
+ 8001b4a:	6813      	ldr	r3, [r2, #0]
+ 8001b4c:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001b50:	d0fb      	beq.n	8001b4a <GCControllerEmulation_SendControllerState+0x61a>
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+ 8001b52:	4b69      	ldr	r3, [pc, #420]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001b54:	22ef      	movs	r2, #239	; 0xef
+ 8001b56:	605a      	str	r2, [r3, #4]
+ 8001b58:	e5fc      	b.n	8001754 <GCControllerEmulation_SendControllerState+0x224>
+	else if(gcProcessedButtonStates[GC_MAIN_STICK_UP] == PUSHED)
+ 8001b5a:	4b68      	ldr	r3, [pc, #416]	; (8001cfc <GCControllerEmulation_SendControllerState+0x7cc>)
+ 8001b5c:	7b1b      	ldrb	r3, [r3, #12]
+ 8001b5e:	b303      	cbz	r3, 8001ba2 <GCControllerEmulation_SendControllerState+0x672>
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001b60:	4a65      	ldr	r2, [pc, #404]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001b62:	6813      	ldr	r3, [r2, #0]
+ 8001b64:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001b68:	d0fb      	beq.n	8001b62 <GCControllerEmulation_SendControllerState+0x632>
+		USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
+ 8001b6a:	4b63      	ldr	r3, [pc, #396]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001b6c:	220f      	movs	r2, #15
+ 8001b6e:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001b70:	461a      	mov	r2, r3
+ 8001b72:	6813      	ldr	r3, [r2, #0]
+ 8001b74:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001b78:	d0fb      	beq.n	8001b72 <GCControllerEmulation_SendControllerState+0x642>
 		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001b24:	4b01      	ldr	r3, [pc, #4]	; (8001b2c <GCControllerEmulation_SendControllerState+0x5fc>)
- 8001b26:	2208      	movs	r2, #8
- 8001b28:	605a      	str	r2, [r3, #4]
- 8001b2a:	e6b9      	b.n	80018a0 <GCControllerEmulation_SendControllerState+0x370>
- 8001b2c:	40011000 	.word	0x40011000
-
-08001b30 <GCControllerEmulation_Run>:
-{
- 8001b30:	e92d 4880 	stmdb	sp!, {r7, fp, lr}
- 8001b34:	b083      	sub	sp, #12
-	USART1->CR1 |= USART_CR1_RE;
- 8001b36:	4cb3      	ldr	r4, [pc, #716]	; (8001e04 <GCControllerEmulation_Run+0x2d4>)
- 8001b38:	e0e8      	b.n	8001d0c <GCControllerEmulation_Run+0x1dc>
-		if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_00_CASE2) ) &&
- 8001b3a:	f002 037f 	and.w	r3, r2, #127	; 0x7f
- 8001b3e:	2b08      	cmp	r3, #8
- 8001b40:	d007      	beq.n	8001b52 <GCControllerEmulation_Run+0x22>
-		else if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_01_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_01_CASE2) ) &&
- 8001b42:	2ae8      	cmp	r2, #232	; 0xe8
- 8001b44:	d115      	bne.n	8001b72 <GCControllerEmulation_Run+0x42>
- 8001b46:	f001 017f 	and.w	r1, r1, #127	; 0x7f
- 8001b4a:	2908      	cmp	r1, #8
- 8001b4c:	d01b      	beq.n	8001b86 <GCControllerEmulation_Run+0x56>
-			command = GC_COMMAND_UNKNOWN;
- 8001b4e:	2304      	movs	r3, #4
- 8001b50:	e004      	b.n	8001b5c <GCControllerEmulation_Run+0x2c>
-		if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_00_CASE2) ) &&
- 8001b52:	f001 037f 	and.w	r3, r1, #127	; 0x7f
- 8001b56:	2b08      	cmp	r3, #8
- 8001b58:	d005      	beq.n	8001b66 <GCControllerEmulation_Run+0x36>
-			command = GC_COMMAND_UNKNOWN;
- 8001b5a:	2304      	movs	r3, #4
-		USART1->CR1 &= ~USART_CR1_RE;
- 8001b5c:	68e2      	ldr	r2, [r4, #12]
- 8001b5e:	f022 0204 	bic.w	r2, r2, #4
- 8001b62:	60e2      	str	r2, [r4, #12]
- 8001b64:	e12f      	b.n	8001dc6 <GCControllerEmulation_Run+0x296>
-			( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT5_BIT4] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT5_BIT4] == GC_BITS_00_CASE2) ) &&
- 8001b66:	f000 037f 	and.w	r3, r0, #127	; 0x7f
- 8001b6a:	2b08      	cmp	r3, #8
- 8001b6c:	d005      	beq.n	8001b7a <GCControllerEmulation_Run+0x4a>
-		else if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_01_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_01_CASE2) ) &&
- 8001b6e:	2ae8      	cmp	r2, #232	; 0xe8
- 8001b70:	d009      	beq.n	8001b86 <GCControllerEmulation_Run+0x56>
- 8001b72:	2ac8      	cmp	r2, #200	; 0xc8
- 8001b74:	d0e7      	beq.n	8001b46 <GCControllerEmulation_Run+0x16>
-			command = GC_COMMAND_UNKNOWN;
- 8001b76:	2304      	movs	r3, #4
- 8001b78:	e7f0      	b.n	8001b5c <GCControllerEmulation_Run+0x2c>
-			( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT3_BIT2] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT3_BIT2] == GC_BITS_00_CASE2) ) &&
- 8001b7a:	f005 037f 	and.w	r3, r5, #127	; 0x7f
- 8001b7e:	2b08      	cmp	r3, #8
- 8001b80:	d1f5      	bne.n	8001b6e <GCControllerEmulation_Run+0x3e>
-			command = GC_COMMAND_PROBE;
- 8001b82:	2300      	movs	r3, #0
- 8001b84:	e7ea      	b.n	8001b5c <GCControllerEmulation_Run+0x2c>
-				 ( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT5_BIT4] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT5_BIT4] == GC_BITS_00_CASE2) ) &&
- 8001b86:	f000 007f 	and.w	r0, r0, #127	; 0x7f
- 8001b8a:	2808      	cmp	r0, #8
- 8001b8c:	d001      	beq.n	8001b92 <GCControllerEmulation_Run+0x62>
-			command = GC_COMMAND_UNKNOWN;
- 8001b8e:	2304      	movs	r3, #4
- 8001b90:	e7e4      	b.n	8001b5c <GCControllerEmulation_Run+0x2c>
-				 ( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT1_BIT0] == GC_BITS_01_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT1_BIT0] == GC_BITS_01_CASE2) )    )
- 8001b92:	f005 05df 	and.w	r5, r5, #223	; 0xdf
-			command = GC_COMMAND_PROBE_ORIGIN;
- 8001b96:	2dc8      	cmp	r5, #200	; 0xc8
- 8001b98:	bf14      	ite	ne
- 8001b9a:	2304      	movne	r3, #4
- 8001b9c:	2301      	moveq	r3, #1
- 8001b9e:	e7dd      	b.n	8001b5c <GCControllerEmulation_Run+0x2c>
-	if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_01_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_01_CASE2) ) &&
- 8001ba0:	f001 017f 	and.w	r1, r1, #127	; 0x7f
- 8001ba4:	2908      	cmp	r1, #8
- 8001ba6:	d001      	beq.n	8001bac <GCControllerEmulation_Run+0x7c>
-		command = GC_COMMAND_UNKNOWN;
- 8001ba8:	2304      	movs	r3, #4
- 8001baa:	e108      	b.n	8001dbe <GCControllerEmulation_Run+0x28e>
-		( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT5_BIT4] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT5_BIT4] == GC_BITS_00_CASE2) ) &&
- 8001bac:	f000 007f 	and.w	r0, r0, #127	; 0x7f
- 8001bb0:	2808      	cmp	r0, #8
- 8001bb2:	d001      	beq.n	8001bb8 <GCControllerEmulation_Run+0x88>
-		command = GC_COMMAND_UNKNOWN;
- 8001bb4:	2304      	movs	r3, #4
- 8001bb6:	e102      	b.n	8001dbe <GCControllerEmulation_Run+0x28e>
-		( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT3_BIT2] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT3_BIT2] == GC_BITS_00_CASE2) ) &&
- 8001bb8:	f005 057f 	and.w	r5, r5, #127	; 0x7f
- 8001bbc:	2d08      	cmp	r5, #8
- 8001bbe:	d001      	beq.n	8001bc4 <GCControllerEmulation_Run+0x94>
-		command = GC_COMMAND_UNKNOWN;
- 8001bc0:	2304      	movs	r3, #4
- 8001bc2:	e0fc      	b.n	8001dbe <GCControllerEmulation_Run+0x28e>
-		if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT7_BIT6] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT7_BIT6] == GC_BITS_00_CASE2) ) &&
- 8001bc4:	f006 067f 	and.w	r6, r6, #127	; 0x7f
- 8001bc8:	2e08      	cmp	r6, #8
- 8001bca:	d001      	beq.n	8001bd0 <GCControllerEmulation_Run+0xa0>
-			command = GC_COMMAND_UNKNOWN;
- 8001bcc:	2304      	movs	r3, #4
- 8001bce:	e0f6      	b.n	8001dbe <GCControllerEmulation_Run+0x28e>
-		if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT7_BIT6] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT7_BIT6] == GC_BITS_00_CASE2) ) &&
- 8001bd0:	f007 077f 	and.w	r7, r7, #127	; 0x7f
- 8001bd4:	2f08      	cmp	r7, #8
- 8001bd6:	d001      	beq.n	8001bdc <GCControllerEmulation_Run+0xac>
-			command = GC_COMMAND_UNKNOWN;
- 8001bd8:	2304      	movs	r3, #4
- 8001bda:	e0f0      	b.n	8001dbe <GCControllerEmulation_Run+0x28e>
-		    ( (gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT5_BIT4] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT5_BIT4] == GC_BITS_00_CASE2) ) &&
- 8001bdc:	f00c 0c7f 	and.w	ip, ip, #127	; 0x7f
- 8001be0:	f1bc 0f08 	cmp.w	ip, #8
- 8001be4:	d001      	beq.n	8001bea <GCControllerEmulation_Run+0xba>
-			command = GC_COMMAND_UNKNOWN;
- 8001be6:	2304      	movs	r3, #4
- 8001be8:	e0e9      	b.n	8001dbe <GCControllerEmulation_Run+0x28e>
-		    ( (gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT1_BIT0] == GC_BITS_11_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT1_BIT0] == GC_BITS_11_CASE2) )    )
- 8001bea:	f00e 0edf 	and.w	lr, lr, #223	; 0xdf
- 8001bee:	f1be 0fcf 	cmp.w	lr, #207	; 0xcf
- 8001bf2:	d001      	beq.n	8001bf8 <GCControllerEmulation_Run+0xc8>
-			command = GC_COMMAND_UNKNOWN;
- 8001bf4:	2304      	movs	r3, #4
- 8001bf6:	e0e2      	b.n	8001dbe <GCControllerEmulation_Run+0x28e>
-	gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT7_BIT6] = USART1->DR;
- 8001bf8:	fa5f f888 	uxtb.w	r8, r8
-			if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT7_BIT6] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT7_BIT6] == GC_BITS_00_CASE2) ) &&
- 8001bfc:	f008 037f 	and.w	r3, r8, #127	; 0x7f
- 8001c00:	2b08      	cmp	r3, #8
- 8001c02:	d001      	beq.n	8001c08 <GCControllerEmulation_Run+0xd8>
-				command = GC_COMMAND_UNKNOWN;
- 8001c04:	2304      	movs	r3, #4
- 8001c06:	e0da      	b.n	8001dbe <GCControllerEmulation_Run+0x28e>
-	gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT3_BIT2] = USART1->DR;
- 8001c08:	fa5f fa8a 	uxtb.w	sl, sl
-	gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT1_BIT0] = USART1->DR;
- 8001c0c:	fa5f fb8b 	uxtb.w	fp, fp
-			if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT7_BIT6] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT7_BIT6] == GC_BITS_00_CASE2) ) &&
- 8001c10:	f009 097f 	and.w	r9, r9, #127	; 0x7f
- 8001c14:	f1b9 0f08 	cmp.w	r9, #8
- 8001c18:	d001      	beq.n	8001c1e <GCControllerEmulation_Run+0xee>
-				command = GC_COMMAND_UNKNOWN;
- 8001c1a:	2304      	movs	r3, #4
- 8001c1c:	e0cf      	b.n	8001dbe <GCControllerEmulation_Run+0x28e>
-				( (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT5_BIT4] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT5_BIT4] == GC_BITS_00_CASE2) ) &&
- 8001c1e:	f00a 037f 	and.w	r3, sl, #127	; 0x7f
- 8001c22:	2b08      	cmp	r3, #8
- 8001c24:	d00a      	beq.n	8001c3c <GCControllerEmulation_Run+0x10c>
-			else if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT7_BIT6] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT7_BIT6] == GC_BITS_00_CASE2) ) &&
- 8001c26:	f1b8 0f08 	cmp.w	r8, #8
- 8001c2a:	f040 80e5 	bne.w	8001df8 <GCControllerEmulation_Run+0x2c8>
-					( (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT5_BIT4] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT5_BIT4] == GC_BITS_00_CASE2) ) &&
- 8001c2e:	f00a 0a7f 	and.w	sl, sl, #127	; 0x7f
- 8001c32:	f1ba 0f08 	cmp.w	sl, #8
- 8001c36:	d007      	beq.n	8001c48 <GCControllerEmulation_Run+0x118>
-				command = GC_COMMAND_UNKNOWN;
- 8001c38:	2304      	movs	r3, #4
- 8001c3a:	e0c0      	b.n	8001dbe <GCControllerEmulation_Run+0x28e>
-				( (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT3_BIT2] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT3_BIT2] == GC_BITS_00_CASE2) ) &&
- 8001c3c:	f00b 037f 	and.w	r3, fp, #127	; 0x7f
- 8001c40:	2b08      	cmp	r3, #8
- 8001c42:	d1f0      	bne.n	8001c26 <GCControllerEmulation_Run+0xf6>
-				command = GC_COMMAND_POLL_AND_TURN_RUMBLE_OFF;
- 8001c44:	2302      	movs	r3, #2
- 8001c46:	e0ba      	b.n	8001dbe <GCControllerEmulation_Run+0x28e>
-					( (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT1_BIT0] == GC_BITS_01_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT1_BIT0] == GC_BITS_01_CASE2) )    )
- 8001c48:	f00b 0bdf 	and.w	fp, fp, #223	; 0xdf
-				command = GC_COMMAND_POLL_AND_TURN_RUMBLE_ON;
- 8001c4c:	f1bb 0fc8 	cmp.w	fp, #200	; 0xc8
- 8001c50:	bf14      	ite	ne
- 8001c52:	2304      	movne	r3, #4
- 8001c54:	2303      	moveq	r3, #3
- 8001c56:	e0b2      	b.n	8001dbe <GCControllerEmulation_Run+0x28e>
-	while(!(USART1->SR & USART_SR_TXE)){};
- 8001c58:	6823      	ldr	r3, [r4, #0]
- 8001c5a:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001c5e:	d0fb      	beq.n	8001c58 <GCControllerEmulation_Run+0x128>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001c60:	2308      	movs	r3, #8
- 8001c62:	6063      	str	r3, [r4, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 8001c64:	6823      	ldr	r3, [r4, #0]
- 8001c66:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001c6a:	d0fb      	beq.n	8001c64 <GCControllerEmulation_Run+0x134>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001c6c:	2308      	movs	r3, #8
- 8001c6e:	6063      	str	r3, [r4, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 8001c70:	6823      	ldr	r3, [r4, #0]
- 8001c72:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001c76:	d0fb      	beq.n	8001c70 <GCControllerEmulation_Run+0x140>
-	USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
- 8001c78:	230f      	movs	r3, #15
- 8001c7a:	6063      	str	r3, [r4, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 8001c7c:	6823      	ldr	r3, [r4, #0]
- 8001c7e:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001c82:	d0fb      	beq.n	8001c7c <GCControllerEmulation_Run+0x14c>
-	USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
- 8001c84:	23e8      	movs	r3, #232	; 0xe8
- 8001c86:	6063      	str	r3, [r4, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 8001c88:	6823      	ldr	r3, [r4, #0]
- 8001c8a:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001c8e:	d0fb      	beq.n	8001c88 <GCControllerEmulation_Run+0x158>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001c90:	2308      	movs	r3, #8
- 8001c92:	6063      	str	r3, [r4, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 8001c94:	6823      	ldr	r3, [r4, #0]
- 8001c96:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001c9a:	d0fb      	beq.n	8001c94 <GCControllerEmulation_Run+0x164>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001c9c:	2308      	movs	r3, #8
- 8001c9e:	6063      	str	r3, [r4, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 8001ca0:	6823      	ldr	r3, [r4, #0]
- 8001ca2:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001ca6:	d0fb      	beq.n	8001ca0 <GCControllerEmulation_Run+0x170>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001ca8:	2308      	movs	r3, #8
- 8001caa:	6063      	str	r3, [r4, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 8001cac:	6823      	ldr	r3, [r4, #0]
- 8001cae:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001cb2:	d0fb      	beq.n	8001cac <GCControllerEmulation_Run+0x17c>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001cb4:	2308      	movs	r3, #8
- 8001cb6:	6063      	str	r3, [r4, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 8001cb8:	6823      	ldr	r3, [r4, #0]
+ 8001b7a:	4b5f      	ldr	r3, [pc, #380]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001b7c:	2208      	movs	r2, #8
+ 8001b7e:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001b80:	461a      	mov	r2, r3
+ 8001b82:	6813      	ldr	r3, [r2, #0]
+ 8001b84:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001b88:	d0fb      	beq.n	8001b82 <GCControllerEmulation_SendControllerState+0x652>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001b8a:	4b5b      	ldr	r3, [pc, #364]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001b8c:	2208      	movs	r2, #8
+ 8001b8e:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001b90:	461a      	mov	r2, r3
+ 8001b92:	6813      	ldr	r3, [r2, #0]
+ 8001b94:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001b98:	d0fb      	beq.n	8001b92 <GCControllerEmulation_SendControllerState+0x662>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001b9a:	4b57      	ldr	r3, [pc, #348]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001b9c:	2208      	movs	r2, #8
+ 8001b9e:	605a      	str	r2, [r3, #4]
+ 8001ba0:	e5fd      	b.n	800179e <GCControllerEmulation_SendControllerState+0x26e>
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001ba2:	4a55      	ldr	r2, [pc, #340]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001ba4:	6813      	ldr	r3, [r2, #0]
+ 8001ba6:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001baa:	d0fb      	beq.n	8001ba4 <GCControllerEmulation_SendControllerState+0x674>
+		USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
+ 8001bac:	4b52      	ldr	r3, [pc, #328]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001bae:	220f      	movs	r2, #15
+ 8001bb0:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001bb2:	461a      	mov	r2, r3
+ 8001bb4:	6813      	ldr	r3, [r2, #0]
+ 8001bb6:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001bba:	d0fb      	beq.n	8001bb4 <GCControllerEmulation_SendControllerState+0x684>
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+ 8001bbc:	4b4e      	ldr	r3, [pc, #312]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001bbe:	22ef      	movs	r2, #239	; 0xef
+ 8001bc0:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001bc2:	461a      	mov	r2, r3
+ 8001bc4:	6813      	ldr	r3, [r2, #0]
+ 8001bc6:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001bca:	d0fb      	beq.n	8001bc4 <GCControllerEmulation_SendControllerState+0x694>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001bcc:	4b4a      	ldr	r3, [pc, #296]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001bce:	2208      	movs	r2, #8
+ 8001bd0:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001bd2:	461a      	mov	r2, r3
+ 8001bd4:	6813      	ldr	r3, [r2, #0]
+ 8001bd6:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001bda:	d0fb      	beq.n	8001bd4 <GCControllerEmulation_SendControllerState+0x6a4>
+		USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
+ 8001bdc:	4b46      	ldr	r3, [pc, #280]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001bde:	22e8      	movs	r2, #232	; 0xe8
+ 8001be0:	605a      	str	r2, [r3, #4]
+ 8001be2:	e5dc      	b.n	800179e <GCControllerEmulation_SendControllerState+0x26e>
+	else if(gcProcessedButtonStates[GC_C_STICK_RIGHT] == PUSHED)
+ 8001be4:	4b45      	ldr	r3, [pc, #276]	; (8001cfc <GCControllerEmulation_SendControllerState+0x7cc>)
+ 8001be6:	7cdb      	ldrb	r3, [r3, #19]
+ 8001be8:	b303      	cbz	r3, 8001c2c <GCControllerEmulation_SendControllerState+0x6fc>
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001bea:	4a43      	ldr	r2, [pc, #268]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001bec:	6813      	ldr	r3, [r2, #0]
+ 8001bee:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001bf2:	d0fb      	beq.n	8001bec <GCControllerEmulation_SendControllerState+0x6bc>
+		USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
+ 8001bf4:	4b40      	ldr	r3, [pc, #256]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001bf6:	220f      	movs	r2, #15
+ 8001bf8:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001bfa:	461a      	mov	r2, r3
+ 8001bfc:	6813      	ldr	r3, [r2, #0]
+ 8001bfe:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001c02:	d0fb      	beq.n	8001bfc <GCControllerEmulation_SendControllerState+0x6cc>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001c04:	4b3c      	ldr	r3, [pc, #240]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001c06:	2208      	movs	r2, #8
+ 8001c08:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001c0a:	461a      	mov	r2, r3
+ 8001c0c:	6813      	ldr	r3, [r2, #0]
+ 8001c0e:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001c12:	d0fb      	beq.n	8001c0c <GCControllerEmulation_SendControllerState+0x6dc>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001c14:	4b38      	ldr	r3, [pc, #224]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001c16:	2208      	movs	r2, #8
+ 8001c18:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001c1a:	461a      	mov	r2, r3
+ 8001c1c:	6813      	ldr	r3, [r2, #0]
+ 8001c1e:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001c22:	d0fb      	beq.n	8001c1c <GCControllerEmulation_SendControllerState+0x6ec>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001c24:	4b34      	ldr	r3, [pc, #208]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001c26:	2208      	movs	r2, #8
+ 8001c28:	605a      	str	r2, [r3, #4]
+ 8001c2a:	e5e4      	b.n	80017f6 <GCControllerEmulation_SendControllerState+0x2c6>
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001c2c:	4a32      	ldr	r2, [pc, #200]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001c2e:	6813      	ldr	r3, [r2, #0]
+ 8001c30:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001c34:	d0fb      	beq.n	8001c2e <GCControllerEmulation_SendControllerState+0x6fe>
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+ 8001c36:	4b30      	ldr	r3, [pc, #192]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001c38:	22ef      	movs	r2, #239	; 0xef
+ 8001c3a:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001c3c:	461a      	mov	r2, r3
+ 8001c3e:	6813      	ldr	r3, [r2, #0]
+ 8001c40:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001c44:	d0fb      	beq.n	8001c3e <GCControllerEmulation_SendControllerState+0x70e>
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+ 8001c46:	4b2c      	ldr	r3, [pc, #176]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001c48:	22ef      	movs	r2, #239	; 0xef
+ 8001c4a:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001c4c:	461a      	mov	r2, r3
+ 8001c4e:	6813      	ldr	r3, [r2, #0]
+ 8001c50:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001c54:	d0fb      	beq.n	8001c4e <GCControllerEmulation_SendControllerState+0x71e>
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+ 8001c56:	4b28      	ldr	r3, [pc, #160]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001c58:	22ef      	movs	r2, #239	; 0xef
+ 8001c5a:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001c5c:	461a      	mov	r2, r3
+ 8001c5e:	6813      	ldr	r3, [r2, #0]
+ 8001c60:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001c64:	d0fb      	beq.n	8001c5e <GCControllerEmulation_SendControllerState+0x72e>
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+ 8001c66:	4b24      	ldr	r3, [pc, #144]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001c68:	22ef      	movs	r2, #239	; 0xef
+ 8001c6a:	605a      	str	r2, [r3, #4]
+ 8001c6c:	e5c3      	b.n	80017f6 <GCControllerEmulation_SendControllerState+0x2c6>
+	else if(gcProcessedButtonStates[GC_C_STICK_UP] == PUSHED)
+ 8001c6e:	4b23      	ldr	r3, [pc, #140]	; (8001cfc <GCControllerEmulation_SendControllerState+0x7cc>)
+ 8001c70:	7c1b      	ldrb	r3, [r3, #16]
+ 8001c72:	b303      	cbz	r3, 8001cb6 <GCControllerEmulation_SendControllerState+0x786>
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001c74:	4a20      	ldr	r2, [pc, #128]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001c76:	6813      	ldr	r3, [r2, #0]
+ 8001c78:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001c7c:	d0fb      	beq.n	8001c76 <GCControllerEmulation_SendControllerState+0x746>
+		USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
+ 8001c7e:	4b1e      	ldr	r3, [pc, #120]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001c80:	220f      	movs	r2, #15
+ 8001c82:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001c84:	461a      	mov	r2, r3
+ 8001c86:	6813      	ldr	r3, [r2, #0]
+ 8001c88:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001c8c:	d0fb      	beq.n	8001c86 <GCControllerEmulation_SendControllerState+0x756>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001c8e:	4b1a      	ldr	r3, [pc, #104]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001c90:	2208      	movs	r2, #8
+ 8001c92:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001c94:	461a      	mov	r2, r3
+ 8001c96:	6813      	ldr	r3, [r2, #0]
+ 8001c98:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001c9c:	d0fb      	beq.n	8001c96 <GCControllerEmulation_SendControllerState+0x766>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001c9e:	4b16      	ldr	r3, [pc, #88]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001ca0:	2208      	movs	r2, #8
+ 8001ca2:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001ca4:	461a      	mov	r2, r3
+ 8001ca6:	6813      	ldr	r3, [r2, #0]
+ 8001ca8:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001cac:	d0fb      	beq.n	8001ca6 <GCControllerEmulation_SendControllerState+0x776>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001cae:	4b12      	ldr	r3, [pc, #72]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001cb0:	2208      	movs	r2, #8
+ 8001cb2:	605a      	str	r2, [r3, #4]
+ 8001cb4:	e5c4      	b.n	8001840 <GCControllerEmulation_SendControllerState+0x310>
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001cb6:	4a10      	ldr	r2, [pc, #64]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001cb8:	6813      	ldr	r3, [r2, #0]
  8001cba:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001cbe:	d0fb      	beq.n	8001cb8 <GCControllerEmulation_Run+0x188>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001cc0:	2308      	movs	r3, #8
- 8001cc2:	6063      	str	r3, [r4, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 8001cc4:	6823      	ldr	r3, [r4, #0]
- 8001cc6:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001cca:	d0fb      	beq.n	8001cc4 <GCControllerEmulation_Run+0x194>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001ccc:	2308      	movs	r3, #8
- 8001cce:	6063      	str	r3, [r4, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 8001cd0:	6823      	ldr	r3, [r4, #0]
- 8001cd2:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001cd6:	d0fb      	beq.n	8001cd0 <GCControllerEmulation_Run+0x1a0>
-	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
- 8001cd8:	2308      	movs	r3, #8
- 8001cda:	6063      	str	r3, [r4, #4]
-	while(!(USART1->SR & USART_SR_TXE)){};
- 8001cdc:	6823      	ldr	r3, [r4, #0]
- 8001cde:	f013 0f80 	tst.w	r3, #128	; 0x80
- 8001ce2:	d0fb      	beq.n	8001cdc <GCControllerEmulation_Run+0x1ac>
-	USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
- 8001ce4:	23ef      	movs	r3, #239	; 0xef
- 8001ce6:	6063      	str	r3, [r4, #4]
-	while(!(USART1->SR & USART_SR_TC)){};
- 8001ce8:	6823      	ldr	r3, [r4, #0]
- 8001cea:	f013 0f40 	tst.w	r3, #64	; 0x40
- 8001cee:	d0fb      	beq.n	8001ce8 <GCControllerEmulation_Run+0x1b8>
-	GC_STOP_PORT->BSRR = GC_STOP_CLEAR;
- 8001cf0:	f44f 1300 	mov.w	r3, #2097152	; 0x200000
- 8001cf4:	4a44      	ldr	r2, [pc, #272]	; (8001e08 <GCControllerEmulation_Run+0x2d8>)
- 8001cf6:	6193      	str	r3, [r2, #24]
-	volatile uint32_t counter = 17;
- 8001cf8:	2311      	movs	r3, #17
- 8001cfa:	9301      	str	r3, [sp, #4]
-	while(counter--);
- 8001cfc:	9b01      	ldr	r3, [sp, #4]
- 8001cfe:	1e5a      	subs	r2, r3, #1
- 8001d00:	9201      	str	r2, [sp, #4]
- 8001d02:	2b00      	cmp	r3, #0
- 8001d04:	d1fa      	bne.n	8001cfc <GCControllerEmulation_Run+0x1cc>
-	GC_STOP_PORT->BSRR = GC_STOP_SET;
- 8001d06:	2320      	movs	r3, #32
- 8001d08:	4a3f      	ldr	r2, [pc, #252]	; (8001e08 <GCControllerEmulation_Run+0x2d8>)
- 8001d0a:	6193      	str	r3, [r2, #24]
-	USART1->CR1 |= USART_CR1_RE;
- 8001d0c:	68e3      	ldr	r3, [r4, #12]
- 8001d0e:	f043 0304 	orr.w	r3, r3, #4
- 8001d12:	60e3      	str	r3, [r4, #12]
-	while(!(USART1->SR & USART_SR_RXNE)){};
- 8001d14:	6823      	ldr	r3, [r4, #0]
- 8001d16:	f013 0f20 	tst.w	r3, #32
- 8001d1a:	d0fb      	beq.n	8001d14 <GCControllerEmulation_Run+0x1e4>
-	gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] = USART1->DR;
- 8001d1c:	6862      	ldr	r2, [r4, #4]
- 8001d1e:	b2d2      	uxtb	r2, r2
-	while(!(USART1->SR & USART_SR_RXNE)){};
- 8001d20:	6823      	ldr	r3, [r4, #0]
- 8001d22:	f013 0f20 	tst.w	r3, #32
- 8001d26:	d0fb      	beq.n	8001d20 <GCControllerEmulation_Run+0x1f0>
-	gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT5_BIT4] = USART1->DR;
- 8001d28:	6861      	ldr	r1, [r4, #4]
- 8001d2a:	b2c9      	uxtb	r1, r1
-	while(!(USART1->SR & USART_SR_RXNE)){};
- 8001d2c:	6823      	ldr	r3, [r4, #0]
- 8001d2e:	f013 0f20 	tst.w	r3, #32
- 8001d32:	d0fb      	beq.n	8001d2c <GCControllerEmulation_Run+0x1fc>
-	gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT3_BIT2] = USART1->DR;
- 8001d34:	6860      	ldr	r0, [r4, #4]
- 8001d36:	b2c0      	uxtb	r0, r0
-	while(!(USART1->SR & USART_SR_RXNE)){};
- 8001d38:	6823      	ldr	r3, [r4, #0]
- 8001d3a:	f013 0f20 	tst.w	r3, #32
- 8001d3e:	d0fb      	beq.n	8001d38 <GCControllerEmulation_Run+0x208>
-	gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT1_BIT0] = USART1->DR;
- 8001d40:	6865      	ldr	r5, [r4, #4]
- 8001d42:	b2ed      	uxtb	r5, r5
-	while(!(USART1->SR & USART_SR_RXNE)){};
- 8001d44:	6823      	ldr	r3, [r4, #0]
- 8001d46:	f013 0f20 	tst.w	r3, #32
- 8001d4a:	d0fb      	beq.n	8001d44 <GCControllerEmulation_Run+0x214>
-	gcConsoleResponse[GC_CONSOLE_TEMP_BITS] = USART1->DR;
- 8001d4c:	6866      	ldr	r6, [r4, #4]
- 8001d4e:	b2f6      	uxtb	r6, r6
-	if(gcConsoleResponse[GC_CONSOLE_TEMP_BITS] == GC_BITS_STOP_BIT)
- 8001d50:	2eff      	cmp	r6, #255	; 0xff
- 8001d52:	f43f aef2 	beq.w	8001b3a <GCControllerEmulation_Run+0xa>
-	while(!(USART1->SR & USART_SR_RXNE)){};
- 8001d56:	6823      	ldr	r3, [r4, #0]
- 8001d58:	f013 0f20 	tst.w	r3, #32
- 8001d5c:	d0fb      	beq.n	8001d56 <GCControllerEmulation_Run+0x226>
-	gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT5_BIT4] = USART1->DR;
- 8001d5e:	6867      	ldr	r7, [r4, #4]
-	while(!(USART1->SR & USART_SR_RXNE)){};
- 8001d60:	6823      	ldr	r3, [r4, #0]
- 8001d62:	f013 0f20 	tst.w	r3, #32
- 8001d66:	d0fb      	beq.n	8001d60 <GCControllerEmulation_Run+0x230>
-	gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT3_BIT2] = USART1->DR;
- 8001d68:	f8d4 c004 	ldr.w	ip, [r4, #4]
-	while(!(USART1->SR & USART_SR_RXNE)){};
- 8001d6c:	6823      	ldr	r3, [r4, #0]
- 8001d6e:	f013 0f20 	tst.w	r3, #32
- 8001d72:	d0fb      	beq.n	8001d6c <GCControllerEmulation_Run+0x23c>
-	gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT1_BIT0] = USART1->DR;
- 8001d74:	f8d4 e004 	ldr.w	lr, [r4, #4]
-	while(!(USART1->SR & USART_SR_RXNE)){};
- 8001d78:	6823      	ldr	r3, [r4, #0]
- 8001d7a:	f013 0f20 	tst.w	r3, #32
- 8001d7e:	d0fb      	beq.n	8001d78 <GCControllerEmulation_Run+0x248>
-	gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT7_BIT6] = USART1->DR;
- 8001d80:	f8d4 8004 	ldr.w	r8, [r4, #4]
-	while(!(USART1->SR & USART_SR_RXNE)){};
- 8001d84:	6823      	ldr	r3, [r4, #0]
- 8001d86:	f013 0f20 	tst.w	r3, #32
- 8001d8a:	d0fb      	beq.n	8001d84 <GCControllerEmulation_Run+0x254>
-	gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT5_BIT4] = USART1->DR;
- 8001d8c:	f8d4 9004 	ldr.w	r9, [r4, #4]
-	while(!(USART1->SR & USART_SR_RXNE)){};
- 8001d90:	6823      	ldr	r3, [r4, #0]
- 8001d92:	f013 0f20 	tst.w	r3, #32
- 8001d96:	d0fb      	beq.n	8001d90 <GCControllerEmulation_Run+0x260>
-	gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT3_BIT2] = USART1->DR;
- 8001d98:	f8d4 a004 	ldr.w	sl, [r4, #4]
-	while(!(USART1->SR & USART_SR_RXNE)){};
- 8001d9c:	6823      	ldr	r3, [r4, #0]
- 8001d9e:	f013 0f20 	tst.w	r3, #32
- 8001da2:	d0fb      	beq.n	8001d9c <GCControllerEmulation_Run+0x26c>
-	gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT1_BIT0] = USART1->DR;
- 8001da4:	f8d4 b004 	ldr.w	fp, [r4, #4]
-	while(!(USART1->SR & USART_SR_RXNE)){};
- 8001da8:	6823      	ldr	r3, [r4, #0]
- 8001daa:	f013 0f20 	tst.w	r3, #32
- 8001dae:	d0fb      	beq.n	8001da8 <GCControllerEmulation_Run+0x278>
-	gcConsoleResponse[GC_CONSOLE_TEMP_BITS] = USART1->DR;
- 8001db0:	6863      	ldr	r3, [r4, #4]
-	if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_01_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_01_CASE2) ) &&
- 8001db2:	f002 02df 	and.w	r2, r2, #223	; 0xdf
- 8001db6:	2ac8      	cmp	r2, #200	; 0xc8
- 8001db8:	f43f aef2 	beq.w	8001ba0 <GCControllerEmulation_Run+0x70>
-		command = GC_COMMAND_UNKNOWN;
- 8001dbc:	2304      	movs	r3, #4
-	USART1->CR1 &= ~USART_CR1_RE;
- 8001dbe:	68e2      	ldr	r2, [r4, #12]
- 8001dc0:	f022 0204 	bic.w	r2, r2, #4
- 8001dc4:	60e2      	str	r2, [r4, #12]
-		switch(command)
- 8001dc6:	2b03      	cmp	r3, #3
- 8001dc8:	d8a0      	bhi.n	8001d0c <GCControllerEmulation_Run+0x1dc>
- 8001dca:	a201      	add	r2, pc, #4	; (adr r2, 8001dd0 <GCControllerEmulation_Run+0x2a0>)
- 8001dcc:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
- 8001dd0:	08001c59 	.word	0x08001c59
- 8001dd4:	08001de1 	.word	0x08001de1
- 8001dd8:	08001de9 	.word	0x08001de9
- 8001ddc:	08001df1 	.word	0x08001df1
-				GCControllerEmulation_SendControllerState(GC_COMMAND_PROBE_ORIGIN);
- 8001de0:	2001      	movs	r0, #1
- 8001de2:	f7ff fba5 	bl	8001530 <GCControllerEmulation_SendControllerState>
-				break;
- 8001de6:	e791      	b.n	8001d0c <GCControllerEmulation_Run+0x1dc>
-				GCControllerEmulation_SendControllerState(GC_COMMAND_POLL_AND_TURN_RUMBLE_OFF);
- 8001de8:	2002      	movs	r0, #2
- 8001dea:	f7ff fba1 	bl	8001530 <GCControllerEmulation_SendControllerState>
-				break;
- 8001dee:	e78d      	b.n	8001d0c <GCControllerEmulation_Run+0x1dc>
-				GCControllerEmulation_SendControllerState(GC_COMMAND_POLL_AND_TURN_RUMBLE_ON);
- 8001df0:	2003      	movs	r0, #3
- 8001df2:	f7ff fb9d 	bl	8001530 <GCControllerEmulation_SendControllerState>
-				break;
- 8001df6:	e789      	b.n	8001d0c <GCControllerEmulation_Run+0x1dc>
-			else if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT7_BIT6] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT7_BIT6] == GC_BITS_00_CASE2) ) &&
- 8001df8:	f1b8 0f88 	cmp.w	r8, #136	; 0x88
- 8001dfc:	f43f af17 	beq.w	8001c2e <GCControllerEmulation_Run+0xfe>
-				command = GC_COMMAND_UNKNOWN;
- 8001e00:	2304      	movs	r3, #4
- 8001e02:	e7dc      	b.n	8001dbe <GCControllerEmulation_Run+0x28e>
- 8001e04:	40011000 	.word	0x40011000
- 8001e08:	40020400 	.word	0x40020400
+ 8001cbe:	d0fb      	beq.n	8001cb8 <GCControllerEmulation_SendControllerState+0x788>
+		USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
+ 8001cc0:	4b0d      	ldr	r3, [pc, #52]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001cc2:	220f      	movs	r2, #15
+ 8001cc4:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001cc6:	461a      	mov	r2, r3
+ 8001cc8:	6813      	ldr	r3, [r2, #0]
+ 8001cca:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001cce:	d0fb      	beq.n	8001cc8 <GCControllerEmulation_SendControllerState+0x798>
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+ 8001cd0:	4b09      	ldr	r3, [pc, #36]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001cd2:	22ef      	movs	r2, #239	; 0xef
+ 8001cd4:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001cd6:	461a      	mov	r2, r3
+ 8001cd8:	6813      	ldr	r3, [r2, #0]
+ 8001cda:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001cde:	d0fb      	beq.n	8001cd8 <GCControllerEmulation_SendControllerState+0x7a8>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001ce0:	4b05      	ldr	r3, [pc, #20]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001ce2:	2208      	movs	r2, #8
+ 8001ce4:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001ce6:	461a      	mov	r2, r3
+ 8001ce8:	6813      	ldr	r3, [r2, #0]
+ 8001cea:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001cee:	d0fb      	beq.n	8001ce8 <GCControllerEmulation_SendControllerState+0x7b8>
+		USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
+ 8001cf0:	4b01      	ldr	r3, [pc, #4]	; (8001cf8 <GCControllerEmulation_SendControllerState+0x7c8>)
+ 8001cf2:	22e8      	movs	r2, #232	; 0xe8
+ 8001cf4:	605a      	str	r2, [r3, #4]
+ 8001cf6:	e5a3      	b.n	8001840 <GCControllerEmulation_SendControllerState+0x310>
+ 8001cf8:	40011000 	.word	0x40011000
+ 8001cfc:	20000040 	.word	0x20000040
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001d00:	461a      	mov	r2, r3
+ 8001d02:	6813      	ldr	r3, [r2, #0]
+ 8001d04:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001d08:	d0fb      	beq.n	8001d02 <GCControllerEmulation_SendControllerState+0x7d2>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001d0a:	4b1e      	ldr	r3, [pc, #120]	; (8001d84 <GCControllerEmulation_SendControllerState+0x854>)
+ 8001d0c:	2208      	movs	r2, #8
+ 8001d0e:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001d10:	461a      	mov	r2, r3
+ 8001d12:	6813      	ldr	r3, [r2, #0]
+ 8001d14:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001d18:	d0fb      	beq.n	8001d12 <GCControllerEmulation_SendControllerState+0x7e2>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001d1a:	4b1a      	ldr	r3, [pc, #104]	; (8001d84 <GCControllerEmulation_SendControllerState+0x854>)
+ 8001d1c:	2208      	movs	r2, #8
+ 8001d1e:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001d20:	461a      	mov	r2, r3
+ 8001d22:	6813      	ldr	r3, [r2, #0]
+ 8001d24:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001d28:	d0fb      	beq.n	8001d22 <GCControllerEmulation_SendControllerState+0x7f2>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001d2a:	4b16      	ldr	r3, [pc, #88]	; (8001d84 <GCControllerEmulation_SendControllerState+0x854>)
+ 8001d2c:	2208      	movs	r2, #8
+ 8001d2e:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001d30:	461a      	mov	r2, r3
+ 8001d32:	6813      	ldr	r3, [r2, #0]
+ 8001d34:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001d38:	d0fb      	beq.n	8001d32 <GCControllerEmulation_SendControllerState+0x802>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001d3a:	4b12      	ldr	r3, [pc, #72]	; (8001d84 <GCControllerEmulation_SendControllerState+0x854>)
+ 8001d3c:	2208      	movs	r2, #8
+ 8001d3e:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001d40:	461a      	mov	r2, r3
+ 8001d42:	6813      	ldr	r3, [r2, #0]
+ 8001d44:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001d48:	d0fb      	beq.n	8001d42 <GCControllerEmulation_SendControllerState+0x812>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001d4a:	4b0e      	ldr	r3, [pc, #56]	; (8001d84 <GCControllerEmulation_SendControllerState+0x854>)
+ 8001d4c:	2208      	movs	r2, #8
+ 8001d4e:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001d50:	461a      	mov	r2, r3
+ 8001d52:	6813      	ldr	r3, [r2, #0]
+ 8001d54:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001d58:	d0fb      	beq.n	8001d52 <GCControllerEmulation_SendControllerState+0x822>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001d5a:	4b0a      	ldr	r3, [pc, #40]	; (8001d84 <GCControllerEmulation_SendControllerState+0x854>)
+ 8001d5c:	2208      	movs	r2, #8
+ 8001d5e:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001d60:	461a      	mov	r2, r3
+ 8001d62:	6813      	ldr	r3, [r2, #0]
+ 8001d64:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001d68:	d0fb      	beq.n	8001d62 <GCControllerEmulation_SendControllerState+0x832>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001d6a:	4b06      	ldr	r3, [pc, #24]	; (8001d84 <GCControllerEmulation_SendControllerState+0x854>)
+ 8001d6c:	2208      	movs	r2, #8
+ 8001d6e:	605a      	str	r2, [r3, #4]
+		while(!(USART1->SR & USART_SR_TXE)){};
+ 8001d70:	461a      	mov	r2, r3
+ 8001d72:	6813      	ldr	r3, [r2, #0]
+ 8001d74:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001d78:	d0fb      	beq.n	8001d72 <GCControllerEmulation_SendControllerState+0x842>
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001d7a:	4b02      	ldr	r3, [pc, #8]	; (8001d84 <GCControllerEmulation_SendControllerState+0x854>)
+ 8001d7c:	2208      	movs	r2, #8
+ 8001d7e:	605a      	str	r2, [r3, #4]
+ 8001d80:	e5a1      	b.n	80018c6 <GCControllerEmulation_SendControllerState+0x396>
+ 8001d82:	bf00      	nop
+ 8001d84:	40011000 	.word	0x40011000
 
-08001e0c <Main_Init>:
+08001d88 <GCControllerEmulation_Run>:
+{
+ 8001d88:	e92d 4880 	stmdb	sp!, {r7, fp, lr}
+ 8001d8c:	b083      	sub	sp, #12
+	USART1->CR1 |= USART_CR1_RE;
+ 8001d8e:	4cb3      	ldr	r4, [pc, #716]	; (800205c <GCControllerEmulation_Run+0x2d4>)
+ 8001d90:	e0e8      	b.n	8001f64 <GCControllerEmulation_Run+0x1dc>
+		if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_00_CASE2) ) &&
+ 8001d92:	f002 037f 	and.w	r3, r2, #127	; 0x7f
+ 8001d96:	2b08      	cmp	r3, #8
+ 8001d98:	d007      	beq.n	8001daa <GCControllerEmulation_Run+0x22>
+		else if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_01_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_01_CASE2) ) &&
+ 8001d9a:	2ae8      	cmp	r2, #232	; 0xe8
+ 8001d9c:	d115      	bne.n	8001dca <GCControllerEmulation_Run+0x42>
+ 8001d9e:	f001 017f 	and.w	r1, r1, #127	; 0x7f
+ 8001da2:	2908      	cmp	r1, #8
+ 8001da4:	d01b      	beq.n	8001dde <GCControllerEmulation_Run+0x56>
+			command = GC_COMMAND_UNKNOWN;
+ 8001da6:	2304      	movs	r3, #4
+ 8001da8:	e004      	b.n	8001db4 <GCControllerEmulation_Run+0x2c>
+		if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_00_CASE2) ) &&
+ 8001daa:	f001 037f 	and.w	r3, r1, #127	; 0x7f
+ 8001dae:	2b08      	cmp	r3, #8
+ 8001db0:	d005      	beq.n	8001dbe <GCControllerEmulation_Run+0x36>
+			command = GC_COMMAND_UNKNOWN;
+ 8001db2:	2304      	movs	r3, #4
+		USART1->CR1 &= ~USART_CR1_RE;
+ 8001db4:	68e2      	ldr	r2, [r4, #12]
+ 8001db6:	f022 0204 	bic.w	r2, r2, #4
+ 8001dba:	60e2      	str	r2, [r4, #12]
+ 8001dbc:	e12f      	b.n	800201e <GCControllerEmulation_Run+0x296>
+			( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT5_BIT4] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT5_BIT4] == GC_BITS_00_CASE2) ) &&
+ 8001dbe:	f000 037f 	and.w	r3, r0, #127	; 0x7f
+ 8001dc2:	2b08      	cmp	r3, #8
+ 8001dc4:	d005      	beq.n	8001dd2 <GCControllerEmulation_Run+0x4a>
+		else if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_01_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_01_CASE2) ) &&
+ 8001dc6:	2ae8      	cmp	r2, #232	; 0xe8
+ 8001dc8:	d009      	beq.n	8001dde <GCControllerEmulation_Run+0x56>
+ 8001dca:	2ac8      	cmp	r2, #200	; 0xc8
+ 8001dcc:	d0e7      	beq.n	8001d9e <GCControllerEmulation_Run+0x16>
+			command = GC_COMMAND_UNKNOWN;
+ 8001dce:	2304      	movs	r3, #4
+ 8001dd0:	e7f0      	b.n	8001db4 <GCControllerEmulation_Run+0x2c>
+			( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT3_BIT2] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT3_BIT2] == GC_BITS_00_CASE2) ) &&
+ 8001dd2:	f005 037f 	and.w	r3, r5, #127	; 0x7f
+ 8001dd6:	2b08      	cmp	r3, #8
+ 8001dd8:	d1f5      	bne.n	8001dc6 <GCControllerEmulation_Run+0x3e>
+			command = GC_COMMAND_PROBE;
+ 8001dda:	2300      	movs	r3, #0
+ 8001ddc:	e7ea      	b.n	8001db4 <GCControllerEmulation_Run+0x2c>
+				 ( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT5_BIT4] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT5_BIT4] == GC_BITS_00_CASE2) ) &&
+ 8001dde:	f000 007f 	and.w	r0, r0, #127	; 0x7f
+ 8001de2:	2808      	cmp	r0, #8
+ 8001de4:	d001      	beq.n	8001dea <GCControllerEmulation_Run+0x62>
+			command = GC_COMMAND_UNKNOWN;
+ 8001de6:	2304      	movs	r3, #4
+ 8001de8:	e7e4      	b.n	8001db4 <GCControllerEmulation_Run+0x2c>
+				 ( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT1_BIT0] == GC_BITS_01_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT1_BIT0] == GC_BITS_01_CASE2) )    )
+ 8001dea:	f005 05df 	and.w	r5, r5, #223	; 0xdf
+			command = GC_COMMAND_PROBE_ORIGIN;
+ 8001dee:	2dc8      	cmp	r5, #200	; 0xc8
+ 8001df0:	bf14      	ite	ne
+ 8001df2:	2304      	movne	r3, #4
+ 8001df4:	2301      	moveq	r3, #1
+ 8001df6:	e7dd      	b.n	8001db4 <GCControllerEmulation_Run+0x2c>
+	if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_01_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_01_CASE2) ) &&
+ 8001df8:	f001 017f 	and.w	r1, r1, #127	; 0x7f
+ 8001dfc:	2908      	cmp	r1, #8
+ 8001dfe:	d001      	beq.n	8001e04 <GCControllerEmulation_Run+0x7c>
+		command = GC_COMMAND_UNKNOWN;
+ 8001e00:	2304      	movs	r3, #4
+ 8001e02:	e108      	b.n	8002016 <GCControllerEmulation_Run+0x28e>
+		( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT5_BIT4] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT5_BIT4] == GC_BITS_00_CASE2) ) &&
+ 8001e04:	f000 007f 	and.w	r0, r0, #127	; 0x7f
+ 8001e08:	2808      	cmp	r0, #8
+ 8001e0a:	d001      	beq.n	8001e10 <GCControllerEmulation_Run+0x88>
+		command = GC_COMMAND_UNKNOWN;
+ 8001e0c:	2304      	movs	r3, #4
+ 8001e0e:	e102      	b.n	8002016 <GCControllerEmulation_Run+0x28e>
+		( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT3_BIT2] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT3_BIT2] == GC_BITS_00_CASE2) ) &&
+ 8001e10:	f005 057f 	and.w	r5, r5, #127	; 0x7f
+ 8001e14:	2d08      	cmp	r5, #8
+ 8001e16:	d001      	beq.n	8001e1c <GCControllerEmulation_Run+0x94>
+		command = GC_COMMAND_UNKNOWN;
+ 8001e18:	2304      	movs	r3, #4
+ 8001e1a:	e0fc      	b.n	8002016 <GCControllerEmulation_Run+0x28e>
+		if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT7_BIT6] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT7_BIT6] == GC_BITS_00_CASE2) ) &&
+ 8001e1c:	f006 067f 	and.w	r6, r6, #127	; 0x7f
+ 8001e20:	2e08      	cmp	r6, #8
+ 8001e22:	d001      	beq.n	8001e28 <GCControllerEmulation_Run+0xa0>
+			command = GC_COMMAND_UNKNOWN;
+ 8001e24:	2304      	movs	r3, #4
+ 8001e26:	e0f6      	b.n	8002016 <GCControllerEmulation_Run+0x28e>
+		if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT7_BIT6] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT7_BIT6] == GC_BITS_00_CASE2) ) &&
+ 8001e28:	f007 077f 	and.w	r7, r7, #127	; 0x7f
+ 8001e2c:	2f08      	cmp	r7, #8
+ 8001e2e:	d001      	beq.n	8001e34 <GCControllerEmulation_Run+0xac>
+			command = GC_COMMAND_UNKNOWN;
+ 8001e30:	2304      	movs	r3, #4
+ 8001e32:	e0f0      	b.n	8002016 <GCControllerEmulation_Run+0x28e>
+		    ( (gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT5_BIT4] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT5_BIT4] == GC_BITS_00_CASE2) ) &&
+ 8001e34:	f00c 0c7f 	and.w	ip, ip, #127	; 0x7f
+ 8001e38:	f1bc 0f08 	cmp.w	ip, #8
+ 8001e3c:	d001      	beq.n	8001e42 <GCControllerEmulation_Run+0xba>
+			command = GC_COMMAND_UNKNOWN;
+ 8001e3e:	2304      	movs	r3, #4
+ 8001e40:	e0e9      	b.n	8002016 <GCControllerEmulation_Run+0x28e>
+		    ( (gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT1_BIT0] == GC_BITS_11_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT1_BIT0] == GC_BITS_11_CASE2) )    )
+ 8001e42:	f00e 0edf 	and.w	lr, lr, #223	; 0xdf
+ 8001e46:	f1be 0fcf 	cmp.w	lr, #207	; 0xcf
+ 8001e4a:	d001      	beq.n	8001e50 <GCControllerEmulation_Run+0xc8>
+			command = GC_COMMAND_UNKNOWN;
+ 8001e4c:	2304      	movs	r3, #4
+ 8001e4e:	e0e2      	b.n	8002016 <GCControllerEmulation_Run+0x28e>
+	gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT7_BIT6] = USART1->DR;
+ 8001e50:	fa5f f888 	uxtb.w	r8, r8
+			if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT7_BIT6] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT7_BIT6] == GC_BITS_00_CASE2) ) &&
+ 8001e54:	f008 037f 	and.w	r3, r8, #127	; 0x7f
+ 8001e58:	2b08      	cmp	r3, #8
+ 8001e5a:	d001      	beq.n	8001e60 <GCControllerEmulation_Run+0xd8>
+				command = GC_COMMAND_UNKNOWN;
+ 8001e5c:	2304      	movs	r3, #4
+ 8001e5e:	e0da      	b.n	8002016 <GCControllerEmulation_Run+0x28e>
+	gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT3_BIT2] = USART1->DR;
+ 8001e60:	fa5f fa8a 	uxtb.w	sl, sl
+	gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT1_BIT0] = USART1->DR;
+ 8001e64:	fa5f fb8b 	uxtb.w	fp, fp
+			if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT7_BIT6] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT7_BIT6] == GC_BITS_00_CASE2) ) &&
+ 8001e68:	f009 097f 	and.w	r9, r9, #127	; 0x7f
+ 8001e6c:	f1b9 0f08 	cmp.w	r9, #8
+ 8001e70:	d001      	beq.n	8001e76 <GCControllerEmulation_Run+0xee>
+				command = GC_COMMAND_UNKNOWN;
+ 8001e72:	2304      	movs	r3, #4
+ 8001e74:	e0cf      	b.n	8002016 <GCControllerEmulation_Run+0x28e>
+				( (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT5_BIT4] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT5_BIT4] == GC_BITS_00_CASE2) ) &&
+ 8001e76:	f00a 037f 	and.w	r3, sl, #127	; 0x7f
+ 8001e7a:	2b08      	cmp	r3, #8
+ 8001e7c:	d00a      	beq.n	8001e94 <GCControllerEmulation_Run+0x10c>
+			else if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT7_BIT6] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT7_BIT6] == GC_BITS_00_CASE2) ) &&
+ 8001e7e:	f1b8 0f08 	cmp.w	r8, #8
+ 8001e82:	f040 80e5 	bne.w	8002050 <GCControllerEmulation_Run+0x2c8>
+					( (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT5_BIT4] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT5_BIT4] == GC_BITS_00_CASE2) ) &&
+ 8001e86:	f00a 0a7f 	and.w	sl, sl, #127	; 0x7f
+ 8001e8a:	f1ba 0f08 	cmp.w	sl, #8
+ 8001e8e:	d007      	beq.n	8001ea0 <GCControllerEmulation_Run+0x118>
+				command = GC_COMMAND_UNKNOWN;
+ 8001e90:	2304      	movs	r3, #4
+ 8001e92:	e0c0      	b.n	8002016 <GCControllerEmulation_Run+0x28e>
+				( (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT3_BIT2] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT3_BIT2] == GC_BITS_00_CASE2) ) &&
+ 8001e94:	f00b 037f 	and.w	r3, fp, #127	; 0x7f
+ 8001e98:	2b08      	cmp	r3, #8
+ 8001e9a:	d1f0      	bne.n	8001e7e <GCControllerEmulation_Run+0xf6>
+				command = GC_COMMAND_POLL_AND_TURN_RUMBLE_OFF;
+ 8001e9c:	2302      	movs	r3, #2
+ 8001e9e:	e0ba      	b.n	8002016 <GCControllerEmulation_Run+0x28e>
+					( (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT1_BIT0] == GC_BITS_01_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT1_BIT0] == GC_BITS_01_CASE2) )    )
+ 8001ea0:	f00b 0bdf 	and.w	fp, fp, #223	; 0xdf
+				command = GC_COMMAND_POLL_AND_TURN_RUMBLE_ON;
+ 8001ea4:	f1bb 0fc8 	cmp.w	fp, #200	; 0xc8
+ 8001ea8:	bf14      	ite	ne
+ 8001eaa:	2304      	movne	r3, #4
+ 8001eac:	2303      	moveq	r3, #3
+ 8001eae:	e0b2      	b.n	8002016 <GCControllerEmulation_Run+0x28e>
+	while(!(USART1->SR & USART_SR_TXE)){};
+ 8001eb0:	6823      	ldr	r3, [r4, #0]
+ 8001eb2:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001eb6:	d0fb      	beq.n	8001eb0 <GCControllerEmulation_Run+0x128>
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001eb8:	2308      	movs	r3, #8
+ 8001eba:	6063      	str	r3, [r4, #4]
+	while(!(USART1->SR & USART_SR_TXE)){};
+ 8001ebc:	6823      	ldr	r3, [r4, #0]
+ 8001ebe:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001ec2:	d0fb      	beq.n	8001ebc <GCControllerEmulation_Run+0x134>
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001ec4:	2308      	movs	r3, #8
+ 8001ec6:	6063      	str	r3, [r4, #4]
+	while(!(USART1->SR & USART_SR_TXE)){};
+ 8001ec8:	6823      	ldr	r3, [r4, #0]
+ 8001eca:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001ece:	d0fb      	beq.n	8001ec8 <GCControllerEmulation_Run+0x140>
+	USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
+ 8001ed0:	230f      	movs	r3, #15
+ 8001ed2:	6063      	str	r3, [r4, #4]
+	while(!(USART1->SR & USART_SR_TXE)){};
+ 8001ed4:	6823      	ldr	r3, [r4, #0]
+ 8001ed6:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001eda:	d0fb      	beq.n	8001ed4 <GCControllerEmulation_Run+0x14c>
+	USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
+ 8001edc:	23e8      	movs	r3, #232	; 0xe8
+ 8001ede:	6063      	str	r3, [r4, #4]
+	while(!(USART1->SR & USART_SR_TXE)){};
+ 8001ee0:	6823      	ldr	r3, [r4, #0]
+ 8001ee2:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001ee6:	d0fb      	beq.n	8001ee0 <GCControllerEmulation_Run+0x158>
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001ee8:	2308      	movs	r3, #8
+ 8001eea:	6063      	str	r3, [r4, #4]
+	while(!(USART1->SR & USART_SR_TXE)){};
+ 8001eec:	6823      	ldr	r3, [r4, #0]
+ 8001eee:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001ef2:	d0fb      	beq.n	8001eec <GCControllerEmulation_Run+0x164>
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001ef4:	2308      	movs	r3, #8
+ 8001ef6:	6063      	str	r3, [r4, #4]
+	while(!(USART1->SR & USART_SR_TXE)){};
+ 8001ef8:	6823      	ldr	r3, [r4, #0]
+ 8001efa:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001efe:	d0fb      	beq.n	8001ef8 <GCControllerEmulation_Run+0x170>
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001f00:	2308      	movs	r3, #8
+ 8001f02:	6063      	str	r3, [r4, #4]
+	while(!(USART1->SR & USART_SR_TXE)){};
+ 8001f04:	6823      	ldr	r3, [r4, #0]
+ 8001f06:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001f0a:	d0fb      	beq.n	8001f04 <GCControllerEmulation_Run+0x17c>
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001f0c:	2308      	movs	r3, #8
+ 8001f0e:	6063      	str	r3, [r4, #4]
+	while(!(USART1->SR & USART_SR_TXE)){};
+ 8001f10:	6823      	ldr	r3, [r4, #0]
+ 8001f12:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001f16:	d0fb      	beq.n	8001f10 <GCControllerEmulation_Run+0x188>
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001f18:	2308      	movs	r3, #8
+ 8001f1a:	6063      	str	r3, [r4, #4]
+	while(!(USART1->SR & USART_SR_TXE)){};
+ 8001f1c:	6823      	ldr	r3, [r4, #0]
+ 8001f1e:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001f22:	d0fb      	beq.n	8001f1c <GCControllerEmulation_Run+0x194>
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001f24:	2308      	movs	r3, #8
+ 8001f26:	6063      	str	r3, [r4, #4]
+	while(!(USART1->SR & USART_SR_TXE)){};
+ 8001f28:	6823      	ldr	r3, [r4, #0]
+ 8001f2a:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001f2e:	d0fb      	beq.n	8001f28 <GCControllerEmulation_Run+0x1a0>
+	USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+ 8001f30:	2308      	movs	r3, #8
+ 8001f32:	6063      	str	r3, [r4, #4]
+	while(!(USART1->SR & USART_SR_TXE)){};
+ 8001f34:	6823      	ldr	r3, [r4, #0]
+ 8001f36:	f013 0f80 	tst.w	r3, #128	; 0x80
+ 8001f3a:	d0fb      	beq.n	8001f34 <GCControllerEmulation_Run+0x1ac>
+	USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+ 8001f3c:	23ef      	movs	r3, #239	; 0xef
+ 8001f3e:	6063      	str	r3, [r4, #4]
+	while(!(USART1->SR & USART_SR_TC)){};
+ 8001f40:	6823      	ldr	r3, [r4, #0]
+ 8001f42:	f013 0f40 	tst.w	r3, #64	; 0x40
+ 8001f46:	d0fb      	beq.n	8001f40 <GCControllerEmulation_Run+0x1b8>
+	GC_STOP_PORT->BSRR = GC_STOP_CLEAR;
+ 8001f48:	f44f 1300 	mov.w	r3, #2097152	; 0x200000
+ 8001f4c:	4a44      	ldr	r2, [pc, #272]	; (8002060 <GCControllerEmulation_Run+0x2d8>)
+ 8001f4e:	6193      	str	r3, [r2, #24]
+	volatile uint32_t counter = 17;
+ 8001f50:	2311      	movs	r3, #17
+ 8001f52:	9301      	str	r3, [sp, #4]
+	while(counter--);
+ 8001f54:	9b01      	ldr	r3, [sp, #4]
+ 8001f56:	1e5a      	subs	r2, r3, #1
+ 8001f58:	9201      	str	r2, [sp, #4]
+ 8001f5a:	2b00      	cmp	r3, #0
+ 8001f5c:	d1fa      	bne.n	8001f54 <GCControllerEmulation_Run+0x1cc>
+	GC_STOP_PORT->BSRR = GC_STOP_SET;
+ 8001f5e:	2320      	movs	r3, #32
+ 8001f60:	4a3f      	ldr	r2, [pc, #252]	; (8002060 <GCControllerEmulation_Run+0x2d8>)
+ 8001f62:	6193      	str	r3, [r2, #24]
+	USART1->CR1 |= USART_CR1_RE;
+ 8001f64:	68e3      	ldr	r3, [r4, #12]
+ 8001f66:	f043 0304 	orr.w	r3, r3, #4
+ 8001f6a:	60e3      	str	r3, [r4, #12]
+	while(!(USART1->SR & USART_SR_RXNE)){};
+ 8001f6c:	6823      	ldr	r3, [r4, #0]
+ 8001f6e:	f013 0f20 	tst.w	r3, #32
+ 8001f72:	d0fb      	beq.n	8001f6c <GCControllerEmulation_Run+0x1e4>
+	gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] = USART1->DR;
+ 8001f74:	6862      	ldr	r2, [r4, #4]
+ 8001f76:	b2d2      	uxtb	r2, r2
+	while(!(USART1->SR & USART_SR_RXNE)){};
+ 8001f78:	6823      	ldr	r3, [r4, #0]
+ 8001f7a:	f013 0f20 	tst.w	r3, #32
+ 8001f7e:	d0fb      	beq.n	8001f78 <GCControllerEmulation_Run+0x1f0>
+	gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT5_BIT4] = USART1->DR;
+ 8001f80:	6861      	ldr	r1, [r4, #4]
+ 8001f82:	b2c9      	uxtb	r1, r1
+	while(!(USART1->SR & USART_SR_RXNE)){};
+ 8001f84:	6823      	ldr	r3, [r4, #0]
+ 8001f86:	f013 0f20 	tst.w	r3, #32
+ 8001f8a:	d0fb      	beq.n	8001f84 <GCControllerEmulation_Run+0x1fc>
+	gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT3_BIT2] = USART1->DR;
+ 8001f8c:	6860      	ldr	r0, [r4, #4]
+ 8001f8e:	b2c0      	uxtb	r0, r0
+	while(!(USART1->SR & USART_SR_RXNE)){};
+ 8001f90:	6823      	ldr	r3, [r4, #0]
+ 8001f92:	f013 0f20 	tst.w	r3, #32
+ 8001f96:	d0fb      	beq.n	8001f90 <GCControllerEmulation_Run+0x208>
+	gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT1_BIT0] = USART1->DR;
+ 8001f98:	6865      	ldr	r5, [r4, #4]
+ 8001f9a:	b2ed      	uxtb	r5, r5
+	while(!(USART1->SR & USART_SR_RXNE)){};
+ 8001f9c:	6823      	ldr	r3, [r4, #0]
+ 8001f9e:	f013 0f20 	tst.w	r3, #32
+ 8001fa2:	d0fb      	beq.n	8001f9c <GCControllerEmulation_Run+0x214>
+	gcConsoleResponse[GC_CONSOLE_TEMP_BITS] = USART1->DR;
+ 8001fa4:	6866      	ldr	r6, [r4, #4]
+ 8001fa6:	b2f6      	uxtb	r6, r6
+	if(gcConsoleResponse[GC_CONSOLE_TEMP_BITS] == GC_BITS_STOP_BIT)
+ 8001fa8:	2eff      	cmp	r6, #255	; 0xff
+ 8001faa:	f43f aef2 	beq.w	8001d92 <GCControllerEmulation_Run+0xa>
+	while(!(USART1->SR & USART_SR_RXNE)){};
+ 8001fae:	6823      	ldr	r3, [r4, #0]
+ 8001fb0:	f013 0f20 	tst.w	r3, #32
+ 8001fb4:	d0fb      	beq.n	8001fae <GCControllerEmulation_Run+0x226>
+	gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT5_BIT4] = USART1->DR;
+ 8001fb6:	6867      	ldr	r7, [r4, #4]
+	while(!(USART1->SR & USART_SR_RXNE)){};
+ 8001fb8:	6823      	ldr	r3, [r4, #0]
+ 8001fba:	f013 0f20 	tst.w	r3, #32
+ 8001fbe:	d0fb      	beq.n	8001fb8 <GCControllerEmulation_Run+0x230>
+	gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT3_BIT2] = USART1->DR;
+ 8001fc0:	f8d4 c004 	ldr.w	ip, [r4, #4]
+	while(!(USART1->SR & USART_SR_RXNE)){};
+ 8001fc4:	6823      	ldr	r3, [r4, #0]
+ 8001fc6:	f013 0f20 	tst.w	r3, #32
+ 8001fca:	d0fb      	beq.n	8001fc4 <GCControllerEmulation_Run+0x23c>
+	gcConsoleResponse[GC_CONSOLE_BYTE_1_BIT1_BIT0] = USART1->DR;
+ 8001fcc:	f8d4 e004 	ldr.w	lr, [r4, #4]
+	while(!(USART1->SR & USART_SR_RXNE)){};
+ 8001fd0:	6823      	ldr	r3, [r4, #0]
+ 8001fd2:	f013 0f20 	tst.w	r3, #32
+ 8001fd6:	d0fb      	beq.n	8001fd0 <GCControllerEmulation_Run+0x248>
+	gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT7_BIT6] = USART1->DR;
+ 8001fd8:	f8d4 8004 	ldr.w	r8, [r4, #4]
+	while(!(USART1->SR & USART_SR_RXNE)){};
+ 8001fdc:	6823      	ldr	r3, [r4, #0]
+ 8001fde:	f013 0f20 	tst.w	r3, #32
+ 8001fe2:	d0fb      	beq.n	8001fdc <GCControllerEmulation_Run+0x254>
+	gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT5_BIT4] = USART1->DR;
+ 8001fe4:	f8d4 9004 	ldr.w	r9, [r4, #4]
+	while(!(USART1->SR & USART_SR_RXNE)){};
+ 8001fe8:	6823      	ldr	r3, [r4, #0]
+ 8001fea:	f013 0f20 	tst.w	r3, #32
+ 8001fee:	d0fb      	beq.n	8001fe8 <GCControllerEmulation_Run+0x260>
+	gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT3_BIT2] = USART1->DR;
+ 8001ff0:	f8d4 a004 	ldr.w	sl, [r4, #4]
+	while(!(USART1->SR & USART_SR_RXNE)){};
+ 8001ff4:	6823      	ldr	r3, [r4, #0]
+ 8001ff6:	f013 0f20 	tst.w	r3, #32
+ 8001ffa:	d0fb      	beq.n	8001ff4 <GCControllerEmulation_Run+0x26c>
+	gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT1_BIT0] = USART1->DR;
+ 8001ffc:	f8d4 b004 	ldr.w	fp, [r4, #4]
+	while(!(USART1->SR & USART_SR_RXNE)){};
+ 8002000:	6823      	ldr	r3, [r4, #0]
+ 8002002:	f013 0f20 	tst.w	r3, #32
+ 8002006:	d0fb      	beq.n	8002000 <GCControllerEmulation_Run+0x278>
+	gcConsoleResponse[GC_CONSOLE_TEMP_BITS] = USART1->DR;
+ 8002008:	6863      	ldr	r3, [r4, #4]
+	if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_01_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_0_BIT7_BIT6] == GC_BITS_01_CASE2) ) &&
+ 800200a:	f002 02df 	and.w	r2, r2, #223	; 0xdf
+ 800200e:	2ac8      	cmp	r2, #200	; 0xc8
+ 8002010:	f43f aef2 	beq.w	8001df8 <GCControllerEmulation_Run+0x70>
+		command = GC_COMMAND_UNKNOWN;
+ 8002014:	2304      	movs	r3, #4
+	USART1->CR1 &= ~USART_CR1_RE;
+ 8002016:	68e2      	ldr	r2, [r4, #12]
+ 8002018:	f022 0204 	bic.w	r2, r2, #4
+ 800201c:	60e2      	str	r2, [r4, #12]
+		switch(command)
+ 800201e:	2b03      	cmp	r3, #3
+ 8002020:	d8a0      	bhi.n	8001f64 <GCControllerEmulation_Run+0x1dc>
+ 8002022:	a201      	add	r2, pc, #4	; (adr r2, 8002028 <GCControllerEmulation_Run+0x2a0>)
+ 8002024:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
+ 8002028:	08001eb1 	.word	0x08001eb1
+ 800202c:	08002039 	.word	0x08002039
+ 8002030:	08002041 	.word	0x08002041
+ 8002034:	08002049 	.word	0x08002049
+				GCControllerEmulation_SendControllerState(GC_COMMAND_PROBE_ORIGIN);
+ 8002038:	2001      	movs	r0, #1
+ 800203a:	f7ff fa79 	bl	8001530 <GCControllerEmulation_SendControllerState>
+				break;
+ 800203e:	e791      	b.n	8001f64 <GCControllerEmulation_Run+0x1dc>
+				GCControllerEmulation_SendControllerState(GC_COMMAND_POLL_AND_TURN_RUMBLE_OFF);
+ 8002040:	2002      	movs	r0, #2
+ 8002042:	f7ff fa75 	bl	8001530 <GCControllerEmulation_SendControllerState>
+				break;
+ 8002046:	e78d      	b.n	8001f64 <GCControllerEmulation_Run+0x1dc>
+				GCControllerEmulation_SendControllerState(GC_COMMAND_POLL_AND_TURN_RUMBLE_ON);
+ 8002048:	2003      	movs	r0, #3
+ 800204a:	f7ff fa71 	bl	8001530 <GCControllerEmulation_SendControllerState>
+				break;
+ 800204e:	e789      	b.n	8001f64 <GCControllerEmulation_Run+0x1dc>
+			else if( ( (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT7_BIT6] == GC_BITS_00_CASE1) || (gcConsoleResponse[GC_CONSOLE_BYTE_2_BIT7_BIT6] == GC_BITS_00_CASE2) ) &&
+ 8002050:	f1b8 0f88 	cmp.w	r8, #136	; 0x88
+ 8002054:	f43f af17 	beq.w	8001e86 <GCControllerEmulation_Run+0xfe>
+				command = GC_COMMAND_UNKNOWN;
+ 8002058:	2304      	movs	r3, #4
+ 800205a:	e7dc      	b.n	8002016 <GCControllerEmulation_Run+0x28e>
+ 800205c:	40011000 	.word	0x40011000
+ 8002060:	40020400 	.word	0x40020400
+
+08002064 <Main_Init>:
 	}
 }
 
 /* Main Functions */
 void Main_Init()
 {
- 8001e0c:	b500      	push	{lr}
- 8001e0e:	b087      	sub	sp, #28
+ 8002064:	b500      	push	{lr}
+ 8002066:	b087      	sub	sp, #28
 	/* Initialize the blue led */
 	__HAL_RCC_GPIOC_CLK_ENABLE();
- 8001e10:	2300      	movs	r3, #0
- 8001e12:	9300      	str	r3, [sp, #0]
- 8001e14:	4a0c      	ldr	r2, [pc, #48]	; (8001e48 <Main_Init+0x3c>)
- 8001e16:	6b11      	ldr	r1, [r2, #48]	; 0x30
- 8001e18:	f041 0104 	orr.w	r1, r1, #4
- 8001e1c:	6311      	str	r1, [r2, #48]	; 0x30
- 8001e1e:	6b12      	ldr	r2, [r2, #48]	; 0x30
- 8001e20:	f002 0204 	and.w	r2, r2, #4
- 8001e24:	9200      	str	r2, [sp, #0]
- 8001e26:	9a00      	ldr	r2, [sp, #0]
+ 8002068:	2300      	movs	r3, #0
+ 800206a:	9300      	str	r3, [sp, #0]
+ 800206c:	4a0c      	ldr	r2, [pc, #48]	; (80020a0 <Main_Init+0x3c>)
+ 800206e:	6b11      	ldr	r1, [r2, #48]	; 0x30
+ 8002070:	f041 0104 	orr.w	r1, r1, #4
+ 8002074:	6311      	str	r1, [r2, #48]	; 0x30
+ 8002076:	6b12      	ldr	r2, [r2, #48]	; 0x30
+ 8002078:	f002 0204 	and.w	r2, r2, #4
+ 800207c:	9200      	str	r2, [sp, #0]
+ 800207e:	9a00      	ldr	r2, [sp, #0]
 
 	GPIO_InitTypeDef GPIO_InitStruct_Main = {0};
- 8001e28:	9303      	str	r3, [sp, #12]
- 8001e2a:	9304      	str	r3, [sp, #16]
- 8001e2c:	9305      	str	r3, [sp, #20]
+ 8002080:	9303      	str	r3, [sp, #12]
+ 8002082:	9304      	str	r3, [sp, #16]
+ 8002084:	9305      	str	r3, [sp, #20]
 
 	GPIO_InitStruct_Main.Pin = BLUE_LED_PIN_HAL;
- 8001e2e:	f44f 5300 	mov.w	r3, #8192	; 0x2000
- 8001e32:	9301      	str	r3, [sp, #4]
+ 8002086:	f44f 5300 	mov.w	r3, #8192	; 0x2000
+ 800208a:	9301      	str	r3, [sp, #4]
 	GPIO_InitStruct_Main.Mode = GPIO_MODE_OUTPUT_PP;
- 8001e34:	2301      	movs	r3, #1
- 8001e36:	9302      	str	r3, [sp, #8]
+ 800208c:	2301      	movs	r3, #1
+ 800208e:	9302      	str	r3, [sp, #8]
 	GPIO_InitStruct_Main.Pull = GPIO_NOPULL;
 	GPIO_InitStruct_Main.Speed = GPIO_SPEED_FREQ_LOW;
 
 	HAL_GPIO_Init(BLUE_LED_PORT, &GPIO_InitStruct_Main);
- 8001e38:	a901      	add	r1, sp, #4
- 8001e3a:	4804      	ldr	r0, [pc, #16]	; (8001e4c <Main_Init+0x40>)
- 8001e3c:	f7fe fbfa 	bl	8000634 <HAL_GPIO_Init>
+ 8002090:	a901      	add	r1, sp, #4
+ 8002092:	4804      	ldr	r0, [pc, #16]	; (80020a4 <Main_Init+0x40>)
+ 8002094:	f7fe face 	bl	8000634 <HAL_GPIO_Init>
 
 	/* Blue LED off by default */
 	//Main_SetBlueLed(LED_OFF);
 }
- 8001e40:	b007      	add	sp, #28
- 8001e42:	f85d fb04 	ldr.w	pc, [sp], #4
- 8001e46:	bf00      	nop
- 8001e48:	40023800 	.word	0x40023800
- 8001e4c:	40020800 	.word	0x40020800
+ 8002098:	b007      	add	sp, #28
+ 800209a:	f85d fb04 	ldr.w	pc, [sp], #4
+ 800209e:	bf00      	nop
+ 80020a0:	40023800 	.word	0x40023800
+ 80020a4:	40020800 	.word	0x40020800
 
-08001e50 <SysTick_Handler>:
+080020a8 <SysTick_Handler>:
 //			break;
 //	}
 //}
 
 void SysTick_Handler(void)
 {
- 8001e50:	b508      	push	{r3, lr}
+ 80020a8:	b508      	push	{r3, lr}
 	HAL_IncTick();
- 8001e52:	f7fe fb83 	bl	800055c <HAL_IncTick>
+ 80020aa:	f7fe fa57 	bl	800055c <HAL_IncTick>
 }
- 8001e56:	bd08      	pop	{r3, pc}
+ 80020ae:	bd08      	pop	{r3, pc}
 
-08001e58 <SystemClock_Config>:
+080020b0 <SystemClock_Config>:
 /**
   * @brief System Clock Configuration
   * @retval None
   */
 void SystemClock_Config(void)
 {
- 8001e58:	b570      	push	{r4, r5, r6, lr}
- 8001e5a:	b094      	sub	sp, #80	; 0x50
+ 80020b0:	b570      	push	{r4, r5, r6, lr}
+ 80020b2:	b094      	sub	sp, #80	; 0x50
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
- 8001e5c:	2230      	movs	r2, #48	; 0x30
- 8001e5e:	2100      	movs	r1, #0
- 8001e60:	a808      	add	r0, sp, #32
- 8001e62:	f000 f8a5 	bl	8001fb0 <memset>
+ 80020b4:	2230      	movs	r2, #48	; 0x30
+ 80020b6:	2100      	movs	r1, #0
+ 80020b8:	a808      	add	r0, sp, #32
+ 80020ba:	f000 f8a5 	bl	8002208 <memset>
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
- 8001e66:	2400      	movs	r4, #0
- 8001e68:	9403      	str	r4, [sp, #12]
- 8001e6a:	9404      	str	r4, [sp, #16]
- 8001e6c:	9405      	str	r4, [sp, #20]
- 8001e6e:	9406      	str	r4, [sp, #24]
- 8001e70:	9407      	str	r4, [sp, #28]
+ 80020be:	2400      	movs	r4, #0
+ 80020c0:	9403      	str	r4, [sp, #12]
+ 80020c2:	9404      	str	r4, [sp, #16]
+ 80020c4:	9405      	str	r4, [sp, #20]
+ 80020c6:	9406      	str	r4, [sp, #24]
+ 80020c8:	9407      	str	r4, [sp, #28]
 
   /** Configure the main internal regulator output voltage
   */
   __HAL_RCC_PWR_CLK_ENABLE();
- 8001e72:	9401      	str	r4, [sp, #4]
- 8001e74:	4b1f      	ldr	r3, [pc, #124]	; (8001ef4 <SystemClock_Config+0x9c>)
- 8001e76:	6c1a      	ldr	r2, [r3, #64]	; 0x40
- 8001e78:	f042 5280 	orr.w	r2, r2, #268435456	; 0x10000000
- 8001e7c:	641a      	str	r2, [r3, #64]	; 0x40
- 8001e7e:	6c1b      	ldr	r3, [r3, #64]	; 0x40
- 8001e80:	f003 5380 	and.w	r3, r3, #268435456	; 0x10000000
- 8001e84:	9301      	str	r3, [sp, #4]
- 8001e86:	9b01      	ldr	r3, [sp, #4]
+ 80020ca:	9401      	str	r4, [sp, #4]
+ 80020cc:	4b1f      	ldr	r3, [pc, #124]	; (800214c <SystemClock_Config+0x9c>)
+ 80020ce:	6c1a      	ldr	r2, [r3, #64]	; 0x40
+ 80020d0:	f042 5280 	orr.w	r2, r2, #268435456	; 0x10000000
+ 80020d4:	641a      	str	r2, [r3, #64]	; 0x40
+ 80020d6:	6c1b      	ldr	r3, [r3, #64]	; 0x40
+ 80020d8:	f003 5380 	and.w	r3, r3, #268435456	; 0x10000000
+ 80020dc:	9301      	str	r3, [sp, #4]
+ 80020de:	9b01      	ldr	r3, [sp, #4]
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
- 8001e88:	9402      	str	r4, [sp, #8]
- 8001e8a:	4b1b      	ldr	r3, [pc, #108]	; (8001ef8 <SystemClock_Config+0xa0>)
- 8001e8c:	681a      	ldr	r2, [r3, #0]
- 8001e8e:	f442 4240 	orr.w	r2, r2, #49152	; 0xc000
- 8001e92:	601a      	str	r2, [r3, #0]
- 8001e94:	681b      	ldr	r3, [r3, #0]
- 8001e96:	f403 4340 	and.w	r3, r3, #49152	; 0xc000
- 8001e9a:	9302      	str	r3, [sp, #8]
- 8001e9c:	9b02      	ldr	r3, [sp, #8]
+ 80020e0:	9402      	str	r4, [sp, #8]
+ 80020e2:	4b1b      	ldr	r3, [pc, #108]	; (8002150 <SystemClock_Config+0xa0>)
+ 80020e4:	681a      	ldr	r2, [r3, #0]
+ 80020e6:	f442 4240 	orr.w	r2, r2, #49152	; 0xc000
+ 80020ea:	601a      	str	r2, [r3, #0]
+ 80020ec:	681b      	ldr	r3, [r3, #0]
+ 80020ee:	f403 4340 	and.w	r3, r3, #49152	; 0xc000
+ 80020f2:	9302      	str	r3, [sp, #8]
+ 80020f4:	9b02      	ldr	r3, [sp, #8]
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_HSE;
- 8001e9e:	2603      	movs	r6, #3
- 8001ea0:	9608      	str	r6, [sp, #32]
+ 80020f6:	2603      	movs	r6, #3
+ 80020f8:	9608      	str	r6, [sp, #32]
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
- 8001ea2:	f44f 3380 	mov.w	r3, #65536	; 0x10000
- 8001ea6:	9309      	str	r3, [sp, #36]	; 0x24
+ 80020fa:	f44f 3380 	mov.w	r3, #65536	; 0x10000
+ 80020fe:	9309      	str	r3, [sp, #36]	; 0x24
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
- 8001ea8:	2301      	movs	r3, #1
- 8001eaa:	930b      	str	r3, [sp, #44]	; 0x2c
+ 8002100:	2301      	movs	r3, #1
+ 8002102:	930b      	str	r3, [sp, #44]	; 0x2c
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
- 8001eac:	2310      	movs	r3, #16
- 8001eae:	930c      	str	r3, [sp, #48]	; 0x30
+ 8002104:	2310      	movs	r3, #16
+ 8002106:	930c      	str	r3, [sp, #48]	; 0x30
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
- 8001eb0:	2502      	movs	r5, #2
- 8001eb2:	950e      	str	r5, [sp, #56]	; 0x38
+ 8002108:	2502      	movs	r5, #2
+ 800210a:	950e      	str	r5, [sp, #56]	; 0x38
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
- 8001eb4:	f44f 0380 	mov.w	r3, #4194304	; 0x400000
- 8001eb8:	930f      	str	r3, [sp, #60]	; 0x3c
+ 800210c:	f44f 0380 	mov.w	r3, #4194304	; 0x400000
+ 8002110:	930f      	str	r3, [sp, #60]	; 0x3c
   RCC_OscInitStruct.PLL.PLLM = 12;
- 8001eba:	230c      	movs	r3, #12
- 8001ebc:	9310      	str	r3, [sp, #64]	; 0x40
+ 8002112:	230c      	movs	r3, #12
+ 8002114:	9310      	str	r3, [sp, #64]	; 0x40
   RCC_OscInitStruct.PLL.PLLN = 96;
- 8001ebe:	2360      	movs	r3, #96	; 0x60
- 8001ec0:	9311      	str	r3, [sp, #68]	; 0x44
+ 8002116:	2360      	movs	r3, #96	; 0x60
+ 8002118:	9311      	str	r3, [sp, #68]	; 0x44
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
- 8001ec2:	9512      	str	r5, [sp, #72]	; 0x48
+ 800211a:	9512      	str	r5, [sp, #72]	; 0x48
   RCC_OscInitStruct.PLL.PLLQ = 4;
- 8001ec4:	2304      	movs	r3, #4
- 8001ec6:	9313      	str	r3, [sp, #76]	; 0x4c
+ 800211c:	2304      	movs	r3, #4
+ 800211e:	9313      	str	r3, [sp, #76]	; 0x4c
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
- 8001ec8:	a808      	add	r0, sp, #32
- 8001eca:	f7fe fca9 	bl	8000820 <HAL_RCC_OscConfig>
+ 8002120:	a808      	add	r0, sp, #32
+ 8002122:	f7fe fb7d 	bl	8000820 <HAL_RCC_OscConfig>
   {
     //Error_Handler();
   }
   /** Initializes the CPU, AHB and APB buses clocks
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
- 8001ece:	230f      	movs	r3, #15
- 8001ed0:	9303      	str	r3, [sp, #12]
+ 8002126:	230f      	movs	r3, #15
+ 8002128:	9303      	str	r3, [sp, #12]
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
- 8001ed2:	9504      	str	r5, [sp, #16]
+ 800212a:	9504      	str	r5, [sp, #16]
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
- 8001ed4:	9405      	str	r4, [sp, #20]
+ 800212c:	9405      	str	r4, [sp, #20]
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
- 8001ed6:	f44f 5380 	mov.w	r3, #4096	; 0x1000
- 8001eda:	9306      	str	r3, [sp, #24]
+ 800212e:	f44f 5380 	mov.w	r3, #4096	; 0x1000
+ 8002132:	9306      	str	r3, [sp, #24]
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
- 8001edc:	9407      	str	r4, [sp, #28]
+ 8002134:	9407      	str	r4, [sp, #28]
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_3) != HAL_OK)
- 8001ede:	4631      	mov	r1, r6
- 8001ee0:	a803      	add	r0, sp, #12
- 8001ee2:	f7fe ff3d 	bl	8000d60 <HAL_RCC_ClockConfig>
+ 8002136:	4631      	mov	r1, r6
+ 8002138:	a803      	add	r0, sp, #12
+ 800213a:	f7fe fe11 	bl	8000d60 <HAL_RCC_ClockConfig>
   {
     //Error_Handler();
   }
   HAL_RCC_MCOConfig(RCC_MCO1, RCC_MCO1SOURCE_HSI, RCC_MCODIV_1);
- 8001ee6:	4622      	mov	r2, r4
- 8001ee8:	4621      	mov	r1, r4
- 8001eea:	4620      	mov	r0, r4
- 8001eec:	f7fe fe96 	bl	8000c1c <HAL_RCC_MCOConfig>
+ 800213e:	4622      	mov	r2, r4
+ 8002140:	4621      	mov	r1, r4
+ 8002142:	4620      	mov	r0, r4
+ 8002144:	f7fe fd6a 	bl	8000c1c <HAL_RCC_MCOConfig>
 }
- 8001ef0:	b014      	add	sp, #80	; 0x50
- 8001ef2:	bd70      	pop	{r4, r5, r6, pc}
- 8001ef4:	40023800 	.word	0x40023800
- 8001ef8:	40007000 	.word	0x40007000
+ 8002148:	b014      	add	sp, #80	; 0x50
+ 800214a:	bd70      	pop	{r4, r5, r6, pc}
+ 800214c:	40023800 	.word	0x40023800
+ 8002150:	40007000 	.word	0x40007000
 
-08001efc <main>:
+08002154 <main>:
 {
- 8001efc:	b508      	push	{r3, lr}
+ 8002154:	b508      	push	{r3, lr}
 	HAL_Init();
- 8001efe:	f7fe fb13 	bl	8000528 <HAL_Init>
+ 8002156:	f7fe f9e7 	bl	8000528 <HAL_Init>
 	SystemClock_Config();
- 8001f02:	f7ff ffa9 	bl	8001e58 <SystemClock_Config>
+ 800215a:	f7ff ffa9 	bl	80020b0 <SystemClock_Config>
 	Main_Init();
- 8001f06:	f7ff ff81 	bl	8001e0c <Main_Init>
+ 800215e:	f7ff ff81 	bl	8002064 <Main_Init>
 	GCControllerEmulation_Init();
- 8001f0a:	f7ff f8c1 	bl	8001090 <GCControllerEmulation_Init>
+ 8002162:	f7fe ff95 	bl	8001090 <GCControllerEmulation_Init>
 		GCControllerEmulation_Run();
- 8001f0e:	f7ff fe0f 	bl	8001b30 <GCControllerEmulation_Run>
- 8001f12:	e7fc      	b.n	8001f0e <main+0x12>
+ 8002166:	f7ff fe0f 	bl	8001d88 <GCControllerEmulation_Run>
+ 800216a:	e7fc      	b.n	8002166 <main+0x12>
 
-08001f14 <Reset_Handler>:
+0800216c <Reset_Handler>:
 
   .section .text.Reset_Handler
   .weak Reset_Handler
   .type Reset_Handler, %function
 Reset_Handler:
   ldr   r0, =_estack
- 8001f14:	480d      	ldr	r0, [pc, #52]	; (8001f4c <LoopForever+0x2>)
+ 800216c:	480d      	ldr	r0, [pc, #52]	; (80021a4 <LoopForever+0x2>)
   mov   sp, r0          /* set stack pointer */
- 8001f16:	4685      	mov	sp, r0
+ 800216e:	4685      	mov	sp, r0
 /* Call the clock system intitialization function.*/
   bl  SystemInit
- 8001f18:	f3af 8000 	nop.w
+ 8002170:	f3af 8000 	nop.w
 
 /* Copy the data segment initializers from flash to SRAM */
   ldr r0, =_sdata
- 8001f1c:	480c      	ldr	r0, [pc, #48]	; (8001f50 <LoopForever+0x6>)
+ 8002174:	480c      	ldr	r0, [pc, #48]	; (80021a8 <LoopForever+0x6>)
   ldr r1, =_edata
- 8001f1e:	490d      	ldr	r1, [pc, #52]	; (8001f54 <LoopForever+0xa>)
+ 8002176:	490d      	ldr	r1, [pc, #52]	; (80021ac <LoopForever+0xa>)
   ldr r2, =_sidata
- 8001f20:	4a0d      	ldr	r2, [pc, #52]	; (8001f58 <LoopForever+0xe>)
+ 8002178:	4a0d      	ldr	r2, [pc, #52]	; (80021b0 <LoopForever+0xe>)
   movs r3, #0
- 8001f22:	2300      	movs	r3, #0
+ 800217a:	2300      	movs	r3, #0
   b LoopCopyDataInit
- 8001f24:	e002      	b.n	8001f2c <LoopCopyDataInit>
+ 800217c:	e002      	b.n	8002184 <LoopCopyDataInit>
 
-08001f26 <CopyDataInit>:
+0800217e <CopyDataInit>:
 
 CopyDataInit:
   ldr r4, [r2, r3]
- 8001f26:	58d4      	ldr	r4, [r2, r3]
+ 800217e:	58d4      	ldr	r4, [r2, r3]
   str r4, [r0, r3]
- 8001f28:	50c4      	str	r4, [r0, r3]
+ 8002180:	50c4      	str	r4, [r0, r3]
   adds r3, r3, #4
- 8001f2a:	3304      	adds	r3, #4
+ 8002182:	3304      	adds	r3, #4
 
-08001f2c <LoopCopyDataInit>:
+08002184 <LoopCopyDataInit>:
 
 LoopCopyDataInit:
   adds r4, r0, r3
- 8001f2c:	18c4      	adds	r4, r0, r3
+ 8002184:	18c4      	adds	r4, r0, r3
   cmp r4, r1
- 8001f2e:	428c      	cmp	r4, r1
+ 8002186:	428c      	cmp	r4, r1
   bcc CopyDataInit
- 8001f30:	d3f9      	bcc.n	8001f26 <CopyDataInit>
+ 8002188:	d3f9      	bcc.n	800217e <CopyDataInit>
 
 /* Zero fill the bss segment. */
   ldr r2, =_sbss
- 8001f32:	4a0a      	ldr	r2, [pc, #40]	; (8001f5c <LoopForever+0x12>)
+ 800218a:	4a0a      	ldr	r2, [pc, #40]	; (80021b4 <LoopForever+0x12>)
   ldr r4, =_ebss
- 8001f34:	4c0a      	ldr	r4, [pc, #40]	; (8001f60 <LoopForever+0x16>)
+ 800218c:	4c0a      	ldr	r4, [pc, #40]	; (80021b8 <LoopForever+0x16>)
   movs r3, #0
- 8001f36:	2300      	movs	r3, #0
+ 800218e:	2300      	movs	r3, #0
   b LoopFillZerobss
- 8001f38:	e001      	b.n	8001f3e <LoopFillZerobss>
+ 8002190:	e001      	b.n	8002196 <LoopFillZerobss>
 
-08001f3a <FillZerobss>:
+08002192 <FillZerobss>:
 
 FillZerobss:
   str  r3, [r2]
- 8001f3a:	6013      	str	r3, [r2, #0]
+ 8002192:	6013      	str	r3, [r2, #0]
   adds r2, r2, #4
- 8001f3c:	3204      	adds	r2, #4
+ 8002194:	3204      	adds	r2, #4
 
-08001f3e <LoopFillZerobss>:
+08002196 <LoopFillZerobss>:
 
 LoopFillZerobss:
   cmp r2, r4
- 8001f3e:	42a2      	cmp	r2, r4
+ 8002196:	42a2      	cmp	r2, r4
   bcc FillZerobss
- 8001f40:	d3fb      	bcc.n	8001f3a <FillZerobss>
+ 8002198:	d3fb      	bcc.n	8002192 <FillZerobss>
 
 /* Call static constructors */
   bl __libc_init_array
- 8001f42:	f000 f811 	bl	8001f68 <__libc_init_array>
+ 800219a:	f000 f811 	bl	80021c0 <__libc_init_array>
 /* Call the application's entry point.*/
   bl main
- 8001f46:	f7ff ffd9 	bl	8001efc <main>
+ 800219e:	f7ff ffd9 	bl	8002154 <main>
 
-08001f4a <LoopForever>:
+080021a2 <LoopForever>:
 
 LoopForever:
     b LoopForever
- 8001f4a:	e7fe      	b.n	8001f4a <LoopForever>
+ 80021a2:	e7fe      	b.n	80021a2 <LoopForever>
   ldr   r0, =_estack
- 8001f4c:	20020000 	.word	0x20020000
+ 80021a4:	20020000 	.word	0x20020000
   ldr r0, =_sdata
- 8001f50:	20000000 	.word	0x20000000
+ 80021a8:	20000000 	.word	0x20000000
   ldr r1, =_edata
- 8001f54:	2000000c 	.word	0x2000000c
+ 80021ac:	2000000c 	.word	0x2000000c
   ldr r2, =_sidata
- 8001f58:	08002000 	.word	0x08002000
+ 80021b0:	08002258 	.word	0x08002258
   ldr r2, =_sbss
- 8001f5c:	2000000c 	.word	0x2000000c
+ 80021b4:	2000000c 	.word	0x2000000c
   ldr r4, =_ebss
- 8001f60:	200000a0 	.word	0x200000a0
+ 80021b8:	200000a0 	.word	0x200000a0
 
-08001f64 <ADC_IRQHandler>:
+080021bc <ADC_IRQHandler>:
  * @retval : None
 */
   .section .text.Default_Handler,"ax",%progbits
 Default_Handler:
 Infinite_Loop:
   b Infinite_Loop
- 8001f64:	e7fe      	b.n	8001f64 <ADC_IRQHandler>
+ 80021bc:	e7fe      	b.n	80021bc <ADC_IRQHandler>
 	...
 
-08001f68 <__libc_init_array>:
- 8001f68:	b570      	push	{r4, r5, r6, lr}
- 8001f6a:	4e0d      	ldr	r6, [pc, #52]	; (8001fa0 <__libc_init_array+0x38>)
- 8001f6c:	4c0d      	ldr	r4, [pc, #52]	; (8001fa4 <__libc_init_array+0x3c>)
- 8001f6e:	1ba4      	subs	r4, r4, r6
- 8001f70:	10a4      	asrs	r4, r4, #2
- 8001f72:	2500      	movs	r5, #0
- 8001f74:	42a5      	cmp	r5, r4
- 8001f76:	d109      	bne.n	8001f8c <__libc_init_array+0x24>
- 8001f78:	4e0b      	ldr	r6, [pc, #44]	; (8001fa8 <__libc_init_array+0x40>)
- 8001f7a:	4c0c      	ldr	r4, [pc, #48]	; (8001fac <__libc_init_array+0x44>)
- 8001f7c:	f000 f820 	bl	8001fc0 <_init>
- 8001f80:	1ba4      	subs	r4, r4, r6
- 8001f82:	10a4      	asrs	r4, r4, #2
- 8001f84:	2500      	movs	r5, #0
- 8001f86:	42a5      	cmp	r5, r4
- 8001f88:	d105      	bne.n	8001f96 <__libc_init_array+0x2e>
- 8001f8a:	bd70      	pop	{r4, r5, r6, pc}
- 8001f8c:	f856 3025 	ldr.w	r3, [r6, r5, lsl #2]
- 8001f90:	4798      	blx	r3
- 8001f92:	3501      	adds	r5, #1
- 8001f94:	e7ee      	b.n	8001f74 <__libc_init_array+0xc>
- 8001f96:	f856 3025 	ldr.w	r3, [r6, r5, lsl #2]
- 8001f9a:	4798      	blx	r3
- 8001f9c:	3501      	adds	r5, #1
- 8001f9e:	e7f2      	b.n	8001f86 <__libc_init_array+0x1e>
- 8001fa0:	08001ff8 	.word	0x08001ff8
- 8001fa4:	08001ff8 	.word	0x08001ff8
- 8001fa8:	08001ff8 	.word	0x08001ff8
- 8001fac:	08001ffc 	.word	0x08001ffc
+080021c0 <__libc_init_array>:
+ 80021c0:	b570      	push	{r4, r5, r6, lr}
+ 80021c2:	4e0d      	ldr	r6, [pc, #52]	; (80021f8 <__libc_init_array+0x38>)
+ 80021c4:	4c0d      	ldr	r4, [pc, #52]	; (80021fc <__libc_init_array+0x3c>)
+ 80021c6:	1ba4      	subs	r4, r4, r6
+ 80021c8:	10a4      	asrs	r4, r4, #2
+ 80021ca:	2500      	movs	r5, #0
+ 80021cc:	42a5      	cmp	r5, r4
+ 80021ce:	d109      	bne.n	80021e4 <__libc_init_array+0x24>
+ 80021d0:	4e0b      	ldr	r6, [pc, #44]	; (8002200 <__libc_init_array+0x40>)
+ 80021d2:	4c0c      	ldr	r4, [pc, #48]	; (8002204 <__libc_init_array+0x44>)
+ 80021d4:	f000 f820 	bl	8002218 <_init>
+ 80021d8:	1ba4      	subs	r4, r4, r6
+ 80021da:	10a4      	asrs	r4, r4, #2
+ 80021dc:	2500      	movs	r5, #0
+ 80021de:	42a5      	cmp	r5, r4
+ 80021e0:	d105      	bne.n	80021ee <__libc_init_array+0x2e>
+ 80021e2:	bd70      	pop	{r4, r5, r6, pc}
+ 80021e4:	f856 3025 	ldr.w	r3, [r6, r5, lsl #2]
+ 80021e8:	4798      	blx	r3
+ 80021ea:	3501      	adds	r5, #1
+ 80021ec:	e7ee      	b.n	80021cc <__libc_init_array+0xc>
+ 80021ee:	f856 3025 	ldr.w	r3, [r6, r5, lsl #2]
+ 80021f2:	4798      	blx	r3
+ 80021f4:	3501      	adds	r5, #1
+ 80021f6:	e7f2      	b.n	80021de <__libc_init_array+0x1e>
+ 80021f8:	08002250 	.word	0x08002250
+ 80021fc:	08002250 	.word	0x08002250
+ 8002200:	08002250 	.word	0x08002250
+ 8002204:	08002254 	.word	0x08002254
 
-08001fb0 <memset>:
- 8001fb0:	4402      	add	r2, r0
- 8001fb2:	4603      	mov	r3, r0
- 8001fb4:	4293      	cmp	r3, r2
- 8001fb6:	d100      	bne.n	8001fba <memset+0xa>
- 8001fb8:	4770      	bx	lr
- 8001fba:	f803 1b01 	strb.w	r1, [r3], #1
- 8001fbe:	e7f9      	b.n	8001fb4 <memset+0x4>
+08002208 <memset>:
+ 8002208:	4402      	add	r2, r0
+ 800220a:	4603      	mov	r3, r0
+ 800220c:	4293      	cmp	r3, r2
+ 800220e:	d100      	bne.n	8002212 <memset+0xa>
+ 8002210:	4770      	bx	lr
+ 8002212:	f803 1b01 	strb.w	r1, [r3], #1
+ 8002216:	e7f9      	b.n	800220c <memset+0x4>
 
-08001fc0 <_init>:
- 8001fc0:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
- 8001fc2:	bf00      	nop
- 8001fc4:	bcf8      	pop	{r3, r4, r5, r6, r7}
- 8001fc6:	bc08      	pop	{r3}
- 8001fc8:	469e      	mov	lr, r3
- 8001fca:	4770      	bx	lr
+08002218 <_init>:
+ 8002218:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 800221a:	bf00      	nop
+ 800221c:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 800221e:	bc08      	pop	{r3}
+ 8002220:	469e      	mov	lr, r3
+ 8002222:	4770      	bx	lr
 
-08001fcc <_fini>:
- 8001fcc:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
- 8001fce:	bf00      	nop
- 8001fd0:	bcf8      	pop	{r3, r4, r5, r6, r7}
- 8001fd2:	bc08      	pop	{r3}
- 8001fd4:	469e      	mov	lr, r3
- 8001fd6:	4770      	bx	lr
+08002224 <_fini>:
+ 8002224:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 8002226:	bf00      	nop
+ 8002228:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 800222a:	bc08      	pop	{r3}
+ 800222c:	469e      	mov	lr, r3
+ 800222e:	4770      	bx	lr

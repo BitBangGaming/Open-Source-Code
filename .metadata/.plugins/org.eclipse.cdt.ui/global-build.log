@@ -1,29 +1,7 @@
-19:49:47 **** Incremental Build of configuration Debug for project GC_Anti-Pad_Hack Board ****
+16:23:51 **** Incremental Build of configuration Debug for project GC_Anti-Pad_Hack Board ****
 make -j12 all 
-arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Inc -I"C:/Users/jcorleto/Documents/Altium Docs/Open-Source-Code/GC_Anti-Pad_Hack Board/Drivers/CMSIS/Include" -I"C:/Users/jcorleto/Documents/Altium Docs/Open-Source-Code/GC_Anti-Pad_Hack Board/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"C:/Users/jcorleto/Documents/Altium Docs/Open-Source-Code/GC_Anti-Pad_Hack Board/Drivers/STM32F4xx_HAL_Driver/Inc" -O1 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
-../Src/main.c: In function 'main':
-../Src/main.c:9:2: warning: implicit declaration of function 'SystemClock_Config'; did you mean 'SysTick_Config'? [-Wimplicit-function-declaration]
-  SystemClock_Config();
-  ^~~~~~~~~~~~~~~~~~
-  SysTick_Config
-../Src/main.c: At top level:
-../Src/main.c:75:6: warning: conflicting types for 'SystemClock_Config'
- void SystemClock_Config(void)
-      ^~~~~~~~~~~~~~~~~~
-../Src/main.c:9:2: note: previous implicit declaration of 'SystemClock_Config' was here
-  SystemClock_Config();
-  ^~~~~~~~~~~~~~~~~~
-arm-none-eabi-gcc -o "GC_Anti-Pad_Hack Board.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\jcorleto\Documents\Altium Docs\Open-Source-Code\GC_Anti-Pad_Hack Board\STM32F411CEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="GC_Anti-Pad_Hack Board.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: GC_Anti-Pad_Hack Board.elf
- 
-arm-none-eabi-objdump -h -S  GC_Anti-Pad_Hack\ Board.elf  > "GC_Anti-Pad_Hack Board.list"
-arm-none-eabi-objcopy  -O binary  GC_Anti-Pad_Hack\ Board.elf  "GC_Anti-Pad_Hack Board.bin"
 arm-none-eabi-size   GC_Anti-Pad_Hack\ Board.elf 
    text	   data	    bss	    dec	    hex	filename
-   8184	     20	   1684	   9888	   26a0	GC_Anti-Pad_Hack Board.elf
+   8784	     20	   1684	  10488	   28f8	GC_Anti-Pad_Hack Board.elf
 Finished building: default.size.stdout
- 
-Finished building: GC_Anti-Pad_Hack Board.bin
-Finished building: GC_Anti-Pad_Hack Board.list
- 
  

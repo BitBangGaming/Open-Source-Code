@@ -909,44 +909,44 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
 		// Send states for MAIN STICK X AXIS BIT7 AND BIT6
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
 
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
 		// Send states for MAIN STICK X AXIS BIT5 AND BIT4
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
 
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
 		// Send states for MAIN STICK X AXIS BIT2 AND BIT2
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
 
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
 		// Send states for MAIN STICK X AXIS BIT1 AND BIT0
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
 	}
 	else if(gcProcessedButtonStates[GC_MAIN_STICK_RIGHT] == PUSHED)
 	{
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
 		// Send states for MAIN STICK X AXIS BIT7 AND BIT6
-		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
 
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
 		// Send states for MAIN STICK X AXIS BIT5 AND BIT4
-		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
 
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
 		// Send states for MAIN STICK X AXIS BIT2 AND BIT2
-		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
 
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
 		// Send states for MAIN STICK X AXIS BIT1 AND BIT0
-		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
 	}
 	else
 	{
@@ -978,29 +978,7 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
 		// Send states for MAIN STICK Y AXIS BIT7 AND BIT6
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
-
-		// Make sure the transmit data register is empty before sending next byte
-		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for MAIN STICK Y AXIS BIT5 AND BIT4
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
-
-		// Make sure the transmit data register is empty before sending next byte
-		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for MAIN STICK Y AXIS BIT2 AND BIT2
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
-
-		// Make sure the transmit data register is empty before sending next byte
-		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for MAIN STICK Y AXIS BIT1 AND BIT0
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
-	}
-	else if(gcProcessedButtonStates[GC_MAIN_STICK_UP] == PUSHED)
-	{
-		// Make sure the transmit data register is empty before sending next byte
-		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for MAIN STICK Y AXIS BIT7 AND BIT6
-		USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
 
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
@@ -1010,12 +988,34 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
 		// Send states for MAIN STICK Y AXIS BIT2 AND BIT2
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+
+		// Make sure the transmit data register is empty before sending next byte
+		while(!(USART1->SR & USART_SR_TXE)){};
+		// Send states for MAIN STICK Y AXIS BIT1 AND BIT0
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+	}
+	else if(gcProcessedButtonStates[GC_MAIN_STICK_UP] == PUSHED)
+	{
+		// Make sure the transmit data register is empty before sending next byte
+		while(!(USART1->SR & USART_SR_TXE)){};
+		// Send states for MAIN STICK Y AXIS BIT7 AND BIT6
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+		// Make sure the transmit data register is empty before sending next byte
+		while(!(USART1->SR & USART_SR_TXE)){};
+		// Send states for MAIN STICK Y AXIS BIT5 AND BIT4
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+		// Make sure the transmit data register is empty before sending next byte
+		while(!(USART1->SR & USART_SR_TXE)){};
+		// Send states for MAIN STICK Y AXIS BIT2 AND BIT2
 		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
 
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
 		// Send states for MAIN STICK Y AXIS BIT1 AND BIT0
-		USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
 	}
 	else
 	{
@@ -1047,44 +1047,44 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
 		// Send states for C STICK X AXIS BIT7 AND BIT6
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
 
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
 		// Send states for C STICK X AXIS BIT5 AND BIT4
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
 
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
 		// Send states for C STICK X AXIS BIT2 AND BIT2
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
 
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
 		// Send states for C STICK X AXIS BIT1 AND BIT0
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
 	}
 	else if(gcProcessedButtonStates[GC_C_STICK_RIGHT] == PUSHED)
 	{
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
 		// Send states for C STICK X AXIS BIT7 AND BIT6
-		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
 
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
 		// Send states for C STICK X AXIS BIT5 AND BIT4
-		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
 
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
 		// Send states for C STICK X AXIS BIT2 AND BIT2
-		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
 
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
 		// Send states for C STICK X AXIS BIT1 AND BIT0
-		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
 	}
 	else
 	{
@@ -1116,29 +1116,7 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
 		// Send states for C STICK Y AXIS BIT7 AND BIT6
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
-
-		// Make sure the transmit data register is empty before sending next byte
-		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for C STICK Y AXIS BIT5 AND BIT4
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
-
-		// Make sure the transmit data register is empty before sending next byte
-		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for C STICK Y AXIS BIT2 AND BIT2
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
-
-		// Make sure the transmit data register is empty before sending next byte
-		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for C STICK Y AXIS BIT1 AND BIT0
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
-	}
-	else if(gcProcessedButtonStates[GC_C_STICK_UP] == PUSHED)
-	{
-		// Make sure the transmit data register is empty before sending next byte
-		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for C STICK Y AXIS BIT7 AND BIT6
-		USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
 
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
@@ -1148,12 +1126,34 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
 		// Send states for C STICK Y AXIS BIT2 AND BIT2
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+
+		// Make sure the transmit data register is empty before sending next byte
+		while(!(USART1->SR & USART_SR_TXE)){};
+		// Send states for C STICK Y AXIS BIT1 AND BIT0
+		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+	}
+	else if(gcProcessedButtonStates[GC_C_STICK_UP] == PUSHED)
+	{
+		// Make sure the transmit data register is empty before sending next byte
+		while(!(USART1->SR & USART_SR_TXE)){};
+		// Send states for C STICK Y AXIS BIT7 AND BIT6
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+		// Make sure the transmit data register is empty before sending next byte
+		while(!(USART1->SR & USART_SR_TXE)){};
+		// Send states for C STICK Y AXIS BIT5 AND BIT4
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+		// Make sure the transmit data register is empty before sending next byte
+		while(!(USART1->SR & USART_SR_TXE)){};
+		// Send states for C STICK Y AXIS BIT2 AND BIT2
 		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
 
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
 		// Send states for C STICK Y AXIS BIT1 AND BIT0
-		USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
+		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
 	}
 	else
 	{
@@ -1226,43 +1226,43 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 		/* Ninth byte to console */
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for ?
+		// Send states for
 		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
 
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for ?
+		// Send states for
 		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
 
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for ?
+		// Send states for
 		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
 
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for ?
+		// Send states for
 		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
 
 		/* Tenth byte to console */
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for ?
+		// Send states for
 		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
 
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for ?
+		// Send states for
 		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
 
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for ?
+		// Send states for
 		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
 
 		// Make sure the transmit data register is empty before sending next byte
 		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for ?
+		// Send states for
 		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
 	}
 
