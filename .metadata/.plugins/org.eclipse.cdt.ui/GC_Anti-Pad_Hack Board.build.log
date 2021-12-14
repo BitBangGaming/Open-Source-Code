@@ -1,10 +1,20 @@
-16:23:51 **** Incremental Build of configuration Debug for project GC_Anti-Pad_Hack Board ****
+13:41:07 **** Incremental Build of configuration Debug for project GC_Anti-Pad_Hack Board ****
 make -j12 all 
+arm-none-eabi-gcc "../Src/gc_controller_emulation.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Inc -I"C:/Users/jcorleto/Documents/Altium Docs/Open-Source-Code/GC_Anti-Pad_Hack Board/Drivers/CMSIS/Include" -I"C:/Users/jcorleto/Documents/Altium Docs/Open-Source-Code/GC_Anti-Pad_Hack Board/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"C:/Users/jcorleto/Documents/Altium Docs/Open-Source-Code/GC_Anti-Pad_Hack Board/Drivers/STM32F4xx_HAL_Driver/Inc" -O1 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/gc_controller_emulation.d" -MT"Src/gc_controller_emulation.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/gc_controller_emulation.o"
+arm-none-eabi-gcc -o "GC_Anti-Pad_Hack Board.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\jcorleto\Documents\Altium Docs\Open-Source-Code\GC_Anti-Pad_Hack Board\STM32F411CEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="GC_Anti-Pad_Hack Board.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: GC_Anti-Pad_Hack Board.elf
+ 
+arm-none-eabi-objdump -h -S  GC_Anti-Pad_Hack\ Board.elf  > "GC_Anti-Pad_Hack Board.list"
+arm-none-eabi-objcopy  -O binary  GC_Anti-Pad_Hack\ Board.elf  "GC_Anti-Pad_Hack Board.bin"
 arm-none-eabi-size   GC_Anti-Pad_Hack\ Board.elf 
    text	   data	    bss	    dec	    hex	filename
-   8784	     20	   1684	  10488	   28f8	GC_Anti-Pad_Hack Board.elf
+   9028	     20	   1684	  10732	   29ec	GC_Anti-Pad_Hack Board.elf
 Finished building: default.size.stdout
  
+Finished building: GC_Anti-Pad_Hack Board.bin
+Finished building: GC_Anti-Pad_Hack Board.list
+ 
+ 
 
-16:23:51 Build Finished. 0 errors, 0 warnings. (took 290ms)
+13:41:08 Build Finished. 0 errors, 0 warnings. (took 887ms)
 

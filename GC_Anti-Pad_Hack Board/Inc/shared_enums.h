@@ -37,8 +37,7 @@ typedef enum
 	GC_C_STICK_LEFT = 18,
 	GC_C_STICK_RIGHT = 19,
 	GC_MACRO = 20,
-	GC_TILT_X = 21,
-	GC_TILT_Y = 22
+	GC_TILT = 21
 } GCButtonInput_t;
 
 #endif

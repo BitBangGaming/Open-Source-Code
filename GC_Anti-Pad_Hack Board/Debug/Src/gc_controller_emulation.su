@@ -1,5 +1,5 @@
 gc_controller_emulation.c:74:6:GCControllerEmulation_Init	80	static
-gc_controller_emulation.c:352:15:GCControllerEmulation_GetButtonState	8	static
-gc_controller_emulation.c:323:6:GCControllerEmulation_GetSwitchSnapshot	8	static
-gc_controller_emulation.c:739:6:GCControllerEmulation_SendControllerState	32	static
-gc_controller_emulation.c:287:6:GCControllerEmulation_Run	24	static
+gc_controller_emulation.c:344:15:GCControllerEmulation_GetButtonState	8	static
+gc_controller_emulation.c:316:6:GCControllerEmulation_GetSwitchSnapshot	8	static
+gc_controller_emulation.c:727:6:GCControllerEmulation_SendControllerState	32	static
+gc_controller_emulation.c:280:6:GCControllerEmulation_Run	24	static

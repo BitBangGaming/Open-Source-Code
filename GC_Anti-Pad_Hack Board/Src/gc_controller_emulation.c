@@ -1,7 +1,7 @@
 #include "GC_controller_emulation.h"
 
 // Macros //
-#define NUM_OF_BUTTON_INPUTS	23
+#define NUM_OF_BUTTON_INPUTS	22
 
 // Enumerations //
 /* GC Bits to UART Bytes */
@@ -263,19 +263,12 @@ void GCControllerEmulation_Init()
 	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 	HAL_GPIO_Init(BUTTON_MACRO_PORT, &GPIO_InitStruct_GCControllerEmulation);
 
-	// TILT_X Button
-	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_TILT_X_PIN_HAL;
+	// TILT Button
+	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_TILT_PIN_HAL;
 	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
 	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
 	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-	HAL_GPIO_Init(BUTTON_TILT_X_PORT, &GPIO_InitStruct_GCControllerEmulation);
-
-	// TILT_Y Button
-	GPIO_InitStruct_GCControllerEmulation.Pin = BUTTON_TILT_Y_PIN_HAL;
-	GPIO_InitStruct_GCControllerEmulation.Mode = GPIO_MODE_INPUT;
-	GPIO_InitStruct_GCControllerEmulation.Pull = GPIO_PULLUP;
-	GPIO_InitStruct_GCControllerEmulation.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-	HAL_GPIO_Init(BUTTON_TILT_Y_PORT, &GPIO_InitStruct_GCControllerEmulation);
+	HAL_GPIO_Init(BUTTON_TILT_PORT, &GPIO_InitStruct_GCControllerEmulation);
 }
 
 /* Emulate a GC controller forever. Note that this loop
@@ -344,8 +337,7 @@ void GCControllerEmulation_GetSwitchSnapshot()
 	gcButtonInputSnapShot[GC_C_STICK_LEFT] = GCControllerEmulation_GetButtonState(GC_C_STICK_LEFT);
 	gcButtonInputSnapShot[GC_C_STICK_RIGHT] = GCControllerEmulation_GetButtonState(GC_C_STICK_RIGHT);
 	gcButtonInputSnapShot[GC_MACRO] = GCControllerEmulation_GetButtonState(GC_MACRO);
-	gcButtonInputSnapShot[GC_TILT_X] = GCControllerEmulation_GetButtonState(GC_TILT_X);
-	gcButtonInputSnapShot[GC_TILT_Y] = GCControllerEmulation_GetButtonState(GC_TILT_Y);
+	gcButtonInputSnapShot[GC_TILT] = GCControllerEmulation_GetButtonState(GC_TILT);
 }
 
 // Private Function Implementations //
@@ -439,12 +431,8 @@ ButtonState_t GCControllerEmulation_GetButtonState(GCButtonInput_t gcButton)
 			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_MACRO_PORT, BUTTON_MACRO_PIN_HAL);
 			break;
 
-		case GC_TILT_X:
-			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_TILT_X_PORT, BUTTON_TILT_X_PIN_HAL);
-			break;
-
-		case GC_TILT_Y:
-			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_TILT_Y_PORT, BUTTON_TILT_Y_PIN_HAL);
+		case GC_TILT:
+			gcButtonState = (ButtonState_t)HAL_GPIO_ReadPin(BUTTON_TILT_PORT, BUTTON_TILT_PIN_HAL);
 			break;
 
 		default:
@@ -906,47 +894,97 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 	/* Third byte to console */
 	if(gcProcessedButtonStates[GC_MAIN_STICK_LEFT] == PUSHED)
 	{
-		// Make sure the transmit data register is empty before sending next byte
-		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for MAIN STICK X AXIS BIT7 AND BIT6
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+		if(gcProcessedButtonStates[GC_TILT] == PUSHED)
+		{
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK X AXIS BIT7 AND BIT6
+			USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
 
-		// Make sure the transmit data register is empty before sending next byte
-		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for MAIN STICK X AXIS BIT5 AND BIT4
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK X AXIS BIT5 AND BIT4
+			USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
 
-		// Make sure the transmit data register is empty before sending next byte
-		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for MAIN STICK X AXIS BIT2 AND BIT2
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK X AXIS BIT2 AND BIT2
+			USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
 
-		// Make sure the transmit data register is empty before sending next byte
-		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for MAIN STICK X AXIS BIT1 AND BIT0
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK X AXIS BIT1 AND BIT0
+			USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+		}
+		else
+		{
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK X AXIS BIT7 AND BIT6
+			USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK X AXIS BIT5 AND BIT4
+			USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK X AXIS BIT2 AND BIT2
+			USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK X AXIS BIT1 AND BIT0
+			USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+		}
 	}
 	else if(gcProcessedButtonStates[GC_MAIN_STICK_RIGHT] == PUSHED)
 	{
-		// Make sure the transmit data register is empty before sending next byte
-		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for MAIN STICK X AXIS BIT7 AND BIT6
-		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+		if(gcProcessedButtonStates[GC_TILT] == PUSHED)
+		{
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK X AXIS BIT7 AND BIT6
+			USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
 
-		// Make sure the transmit data register is empty before sending next byte
-		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for MAIN STICK X AXIS BIT5 AND BIT4
-		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK X AXIS BIT5 AND BIT4
+			USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
 
-		// Make sure the transmit data register is empty before sending next byte
-		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for MAIN STICK X AXIS BIT2 AND BIT2
-		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK X AXIS BIT2 AND BIT2
+			USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
 
-		// Make sure the transmit data register is empty before sending next byte
-		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for MAIN STICK X AXIS BIT1 AND BIT0
-		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK X AXIS BIT1 AND BIT0
+			USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
+		}
+		else
+		{
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK X AXIS BIT7 AND BIT6
+			USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK X AXIS BIT5 AND BIT4
+			USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK X AXIS BIT2 AND BIT2
+			USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK X AXIS BIT1 AND BIT0
+			USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+		}
 	}
 	else
 	{
@@ -975,47 +1013,97 @@ void GCControllerEmulation_SendControllerState(GCCommand_t command)
 	// Update main stick y-axis
 	if(gcProcessedButtonStates[GC_MAIN_STICK_DOWN] == PUSHED)
 	{
-		// Make sure the transmit data register is empty before sending next byte
-		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for MAIN STICK Y AXIS BIT7 AND BIT6
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+		if(gcProcessedButtonStates[GC_TILT] == PUSHED)
+		{
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK Y AXIS BIT7 AND BIT6
+			USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
 
-		// Make sure the transmit data register is empty before sending next byte
-		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for MAIN STICK Y AXIS BIT5 AND BIT4
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK Y AXIS BIT5 AND BIT4
+			USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
 
-		// Make sure the transmit data register is empty before sending next byte
-		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for MAIN STICK Y AXIS BIT2 AND BIT2
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK Y AXIS BIT2 AND BIT2
+			USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
 
-		// Make sure the transmit data register is empty before sending next byte
-		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for MAIN STICK Y AXIS BIT1 AND BIT0
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK Y AXIS BIT1 AND BIT0
+			USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+		}
+		else
+		{
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK Y AXIS BIT7 AND BIT6
+			USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK Y AXIS BIT5 AND BIT4
+			USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK Y AXIS BIT2 AND BIT2
+			USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK Y AXIS BIT1 AND BIT0
+			USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+		}
 	}
 	else if(gcProcessedButtonStates[GC_MAIN_STICK_UP] == PUSHED)
 	{
-		// Make sure the transmit data register is empty before sending next byte
-		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for MAIN STICK Y AXIS BIT7 AND BIT6
-		USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
+		if(gcProcessedButtonStates[GC_TILT] == PUSHED)
+		{
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK Y AXIS BIT7 AND BIT6
+			USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
 
-		// Make sure the transmit data register is empty before sending next byte
-		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for MAIN STICK Y AXIS BIT5 AND BIT4
-		USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK Y AXIS BIT5 AND BIT4
+			USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
 
-		// Make sure the transmit data register is empty before sending next byte
-		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for MAIN STICK Y AXIS BIT2 AND BIT2
-		USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK Y AXIS BIT2 AND BIT2
+			USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
 
-		// Make sure the transmit data register is empty before sending next byte
-		while(!(USART1->SR & USART_SR_TXE)){};
-		// Send states for MAIN STICK Y AXIS BIT1 AND BIT0
-		USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK Y AXIS BIT1 AND BIT0
+			USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+		}
+		else
+		{
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK Y AXIS BIT7 AND BIT6
+			USART1->DR = (GC_BITS_10_CASE1 & 0xFF);
+
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK Y AXIS BIT5 AND BIT4
+			USART1->DR = (GC_BITS_11_CASE1 & 0xFF);
+
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK Y AXIS BIT2 AND BIT2
+			USART1->DR = (GC_BITS_00_CASE1 & 0xFF);
+
+			// Make sure the transmit data register is empty before sending next byte
+			while(!(USART1->SR & USART_SR_TXE)){};
+			// Send states for MAIN STICK Y AXIS BIT1 AND BIT0
+			USART1->DR = (GC_BITS_01_CASE1 & 0xFF);
+		}
 	}
 	else
 	{
@@ -1438,7 +1526,6 @@ void GCControllerEmulation_ProcessSwitchSnapshot()
 	 * any sort of special processing so just copy them over.
 	 */
 	gcProcessedButtonStates[GC_MACRO] = gcButtonInputSnapShot[GC_MACRO];
-	gcProcessedButtonStates[GC_TILT_X] = gcButtonInputSnapShot[GC_TILT_X];
-	gcProcessedButtonStates[GC_TILT_Y] = gcButtonInputSnapShot[GC_TILT_Y];
+	gcProcessedButtonStates[GC_TILT] = gcButtonInputSnapShot[GC_TILT];
 	/* End processing of digital action buttons */
 }
